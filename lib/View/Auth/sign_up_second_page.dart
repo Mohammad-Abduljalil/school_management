@@ -4,12 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:school_management/Constants/MyColors.dart';
-import 'package:school_management/Controller/sign_up_controller.dart';
+import 'package:school_management/Custom/MyColors.dart';
+import 'package:school_management/Controller/AuthController/sign_up_controller.dart';
+import 'package:school_management/core/AppConstants.dart';
 
-import '../../Constants/MyCustomButton.dart';
-import '../../Constants/MyCustomLoadingButton.dart';
-import '../../Constants/MyCustomTextFields.dart';
+import '../../Custom/MyCustomButton.dart';
+import '../../Custom/MyCustomLoadingButton.dart';
+import '../../Custom/MyCustomTextFields.dart';
 
 class sign_up_second_page extends StatelessWidget {
   final SignUpController _signUpController = Get.put(SignUpController());
@@ -89,29 +90,22 @@ class sign_up_second_page extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             //personal and id photo
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildImagePickerBox("Personal Photo", true, context),
-                const SizedBox(width: 20),
-                _buildImagePickerBox("ID Photo", false, context),
-              ],
+            Center(
+              child: _buildImagePickerBox("Personal Photo", context),
             ),
             const SizedBox(height: 30),
-            _buildFieldLabel("School Name"),
-            //school name TextField
-            MyCustomTextField(
-              controller: _signUpController.schoolNameController,
-              hintText: "Enter your School Name",
-              prefixIcon: Icon(Icons.school_outlined, color: MyColors.iconInTextFieldColor),
-            ),
-            const SizedBox(height: 20),
             _buildFieldLabel("Location"),
             //location TextField
             MyCustomTextField(
               controller: _signUpController.locationController,
               hintText: "Enter your Location",
-              prefixIcon: Icon(Icons.location_on_outlined, color: MyColors.iconInTextFieldColor),
+              prefixIcon: Icon(Icons.location_on_outlined, color: MyColors.iconInAuthTextFieldColor),
+              validator: (value){
+                if(value==null ||value.isEmpty){
+                  return "Please Enter your Location";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 20),
             _buildFieldLabel("Password"),
@@ -121,7 +115,7 @@ class sign_up_second_page extends StatelessWidget {
                 controller: _signUpController.passwordController,
                 hintText: "Enter Password",
                 isPassword: true,
-                prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInTextFieldColor),
+                prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
                 obscureText: _signUpController.isPasswordObsecured.value,
                 onSuffixIconPressed: ()=>_signUpController.isPasswordObsecured.toggle(),
                 onChanged: (value){
@@ -160,7 +154,7 @@ class sign_up_second_page extends StatelessWidget {
               hintText: "Confirm Password",
               isPassword: true,
               textInputAction: TextInputAction.done,
-              prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInTextFieldColor),
+              prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInAuthTextFieldColor),
               onSuffixIconPressed: ()=>_signUpController.isPasswordConfirmObsecured.toggle(),
               onChanged: (value){
                 _signUpController.passwordConfirmText.value=value;
@@ -169,8 +163,8 @@ class sign_up_second_page extends StatelessWidget {
                 if(value==null ||value.isEmpty){
                   return "Please Enter your Password";
                 }
-                if (value.length < 8) {
-                  return 'Password must be at least 8 characters long';
+                if (value.length < AppConstants.minPasswordLength) {
+                  return 'Password must be at least $AppConstants.minPasswordLength characters long';
                 }
                 if(value!=(_signUpController.passwordController.text)){
                   return "Passwords do not match!";
@@ -199,17 +193,15 @@ class sign_up_second_page extends StatelessWidget {
     );
   }
 
-  Widget _buildImagePickerBox(String label, bool isPersonal, BuildContext context) {
+  Widget _buildImagePickerBox(String label, BuildContext context) {
     return Obx(() {
-      dynamic imagePath = isPersonal
-          ? _signUpController.personalImageController.value
-          : _signUpController.idImageController.value;
+      dynamic imagePath =_signUpController.personalImageController.value;
 
       return Stack(
         clipBehavior: Clip.none,
         children: [
           InkWell(
-            onTap: () => _showImageSourceDialog(isPersonal, context),
+            onTap: () => _showImageSourceDialog(context),
             child: DottedBorder(
               options: RectDottedBorderOptions(
                 dashPattern: [4, 3],
@@ -244,9 +236,9 @@ class sign_up_second_page extends StatelessWidget {
               top: -5,
               right: -5,
               child: GestureDetector(
-                onTap: () => isPersonal
-                    ? _signUpController.personalImageController.value = null
-                    : _signUpController.idImageController.value = null,
+                onTap: (){
+                    _signUpController.personalImageController.value = null;
+                    },
                 child: const CircleAvatar(
                   radius: 12,
                   backgroundColor: Colors.red,
@@ -259,7 +251,7 @@ class sign_up_second_page extends StatelessWidget {
     });
   }
 
-  void _showImageSourceDialog(bool isPersonal, BuildContext context) {
+  void _showImageSourceDialog(BuildContext context) {
     Get.bottomSheet(
       Container(
         color: Colors.white,
@@ -270,7 +262,7 @@ class sign_up_second_page extends StatelessWidget {
               leading: const Icon(Icons.photo_library),
               title: const Text('Gallery'),
               onTap: () {
-                _signUpController.pickImage(ImageSource.gallery, isPersonal);
+                _signUpController.pickImage(ImageSource.gallery);
                 Get.back();
               },
             ),
@@ -278,7 +270,7 @@ class sign_up_second_page extends StatelessWidget {
               leading: const Icon(Icons.photo_camera),
               title: const Text('Camera'),
               onTap: () {
-                _signUpController.pickImage(ImageSource.camera, isPersonal);
+                _signUpController.pickImage(ImageSource.camera);
                 Get.back();
               },
             ),

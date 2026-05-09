@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:school_management/Constants/MyColors.dart';
-import 'package:school_management/Controller/sign_up_controller.dart';
+import 'package:school_management/Custom/MyColors.dart';
+import 'package:school_management/Controller/AuthController/sign_up_controller.dart';
 import 'package:school_management/View/Auth/sign_in.dart';
 import 'package:school_management/View/Auth/sign_up_second_page.dart';
+import 'package:school_management/core/AppConstants.dart';
 
-import '../../Constants/MyCustomButton.dart';
-import '../../Constants/MyCustomTextFields.dart';
+import '../../Custom/MyCustomButton.dart';
+import '../../Custom/MyCustomTextFields.dart';
 
 class sign_up_first_page extends StatefulWidget{
 
@@ -87,7 +88,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
             const CircleAvatar(
               radius: 40.0,
               backgroundColor: Color(0xFFE0F2F1),
-              backgroundImage: AssetImage("images/SchoolManagementIcon.png"),
+              backgroundImage: AssetImage(AppConstants.logoPath),
             ),
             const SizedBox(height: 10,),
             //Text of Create Account
@@ -125,7 +126,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
                 MyCustomTextField(
                   controller: _signUpController.fullNameController,
                   hintText: "Enter your Full Name ",
-                  prefixIcon: Icon(Icons.person_outline, color: MyColors.iconInTextFieldColor),
+                  prefixIcon: Icon(Icons.person_outline, color: MyColors.iconInAuthTextFieldColor),
                   keyboardType: TextInputType.text,
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please Enter your Full Name";
@@ -144,11 +145,14 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
                 MyCustomTextField(
                   controller: _signUpController.emailController,
                   hintText: "example@gmail.com",
-                  prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInTextFieldColor),
+                  prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please Enter your Email";
-                    return null;
+                    if(GetUtils.isEmail(value!)){
+                      return null;
+                    }
+                    return "your Email should be as 'example@gmail.com'";
                   },
                 ),
               ],
@@ -164,9 +168,10 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
                   textInputAction: TextInputAction.done,
                   controller: _signUpController.phoneNumberController,
                   hintText: "09 **** ****",
-                  prefixIcon: Icon(Icons.phone_outlined, color: MyColors.iconInTextFieldColor),
+                  prefixIcon: Icon(Icons.phone_outlined, color: MyColors.iconInAuthTextFieldColor),
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please Enter your Phone Number";
+                    else if (value.length != AppConstants.phoneLength) return "Phone number must be ${AppConstants.phoneLength} digits";
                     return null;
                   },
                 ),
@@ -175,7 +180,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
             SizedBox(height: 30,),
             //Next to second Signup page Button
             MyCustomButton(onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> sign_up_second_page()));
+              _signUpController.NextToSecondPage();
             },title: "Next",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
             const SizedBox(height: 20),
             //To go to Login Page

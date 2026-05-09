@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:school_management/Constants/MyColors.dart';
+import 'package:school_management/Custom/MyColors.dart';
 
 import 'MyConstantProperties.dart';
 
@@ -51,7 +51,7 @@ class MyCustomTextField extends StatelessWidget {
         hintStyle: MyConstantProperties.textStyleOfHintTextInTextField,
         prefixIcon: prefixIcon,
         suffixIcon: isPassword ?
-        IconButton(icon: Icon(obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: MyColors.iconInTextFieldColor,),
+        IconButton(icon: Icon(obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: MyColors.iconInAuthTextFieldColor,),
           onPressed: onSuffixIconPressed,
         )
             : suffixIcon,

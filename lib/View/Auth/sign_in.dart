@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:school_management/Constants/MyColors.dart';
-import 'package:school_management/Constants/MyCustomLoadingButton.dart';
-import 'package:school_management/Controller/sign_in_controller.dart';
+import 'package:school_management/Custom/MyColors.dart';
+import 'package:school_management/Custom/MyCustomLoadingButton.dart';
+import 'package:school_management/Controller/AuthController/sign_in_controller.dart';
 import 'package:school_management/View/Auth/sign_up_first_page.dart';
+import 'package:school_management/core/AppConstants.dart';
 
-import '../../Constants/MyCustomButton.dart';
-import '../../Constants/MyCustomTextFields.dart';
+import '../../Custom/MyCustomButton.dart';
+import '../../Custom/MyCustomTextFields.dart';
 
 class sign_in extends StatefulWidget{
+  const sign_in({super.key});
 
   @override
   State<sign_in> createState() => _sign_inState();
@@ -25,6 +26,7 @@ class _sign_inState extends State<sign_in>{
     final size=MediaQuery.of(context).size;
 
     return Scaffold(
+    resizeToAvoidBottomInset: true,
     backgroundColor: MyColors.backgroundColor,
     body:SafeArea(
       child: Center(
@@ -87,7 +89,7 @@ class _sign_inState extends State<sign_in>{
             const CircleAvatar(
               radius: 40.0,
               backgroundColor: Color(0xFFE0F2F1),
-              backgroundImage: AssetImage("images/SchoolManagementIcon.png"),
+              backgroundImage: AssetImage(AppConstants.logoPath),
             ),
             const SizedBox(height: 10,),
             //Text of login
@@ -125,7 +127,7 @@ class _sign_inState extends State<sign_in>{
                 MyCustomTextField(
                 controller: _signInController.emailController,
                   hintText: "Enter your Email ",
-                  prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInTextFieldColor),
+                  prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please Enter your Email";
@@ -149,11 +151,11 @@ class _sign_inState extends State<sign_in>{
                   controller: _signInController.passwordController,
                   hintText: "Enter your Password ",
                   isPassword: false,
-                  prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInTextFieldColor),
+                  prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please Enter your Password";
-                    if (value.length < 8) {
-                      return 'Password must be at least 8 characters long';
+                    if (value.length < AppConstants.minPasswordLength) {
+                      return 'Password must be at least $AppConstants.minPasswordLength characters long';
                     }
                     return null;
                   },
