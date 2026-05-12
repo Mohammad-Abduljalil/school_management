@@ -39,6 +39,7 @@ dependencies:
   dotted_border: ^3.1.0
   http: ^1.6.0
   shared_preferences: ^2.5.5
+  pinput: ^6.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,6 +67,7 @@ flutter:
      - images/Auth/imageInSignIn.png
      - images/SchoolManagementIcon.png
      - images/Auth/imageInSignUp.png
+     - images/Auth/ImageForForgetPassword.png
      - images/personalImage\personal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

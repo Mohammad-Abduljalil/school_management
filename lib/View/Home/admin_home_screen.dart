@@ -32,7 +32,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             return Row(
               children: [
                 _buildSidebar(constraints, isSmallScreen),
-                Expanded(child: _buildContentArea(constraints)),
+                Expanded(child: _buildContentArea(constraints,isSmallScreen)),
               ],
             );
           },
@@ -71,7 +71,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               border: Border.all(color: Colors.white24),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Image.asset(AppConstants.logoPath, fit: BoxFit.cover),
+            child: Image.asset(AppConstants.logoPath, fit: BoxFit.cover,cacheWidth: 150,cacheHeight: 150,),
           )
         : ListTile(
             leading: Container(
@@ -220,7 +220,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   }
 
 
-  Widget _buildContentArea(BoxConstraints constraints) {
+  Widget _buildContentArea(BoxConstraints constraints,bool isSmallScreen) {
     return Container(
       color: const Color(0xFFF5F7FF),
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 28),
@@ -282,9 +282,9 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                         ),
                         Row(
                           children: [
-                            _buildTopAction(Icons.notifications, 'Notifications',(){}),
+                            _buildTopAction(Icons.notifications, 'Notifications',isSmallScreen,(){}),
                             SizedBox(width: 12,),
-                            _buildTopAction(Icons.date_range_outlined, "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",(){})
+                            _buildTopAction(Icons.date_range_outlined, "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",isSmallScreen,(){})
                           ]
                         ),
                       ],
@@ -301,7 +301,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     );
   }
 
-  Widget _buildTopAction(IconData icon, String label,void Function()? onTap) {
+  Widget _buildTopAction(IconData icon, String label,bool isSmallScreen,void Function()? onTap) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -317,13 +317,19 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             ),
           ],
         ),
-        child: Row(
+        child: isSmallScreen ? Row(
           children: [
+            Icon(icon, color: const Color(0xFF3755C3), size: 20),
+          ],
+         )
+            :
+          Row(
+            children: [
             Icon(icon, color: const Color(0xFF3755C3), size: 20),
             const SizedBox(width: 10),
             Text(label, style: const TextStyle(color: Color(0xFF0D1E49))),
-          ],
-        ),
+                ],
+            ),
       ),
     );
   }

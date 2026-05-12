@@ -18,12 +18,13 @@ class SignUpController extends GetxController{
   SettingService settingService=Get.find();
 
   final formKey=GlobalKey<FormState>();
-  var fullNameController=TextEditingController();
-  var emailController=TextEditingController();
-  var phoneNumberController=TextEditingController();
-  final  locationController = TextEditingController();
-  final  passwordController = TextEditingController();
-  final  passwordConfirmController = TextEditingController();
+  final formKeySecond=GlobalKey<FormState>();
+  late TextEditingController fullNameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneNumberController;
+  late TextEditingController  locationController;
+  late TextEditingController  passwordController;
+  late TextEditingController  passwordConfirmController;
   var personalImageController = Rxn<XFile>();
   final ImagePicker _imagePicker=ImagePicker();
   var isLoading=false.obs;
@@ -38,6 +39,12 @@ class SignUpController extends GetxController{
 
   @override
   void onInit() {
+    fullNameController=TextEditingController();
+    emailController=TextEditingController();
+    phoneNumberController=TextEditingController();
+    locationController = TextEditingController();
+    passwordController = TextEditingController();
+    passwordConfirmController = TextEditingController();
     super.onInit();
   }
 
@@ -69,7 +76,7 @@ class SignUpController extends GetxController{
     }
 
   void SignUp()async{
-    if(formKey.currentState?.validate()??false){
+    if(formKeySecond.currentState?.validate()??false){
       if (personalImageController.value == null) {
         Get.snackbar(
           "Missing Photos",

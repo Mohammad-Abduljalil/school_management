@@ -12,11 +12,18 @@ import 'package:school_management/core/forApi.dart';
 class SignInController extends GetxController{
   SettingService settingService=Get.find();
   final formKey=GlobalKey<FormState>();
-  final emailController=TextEditingController();
-  final passwordController=TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
   var isPasswordObsecured=true.obs;
   var passwordText="".obs;
   var isLoading=false.obs;
+
+  @override
+  void onInit() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.onInit();
+  }
 
   Future<void> SignIn() async {
     if (formKey.currentState!.validate()) {

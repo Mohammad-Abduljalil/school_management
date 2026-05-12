@@ -13,7 +13,7 @@ import '../../Custom/MyCustomLoadingButton.dart';
 import '../../Custom/MyCustomTextFields.dart';
 
 class sign_up_second_page extends StatelessWidget {
-  final SignUpController _signUpController = Get.put(SignUpController());
+  final SignUpController _signUpController = Get.find<SignUpController>();
 
 
 
@@ -36,26 +36,29 @@ class sign_up_second_page extends StatelessWidget {
               ),
               width: size.width > 900 ? 900 : size.width * 0.95,
               height: isMobile ? null : (size.height > 750 ? size.height * 0.9 : 750),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  if (!isMobile) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(child: _buildImageSection()),
-                        Expanded(child: _buildFormSection(context)),
-                      ],
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(height: 250, child: _buildImageSection()),
-                        _buildFormSection(context),
-                      ],
-                    );
-                  }
-                },
+              child: Form(
+                key: _signUpController.formKeySecond,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (!isMobile) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: _buildImageSection()),
+                          Expanded(child: _buildFormSection(context)),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 250, child: _buildImageSection()),
+                          _buildFormSection(context),
+                        ],
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ),
@@ -75,120 +78,117 @@ class sign_up_second_page extends StatelessWidget {
   Widget _buildFormSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Form(
-        key: _signUpController.formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Add These Photos",
-              style: TextStyle(
-                  color: Color(0xFF1C3486),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            const SizedBox(height: 20),
-            //personal and id photo
-            Center(
-              child: _buildImagePickerBox("Personal Photo", context),
-            ),
-            const SizedBox(height: 30),
-            _buildFieldLabel("Location"),
-            //location TextField
-            MyCustomTextField(
-              controller: _signUpController.locationController,
-              hintText: "Enter your Location",
-              prefixIcon: Icon(Icons.location_on_outlined, color: MyColors.iconInAuthTextFieldColor),
-              validator: (value){
-                if(value==null ||value.isEmpty){
-                  return "Please Enter your Location";
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-            _buildFieldLabel("Password"),
-            //Password TextField
-            Obx(
-              ()=> MyCustomTextField(
-                controller: _signUpController.passwordController,
-                hintText: "Enter Password",
-                isPassword: true,
-                prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
-                obscureText: _signUpController.isPasswordObsecured.value,
-                onSuffixIconPressed: ()=>_signUpController.isPasswordObsecured.toggle(),
-                onChanged: (value){
-                  _signUpController.passwordText.value=value;
-                },
-                validator: (value){
-                  if(value==null ||value.isEmpty){
-                    return "Please Enter your Password";
-                  }
-                  if (value.length < 8) {
-                    return 'Password must be at least 8 characters long';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            //to check password
-            Obx(()=> Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 25),
-              child: Text(
-                _signUpController.passwordText.value.isEmpty
-                    ? ""
-                    : _signUpController.passwordText.value.length < 8
-                    ? "Weak password"
-                    : "Strong password",
-                style: TextStyle(
-                  color: _signUpController.passwordText.value.length < 8 ? Colors.red : Colors.green,
-                  fontSize: 12,
-                ),
-              ),
-            )),          const SizedBox(height: 20),
-            _buildFieldLabel("Confirm Password"),
-            //Confirm Password TextField
-            Obx(()=>MyCustomTextField(
-              controller: _signUpController.passwordConfirmController,
-              hintText: "Confirm Password",
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Add These Photos",
+            style: TextStyle(
+                color: Color(0xFF1C3486),
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          ),
+          const SizedBox(height: 20),
+          //personal and id photo
+          Center(
+            child: _buildImagePickerBox("Personal Photo", context),
+          ),
+          const SizedBox(height: 30),
+          _buildFieldLabel("Location"),
+          //location TextField
+          MyCustomTextField(
+            controller: _signUpController.locationController,
+            hintText: "Enter your Location",
+            prefixIcon: Icon(Icons.location_on_outlined, color: MyColors.iconInAuthTextFieldColor),
+            validator: (value){
+              if(value==null ||value.isEmpty){
+                return "Please Enter your Location";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          _buildFieldLabel("Password"),
+          //Password TextField
+          Obx(
+            ()=> MyCustomTextField(
+              controller: _signUpController.passwordController,
+              hintText: "Enter Password",
               isPassword: true,
-              textInputAction: TextInputAction.done,
-              prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInAuthTextFieldColor),
-              onSuffixIconPressed: ()=>_signUpController.isPasswordConfirmObsecured.toggle(),
+              prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
+              obscureText: _signUpController.isPasswordObsecured.value,
+              onSuffixIconPressed: ()=>_signUpController.isPasswordObsecured.toggle(),
               onChanged: (value){
-                _signUpController.passwordConfirmText.value=value;
+                _signUpController.passwordText.value=value;
               },
               validator: (value){
                 if(value==null ||value.isEmpty){
                   return "Please Enter your Password";
                 }
-                if (value.length < AppConstants.minPasswordLength) {
-                  return 'Password must be at least $AppConstants.minPasswordLength characters long';
-                }
-                if(value!=(_signUpController.passwordController.text)){
-                  return "Passwords do not match!";
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters long';
                 }
                 return null;
               },
-              obscureText: _signUpController.isPasswordConfirmObsecured.value,
-            ),),
-            const SizedBox(height: 30),
-            //finish Button
-            Obx( ()=> _signUpController.isLoading.value ? MyCustomLoadingButton(onPressed: (){},backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF))
-                :
-            MyCustomButton(
-              onPressed: () {
-                _signUpController.SignUp();
-              },
-              title: "Finish",
-              backgroundColorLeft: const Color(0xFF1D3587),
-              backgroundColorRight: const Color(0xFF006879),
-              foregroundColor: Colors.white,
             ),
+          ),
+          //to check password
+          Obx(()=> Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 25),
+            child: Text(
+              _signUpController.passwordText.value.isEmpty
+                  ? ""
+                  : _signUpController.passwordText.value.length < 8
+                  ? "Weak password"
+                  : "Strong password",
+              style: TextStyle(
+                color: _signUpController.passwordText.value.length < 8 ? Colors.red : Colors.green,
+                fontSize: 12,
+              ),
             ),
-          ],
-        ),
+          )),          const SizedBox(height: 20),
+          _buildFieldLabel("Confirm Password"),
+          //Confirm Password TextField
+          Obx(()=>MyCustomTextField(
+            controller: _signUpController.passwordConfirmController,
+            hintText: "Confirm Password",
+            isPassword: true,
+            textInputAction: TextInputAction.done,
+            prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInAuthTextFieldColor),
+            onSuffixIconPressed: ()=>_signUpController.isPasswordConfirmObsecured.toggle(),
+            onChanged: (value){
+              _signUpController.passwordConfirmText.value=value;
+            },
+            validator: (value){
+              if(value==null ||value.isEmpty){
+                return "Please Enter your Password";
+              }
+              if (value.length < AppConstants.minPasswordLength) {
+                return 'Password must be at least ${AppConstants.minPasswordLength} characters long';
+              }
+              if(value!=(_signUpController.passwordController.text)){
+                return "Passwords do not match!";
+              }
+              return null;
+            },
+            obscureText: _signUpController.isPasswordConfirmObsecured.value,
+          ),),
+          const SizedBox(height: 30),
+          //finish Button
+          Obx( ()=> _signUpController.isLoading.value ? MyCustomLoadingButton(onPressed: (){},backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF))
+              :
+          MyCustomButton(
+            onPressed: () {
+              _signUpController.SignUp();
+            },
+            title: "Finish",
+            backgroundColorLeft: const Color(0xFF1D3587),
+            backgroundColorRight: const Color(0xFF006879),
+            foregroundColor: Colors.white,
+          ),
+          ),
+        ],
       ),
     );
   }
