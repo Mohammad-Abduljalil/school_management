@@ -40,6 +40,10 @@ dependencies:
   http: ^1.6.0
   shared_preferences: ^2.5.5
   pinput: ^6.0.2
+  syncfusion_flutter_datagrid: ^33.2.6
+  awesome_dialog: ^3.3.0
+  fl_chart: ^1.2.0
+  syncfusion_flutter_core: ^33.2.10
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,11 +68,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - images/Auth/imageInSignIn.png
-     - images/SchoolManagementIcon.png
-     - images/Auth/imageInSignUp.png
-     - images/Auth/ImageForForgetPassword.png
-     - images/personalImage\personal.png
+     - images/
+     - images/Auth/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

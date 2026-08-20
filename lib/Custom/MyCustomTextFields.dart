@@ -45,7 +45,7 @@ class MyCustomTextField extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        fillColor: Colors.white,
+        fillColor: Theme.of(context).cardColor,
         filled: true,
         hintText: hintText,
         hintStyle: MyConstantProperties.textStyleOfHintTextInTextField,
@@ -53,6 +53,7 @@ class MyCustomTextField extends StatelessWidget {
         suffixIcon: isPassword ?
         IconButton(icon: Icon(obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: MyColors.iconInAuthTextFieldColor,),
           onPressed: onSuffixIconPressed,
+          focusNode: FocusNode(skipTraversal: true),
         )
             : suffixIcon,
         enabledBorder: OutlineInputBorder(
@@ -60,7 +61,7 @@ class MyCustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: MyColors.borderColor, width: 1.5),
+          borderSide: BorderSide(color: MyColors.borderColor, width: 1.5),
           borderRadius: BorderRadius.circular(10),
         ),
         errorBorder: OutlineInputBorder(
