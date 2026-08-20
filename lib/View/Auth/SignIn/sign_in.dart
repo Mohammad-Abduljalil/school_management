@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:school_management/Custom/MyColors.dart';
 import 'package:school_management/Custom/MyCustomLoadingButton.dart';
 import 'package:school_management/Controller/AuthController/sign_in_controller.dart';
-import 'package:school_management/View/Auth/sign_up_first_page.dart';
+import 'package:school_management/View/Auth/SignUp/sign_up_first_page.dart';
 import 'package:school_management/core/AppConstants.dart';
 
-import '../../Custom/MyCustomButton.dart';
-import '../../Custom/MyCustomTextFields.dart';
+import '../../../Custom/MyCustomButton.dart';
+import '../../../Custom/MyCustomTextFields.dart';
 
 class sign_in extends StatefulWidget{
   const sign_in({super.key});
@@ -35,12 +35,12 @@ class _sign_inState extends State<sign_in>{
             margin: EdgeInsets.all(20),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: const Color(0xFFF0F1F2),
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20),
             ),
             width: size.width>900?900:size.width*0.95,
             constraints: BoxConstraints(
-              minHeight: size.width > 800 ? 700 : 0,
+              minHeight: size.width > 800 ? (size.height*0.7).clamp(0, 700) : 0,
               maxHeight: size.width > 800 ? size.height * 0.85 : double.infinity,
             ),
             child: Form(
@@ -50,7 +50,7 @@ class _sign_inState extends State<sign_in>{
                   return Row(
                     children: [
                       Expanded(
-                          child: _buildImageSection()
+                          child: _buildImageSection(context)
                       ),
                       Expanded(
                           child: _buildFormSection()
@@ -61,7 +61,7 @@ class _sign_inState extends State<sign_in>{
                   return  Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 250, child: _buildImageSection()),
+                      SizedBox(height: 250, child: _buildImageSection(context)),
                       _buildFormSection(),
                     ],
                   );
@@ -74,9 +74,10 @@ class _sign_inState extends State<sign_in>{
       ),
     )));
   }
-  Widget _buildImageSection(){
+
+  Widget _buildImageSection(BuildContext context){
     return Container(
-      color: const Color(0xFFF0F1F2),
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(20),
       child: Image.asset("images/Auth/imageInSignIn.png",fit: BoxFit.contain,),
     );
@@ -90,20 +91,20 @@ class _sign_inState extends State<sign_in>{
         mainAxisSize: MainAxisSize.min,
         children: [
           //image of school
-          const CircleAvatar(
+          CircleAvatar(
             radius: 40.0,
-            backgroundColor: Color(0xFFE0F2F1),
-            backgroundImage: AssetImage(AppConstants.logoPath),
+            backgroundColor: Theme.of(context).dividerColor,
+            backgroundImage: const AssetImage(AppConstants.logoPath),
           ),
           const SizedBox(height: 10,),
           //Text of login
           SizedBox(
             width: 65,
             height: 29,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
               child: Text("Login",style: TextStyle(
-                color: Color(0xFF1C3486),
+                color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
             ),
@@ -112,13 +113,13 @@ class _sign_inState extends State<sign_in>{
           SizedBox(
             width: 333,
             height: 28,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
                 "Start managing your School perfect today",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Color(0xFF64748B)),),
+                    color: MyColors.labelUpOfTextFieldInLoginPageColor),),
             ),
           ),
           const SizedBox(height: 30,),
@@ -150,20 +151,43 @@ class _sign_inState extends State<sign_in>{
             children: [
               Text("Password",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
-              MyCustomTextField(
-                textInputAction: TextInputAction.done,
-                controller: _signInController.passwordController,
-                hintText: "Enter your Password ",
-                isPassword: false,
-                prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
-                validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Password";
-                  if (value.length < AppConstants.minPasswordLength) {
-                    return 'Password must be at least $AppConstants.minPasswordLength characters long';
-                  }
-                  return null;
-                },
+              Obx(
+                    ()=> MyCustomTextField(
+                  controller: _signInController.passwordController,
+                  hintText: "Enter Password",
+                  isPassword: true,
+                  prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
+                  obscureText: _signInController.isPasswordObsecured.value,
+                  onSuffixIconPressed: ()=>_signInController.isPasswordObsecured.toggle(),
+                  onChanged: (value){
+                    _signInController.passwordText.value=value;
+                  },
+                  validator: (value){
+                    if(value==null ||value.isEmpty){
+                      return "Please Enter your Password";
+                    }
+                    if (value.length < 8) {
+                      return 'Password must be at least 8 characters long';
+                    }
+                    return null;
+                  },
+                ),
               ),
+              //to check password
+              Obx(()=> Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 25),
+                child: Text(
+                  _signInController.passwordText.value.isEmpty
+                      ? ""
+                      : _signInController.passwordText.value.length < 8
+                      ? "Weak password"
+                      : "Strong password",
+                  style: TextStyle(
+                    color: _signInController.passwordText.value.length < 8 ? Colors.red : Colors.green,
+                    fontSize: 12,
+                  ),
+                ),
+              )),
             ],
           ),
           const SizedBox(height: 10,),
@@ -193,7 +217,7 @@ class _sign_inState extends State<sign_in>{
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Already haven't account?", style: TextStyle(color: Color(0xFF64748B))),
+              Text("Already haven't account?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>sign_up_first_page()));

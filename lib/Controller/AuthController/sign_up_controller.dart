@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:http_parser/http_parser.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +10,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:school_management/Model/AuthModel/SignUpModel.dart';
-import 'package:school_management/View/Home/admin_home_screen.dart';
+import 'package:school_management/View/Home/HomeScreen.dart';
 import 'package:school_management/core/AppConstants.dart';
 import 'package:school_management/core/Services/SettingsService.dart';
-import 'package:school_management/core/forApi.dart';
+import 'package:school_management/core/Utils/SnackbarHelper.dart';
 
 
 class SignUpController extends GetxController{
@@ -28,8 +30,8 @@ class SignUpController extends GetxController{
   var personalImageController = Rxn<XFile>();
   final ImagePicker _imagePicker=ImagePicker();
   var isLoading=false.obs;
-  var isPasswordObsecured=false.obs;
-  var isPasswordConfirmObsecured=false.obs;
+  var isPasswordObsecured=true.obs;
+  var isPasswordConfirmObsecured=true.obs;
   var passwordText="".obs;
   var passwordConfirmText="".obs;
 
@@ -70,7 +72,7 @@ class SignUpController extends GetxController{
     if(formKey.currentState?.validate()??false){
       Get.toNamed("/SignUpSecondPage");
     } else {
-      Get.snackbar("Error", "Form validation failed or Form not found");
+      SnackbarHelper.showError(title: "Error", message: "Form validation failed or form not found");
     }
 
     }
@@ -78,62 +80,61 @@ class SignUpController extends GetxController{
   void SignUp()async{
     if(formKeySecond.currentState?.validate()??false){
       if (personalImageController.value == null) {
-        Get.snackbar(
-          "Missing Photos",
-          "Please upload your personal photo.",
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-
-          snackPosition: SnackPosition.TOP,
-        );
+        SnackbarHelper.showError(title: "Error", message: "Please upload your personal photo");
         return ;
       }
       try {
         isLoading.value = true;
-        //After Link
-        // var request= http.MultipartRequest('POST',Uri.parse(AppConstants.linkSignUp));
-        //
-        // SignUpModel newUser=SignUpModel(
-        //     fullName: fullNameController.text,
-        //     email: emailController.text.trim(),
-        //     phoneNumber: phoneNumberController.text,
-        //     location: locationController.text,
-        //     password: passwordController.text,
-        //     passwordConfirm: passwordConfirmController.text
-        //     );
-        //
-        // newUser.toJson().forEach((key,value){
-        //   request.fields[key]=value.toString();
-        // });
-        //
-        // request.files.add(await http.MultipartFile.fromPath('personal_image', personalImageController.value!.path));//
-        // var streamResponse=await request.send();
-        // var response=await http.Response.fromStream(streamResponse);
-        //   if(response.statusCode==200||response.statusCode==201){
-        //     var responseBody=jsonDecode(response.body);
-        //     SignUpModel userResponse=SignUpModel.fromJson(responseBody);
-        //         if (userResponse.token != null) {
-        //           saveUserLogin(userResponse.token!);
-        //           Get.offAllNamed("/AdminHomeScreen");
-        //           Get.snackbar("Success", "Account created successfully");
-        //         }else {
-        //         var errorData = jsonDecode(response.body);
-        //         Get.snackbar("Error", errorData['message'] ?? "Registration failed",
-        //             backgroundColor: Colors.redAccent, colorText: Colors.white);
-        //       }
-        //   }
-        
-        await Future.delayed(const Duration(seconds: 2));
+        var request= http.MultipartRequest('POST',Uri.parse(AppConstants.linkSignUp));
+        request.fields['full_name'] = fullNameController.text;
+        request.fields['email'] = emailController.text.trim();
+        request.fields['phone'] = phoneNumberController.text;
+        request.fields['location'] = locationController.text;
+        request.fields['password'] = passwordController.text;
+        request.fields['password_confirmation'] = passwordConfirmController.text;
+        request.fields['role'] = 'super_admin';
 
-        Get.offAllNamed("/AdminHomeScreen");
+
+        if(kIsWeb){
+          var bytes=await personalImageController.value!.readAsBytes();
+          request.files.add(http.MultipartFile.fromBytes('profile_image', bytes,filename: personalImageController.value!.name,));
+
+        }else{
+          request.files.add(await http.MultipartFile.fromPath(
+              'profile_image',
+              personalImageController.value!.path
+          ));
+
+        }
+        request.headers.addAll({
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        });
+        var streamResponse=await request.send();
+
+        var response=await http.Response.fromStream(streamResponse);
+          if(response.statusCode==200||response.statusCode==201){
+            var responseBody=jsonDecode(response.body);
+
+            SignUpModel userResponse=SignUpModel.fromJson(responseBody);
+
+            if (userResponse.token != null) {
+                  saveUserLogin(userResponse.token!);
+                  Get.offAllNamed("/AdminHomeScreen");
+                  SnackbarHelper.showSuccess(title: "Success", message: "Account created successfully");
+                }else {
+                var errorData = jsonDecode(response.body);
+                SnackbarHelper.showError(title: "Error", message: errorData['message'] ?? "Registration failed");
+              }
+          }
+
       } catch (e) {
-        Get.snackbar("Error", "Check your server connection: $e");
-        print("Catch Error: $e");
+        SnackbarHelper.showError(title: "Error", message: "Check your server connection: $e");
       }finally{
         isLoading.value=false;
       }
     } else {
-      print("Form validation failed or Form not found");
+      SnackbarHelper.showError(title: "Error", message: "Form validation failed or form not found");
     }
   }
 

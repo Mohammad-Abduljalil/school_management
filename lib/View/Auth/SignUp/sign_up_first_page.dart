@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:school_management/Custom/MyColors.dart';
 import 'package:school_management/Controller/AuthController/sign_up_controller.dart';
-import 'package:school_management/View/Auth/sign_in.dart';
-import 'package:school_management/View/Auth/sign_up_second_page.dart';
+import 'package:school_management/View/Auth/SignIn/sign_in.dart';
 import 'package:school_management/core/AppConstants.dart';
-
-import '../../Custom/MyCustomButton.dart';
-import '../../Custom/MyCustomTextFields.dart';
+import '../../../Custom/MyCustomButton.dart';
+import '../../../Custom/MyCustomTextFields.dart';
 
 class sign_up_first_page extends StatefulWidget{
 
@@ -33,7 +31,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
                   margin: EdgeInsets.all(20),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F1F2),
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   width: size.width>900?900:size.width*0.95,
@@ -69,10 +67,11 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
               ),
             )));
   }
-  //should edit
+
+
   Widget _buildImageSection(){
     return Container(
-      color: const Color(0xFFF0F1F2),
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.all(20),
       child: Image.asset("images/Auth/imageInSignUp.png",fit: BoxFit.contain,),
     );
@@ -88,7 +87,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           //image of school
           const CircleAvatar(
             radius: 40.0,
-            backgroundColor: Color(0xFFE0F2F1),
+            backgroundColor: Colors.transparent,
             backgroundImage: AssetImage(AppConstants.logoPath),
           ),
           const SizedBox(height: 10,),
@@ -96,10 +95,10 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           SizedBox(
             width: 185,
             height: 29,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
               child: Text("Create Account",style: TextStyle(
-                color: Color(0xFF1C3486),
+                color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
             ),
@@ -108,13 +107,13 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           SizedBox(
             width: 333,
             height: 28,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
                 "Start managing your School perfect today",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Color(0xFF64748B)),),
+                    color: MyColors.labelUpOfTextFieldInLoginPageColor),),
             ),
           ),
           const SizedBox(height: 30,),
@@ -188,7 +187,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Already have account?", style: TextStyle(color: Color(0xFF64748B))),
+              Text("Already have account?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>sign_in()));

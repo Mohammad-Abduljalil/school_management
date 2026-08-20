@@ -4,12 +4,9 @@ import 'package:get/get.dart';
 import 'package:school_management/Controller/AuthController/ForgetPasswordController.dart';
 import 'package:school_management/Custom/MyColors.dart';
 import 'package:school_management/Custom/MyCustomLoadingButton.dart';
-import 'package:school_management/Controller/AuthController/sign_in_controller.dart';
-import 'package:school_management/View/Auth/sign_up_first_page.dart';
 import 'package:school_management/core/AppConstants.dart';
-
-import '../../../Custom/MyCustomButton.dart';
-import '../../../Custom/MyCustomTextFields.dart';
+import '../../../../Custom/MyCustomButton.dart';
+import '../../../../Custom/MyCustomTextFields.dart';
 
 
 class NewPassword extends StatefulWidget{
@@ -24,9 +21,7 @@ class _NewPasswordState extends State<NewPassword>{
   final ForgetPasswordController _forgetPasswordController=Get.find<ForgetPasswordController>();
   @override
   Widget build(BuildContext context) {
-
     final size=MediaQuery.of(context).size;
-
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: MyColors.backgroundColor,
@@ -37,12 +32,12 @@ class _NewPasswordState extends State<NewPassword>{
                   margin: EdgeInsets.all(20),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F1F2),
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   width: size.width>900?900:size.width*0.95,
                   constraints: BoxConstraints(
-                    minHeight: size.width > 800 ? 700 : 0,
+                    minHeight: size.width > 800 ? AppConstants.minHeightForWindowsApplications : 0,
                     maxHeight: size.width > 800 ? size.height * 0.85 : double.infinity,
                   ),
                   child: Form(
@@ -78,7 +73,7 @@ class _NewPasswordState extends State<NewPassword>{
   }
   Widget _buildImageSection(){
     return Container(
-      color: const Color(0xFFF0F1F2),
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(20),
       child: Image.asset("images/Auth/ImageForForgetPassword.png",fit: BoxFit.contain,),
     );
@@ -104,10 +99,10 @@ class _NewPasswordState extends State<NewPassword>{
             SizedBox(
               width: 144,
               height: 24,
-              child: const FittedBox(
+              child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text("Set New Password",style: TextStyle(
-                  color: Color(0xFF1C3486),
+                  color: MyColors.primaryText,
                   fontWeight: FontWeight.bold,
                 ),),
               ),
@@ -116,13 +111,13 @@ class _NewPasswordState extends State<NewPassword>{
             SizedBox(
               width: 333,
               height: 28,
-              child: const FittedBox(
+              child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
                   "Choose a strong password for your account",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Color(0xFF64748B)),),
+                      color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               ),
             ),
             const SizedBox(height: 30,),
@@ -202,7 +197,7 @@ class _NewPasswordState extends State<NewPassword>{
             const SizedBox(height: 10,),
             //Login Button
             Obx(
-                  ()=> _forgetPasswordController.isLoading.value ? MyCustomLoadingButton(onPressed: (){},backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF))
+                  ()=> _forgetPasswordController.isLoading.value ? MyCustomLoadingButton(onPressed: (){_forgetPasswordController.resetPassword();},backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF))
                   :
               MyCustomButton(onPressed: (){
                 _forgetPasswordController.resetPassword();
@@ -213,8 +208,8 @@ class _NewPasswordState extends State<NewPassword>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Do remember the password?", style: TextStyle(color: Color(0xFF64748B))),
-                TextButton(
+              Text("Do remember the password?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              TextButton(
                   onPressed: () {
                         Get.offAllNamed('/SignIn');
                   },

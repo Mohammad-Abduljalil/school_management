@@ -7,21 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:school_management/Custom/MyColors.dart';
 import 'package:school_management/Controller/AuthController/sign_up_controller.dart';
 import 'package:school_management/core/AppConstants.dart';
-
-import '../../Custom/MyCustomButton.dart';
-import '../../Custom/MyCustomLoadingButton.dart';
-import '../../Custom/MyCustomTextFields.dart';
+import '../../../Custom/MyCustomButton.dart';
+import '../../../Custom/MyCustomLoadingButton.dart';
+import '../../../Custom/MyCustomTextFields.dart';
 
 class sign_up_second_page extends StatelessWidget {
   final SignUpController _signUpController = Get.find<SignUpController>();
-
-
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     bool isMobile = size.width < 800;
-
     return Scaffold(
       backgroundColor: MyColors.backgroundColor,
       body: SafeArea(
@@ -31,7 +27,7 @@ class sign_up_second_page extends StatelessWidget {
               margin: const EdgeInsets.all(20),
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                color: const Color(0xFFF0F1F2),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               width: size.width > 900 ? 900 : size.width * 0.95,
@@ -44,7 +40,7 @@ class sign_up_second_page extends StatelessWidget {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Expanded(child: _buildImageSection()),
+                          Expanded(child: _buildImageSection(context)),
                           Expanded(child: _buildFormSection(context)),
                         ],
                       );
@@ -52,7 +48,7 @@ class sign_up_second_page extends StatelessWidget {
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: 250, child: _buildImageSection()),
+                          SizedBox(height: 250, child: _buildImageSection(context)),
                           _buildFormSection(context),
                         ],
                       );
@@ -67,9 +63,9 @@ class sign_up_second_page extends StatelessWidget {
     );
   }
 
-  Widget _buildImageSection() {
+  Widget _buildImageSection(BuildContext context) {
     return Container(
-      color: const Color(0xFFF0F1F2),
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.all(20),
       child: Image.asset("images/Auth/imageInSignUp.png", fit: BoxFit.contain),
     );
@@ -82,10 +78,10 @@ class sign_up_second_page extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Add These Photos",
+          Text(
+            "Add This Photo",
             style: TextStyle(
-                color: Color(0xFF1C3486),
+                color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
                 fontSize: 18),
           ),
@@ -114,6 +110,7 @@ class sign_up_second_page extends StatelessWidget {
           Obx(
             ()=> MyCustomTextField(
               controller: _signUpController.passwordController,
+              textInputAction: TextInputAction.next,
               hintText: "Enter Password",
               isPassword: true,
               prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
@@ -147,7 +144,8 @@ class sign_up_second_page extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-          )),          const SizedBox(height: 20),
+          )),
+          const SizedBox(height: 20),
           _buildFieldLabel("Confirm Password"),
           //Confirm Password TextField
           Obx(()=>MyCustomTextField(
@@ -188,6 +186,20 @@ class sign_up_second_page extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
           ),
+          const SizedBox(height: 30),
+          //To back to first SignUp Page
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Back to First Page?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              TextButton(
+                onPressed: () {
+                      Get.offAllNamed('SignUpFirstPage');
+                },
+                child: Text("Sign Up", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -212,7 +224,7 @@ class sign_up_second_page extends StatelessWidget {
               child: Container(
                 width: 110,
                 height: 110,
-                color: Colors.white,
+                color: Theme.of(context).cardColor,
                 child: imagePath == null
                     ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -254,21 +266,21 @@ class sign_up_second_page extends StatelessWidget {
   void _showImageSourceDialog(BuildContext context) {
     Get.bottomSheet(
       Container(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         padding: const EdgeInsets.all(16),
         child: Wrap(
           children: [
             ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Gallery'),
+              leading: Icon(Icons.photo_library, color: MyColors.backgroundColor),
+              title: Text('Gallery', style: TextStyle(color: MyColors.primaryText)),
               onTap: () {
                 _signUpController.pickImage(ImageSource.gallery);
                 Get.back();
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo_camera),
-              title: const Text('Camera'),
+              leading: Icon(Icons.photo_camera, color: MyColors.backgroundColor),
+              title: Text('Camera', style: TextStyle(color: MyColors.primaryText)),
               onTap: () {
                 _signUpController.pickImage(ImageSource.camera);
                 Get.back();

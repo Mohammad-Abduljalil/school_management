@@ -1,35 +1,38 @@
 class SignUpModel{
-  final String fullName;
+  final String full_name;
   final String email;
-  final String phoneNumber;
+  final String phone;
   final  String location;
   final  String password;
-  final  String passwordConfirm;
-  final String?  personalImage;
+  final  String password_confirmation;
+  final String? role;
+  final String?  profile_image;
   final String? token;
 
-  SignUpModel({required this.fullName,required this.email,required this.phoneNumber,required this.location,required this.password,required this.passwordConfirm,this.personalImage,this.token});
+  SignUpModel({required this.full_name,required this.email,required this.phone,required this.location,required this.password,required this.password_confirmation,required this.role,this.profile_image,this.token});
 
   Map<String,dynamic> toJson(){
     return {
-      'fullName':fullName,
+      'fullName':full_name,
       'email':email,
-      'phoneNumber':phoneNumber,
+      'phoneNumber':phone,
       'location':location,
       'password':password,
-      'passwordConfirm':passwordConfirm,
+      'passwordConfirm':password_confirmation,
+      'role':role,
     };
   }
 
   factory SignUpModel.fromJson(Map<String, dynamic> json) {
     return SignUpModel(
-      fullName: json['full_name'] ?? '',
+      full_name: json['full_name'] ?? '',
       email: json['email'] ?? '',
-      phoneNumber: json['phone_number'] ?? '',
+      phone: json['phone_number'] ?? '',
       location: json['location'] ?? '',
       password: '',
-      passwordConfirm: '',
-      personalImage: json['personal_image'],
+      password_confirmation: '',
+      role: json['role'] ?? 'admin',
+      profile_image: json['personal_image'],
       token: json['token'],
     );
   }

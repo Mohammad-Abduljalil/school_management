@@ -1,25 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 import 'package:school_management/Controller/AuthController/ForgetPasswordController.dart';
 import 'package:school_management/Custom/MyColors.dart';
 import 'package:school_management/Custom/MyCustomLoadingButton.dart';
-import 'package:school_management/Controller/AuthController/sign_in_controller.dart';
-import 'package:school_management/View/Auth/sign_up_first_page.dart';
 import 'package:school_management/core/AppConstants.dart';
+import 'package:school_management/core/Utils/SnackbarHelper.dart';
+import '../../../../Custom/MyCustomButton.dart';
 
-import '../../../Custom/MyCustomButton.dart';
-import '../../../Custom/MyCustomTextFields.dart';
-
-class ForEmail extends StatefulWidget{
-  const ForEmail({super.key});
+class ForCodeVerification extends StatefulWidget{
+  const ForCodeVerification({super.key});
 
   @override
-  State<ForEmail> createState() => _ForEmailState();
+  State<ForCodeVerification> createState() => _ForCodeVerificationState();
 }
 
-class _ForEmailState extends State<ForEmail>{
-  final ForgetPasswordController _forgetPasswordController=Get.put(ForgetPasswordController(),permanent:true);
+class _ForCodeVerificationState extends State<ForCodeVerification>{
+
+  final ForgetPasswordController _forgetPasswordController=Get.find<ForgetPasswordController>();
+
   @override
   Widget build(BuildContext context) {
 
@@ -35,16 +35,16 @@ class _ForEmailState extends State<ForEmail>{
                   margin: EdgeInsets.all(20),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F1F2),
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   width: size.width>900?900:size.width*0.95,
                   constraints: BoxConstraints(
-                    minHeight: size.width > 800 ? 700 : 0,
+                    minHeight: size.width > 800 ? AppConstants.minHeightForWindowsApplications : 0,
                     maxHeight: size.width > 800 ? size.height * 0.85 : double.infinity,
                   ),
                   child: Form(
-                    key: _forgetPasswordController.formKey,
+                    key: _forgetPasswordController.formKeyForCodeVerification,
                     child: LayoutBuilder(builder: (context,constraints){
                       if (constraints.maxWidth>650){
                         return Row(
@@ -74,15 +74,33 @@ class _ForEmailState extends State<ForEmail>{
               ),
             )));
   }
+
+
+
   Widget _buildImageSection(){
     return Container(
-      color: const Color(0xFFF0F1F2),
+      color: Theme.of(context).cardColor,
       padding: const EdgeInsets.all(20),
       child: Image.asset("images/Auth/ImageForForgetPassword.png",fit: BoxFit.contain,),
     );
   }
 
   Widget _buildFormSection(){
+
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: TextStyle(
+        fontSize: 22,
+        color: MyColors.primaryText,
+        fontWeight: FontWeight.bold,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: MyColors.borderColor),
+      ),
+    );
 
     return Padding(
       padding: const EdgeInsets.all(30.0),
@@ -100,69 +118,70 @@ class _ForEmailState extends State<ForEmail>{
           SizedBox(
             width: 448,
             height: 40,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
-              child: Text("Forget Your Password?",style: TextStyle(
-                color: Color(0xFF1C3486),
+              child: Text("Email Verification",style: TextStyle(
+                color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
             ),
           ),
-          //Text bottom of "Forget Your Password?"
+          //Text bottom of "Email Verification"
           SizedBox(
             width: 321,
             height: 40,
-            child: const FittedBox(
+            child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "Enter your email address to receive the verification code",
+                "Enter the 6-digit code sent to your email address",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Color(0xFF64748B)),),
+                    color: MyColors.labelUpOfTextFieldInLoginPageColor),),
             ),
           ),
           const SizedBox(height: 30,),
-          //Email TextField
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Email",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
-              const SizedBox(height: 8,),
-              MyCustomTextField(
-                controller: _forgetPasswordController.emailVerificationController,
-                hintText: "Enter your Email ",
-                prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Email";
-                  if(GetUtils.isEmail(value)){
-                    return null;
-                  }
-                  return "your Email should be as 'example@gmail.com'";
-                },
+          // --- New OTP field ---
+          Pinput(
+            length: 6, // Number of digits
+            controller: _forgetPasswordController.codeVerificationController, // Ensure it's defined in the Controller
+            defaultPinTheme: defaultPinTheme,
+            // Interaction when the field is focused
+            focusedPinTheme: defaultPinTheme.copyWith(
+              decoration: defaultPinTheme.decoration!.copyWith(
+                border: Border.all(color: MyColors.borderColor, width: 2),
               ),
-            ],
+            ),
+            // Interaction when entry is complete
+            submittedPinTheme: defaultPinTheme.copyWith(
+              decoration: defaultPinTheme.decoration!.copyWith(
+                color: MyColors.pageContentColor,
+              ),
+            ),
+            onCompleted: (pin) {
+           SnackbarHelper.showSuccess(title: "Success", message: "Completed Pin: $pin");
+            },
           ),
+
           const SizedBox(height: 20,),
           //Login Button
           Obx(
                 ()=> _forgetPasswordController.isLoading.value ? MyCustomLoadingButton(onPressed: (){},backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF))
                 :
             MyCustomButton(onPressed: (){
-              _forgetPasswordController.SendCode();
-            },title: "Send Code",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+              _forgetPasswordController.VerifyCode();
+            },title: "Verify Code",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
           ),
           const SizedBox(height: 20),
           //To go to Register Page
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Remember password?", style: TextStyle(color: Color(0xFF64748B))),
+              Text("Didn't receive code? ", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
-                Get.offAllNamed('/SignUpFirstPage');
-                },
-                child: Text("Sign In", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                  _forgetPasswordController.resendCode();
+                  },
+                child: Text("Resend", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),

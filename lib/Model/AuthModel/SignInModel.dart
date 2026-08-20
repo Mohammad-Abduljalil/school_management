@@ -6,9 +6,9 @@ class SignInModel{
   SignInModel({required this.email,required this.password,this.token});
 
   factory SignInModel.fromJson(Map<String ,dynamic>json){
-    return SignInModel(email: json['email'],
+    return SignInModel(email: json['user']['email'],
         password: '',
-        token: json['token']//or access_token
+        token: json['token']
     );
   }
 
