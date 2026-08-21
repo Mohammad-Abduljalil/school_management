@@ -106,24 +106,119 @@ class UserManagementController extends GetxController{
 
 
   Future<void> toggleAcceptStatus(UserModel user) async {
+    if (settingService.isGuestMode.value) {
+      user.status = user.status == 1 ? 0 : 1;
+      users.refresh();
+      SnackbarHelper.showSuccess(title: "Success", message: "Status toggled (Guest Mode)");
+      return;
+    }
+
     try {
-
       String? token = settingService.sharedPreferences.getString("token");
-      var response = await http.put(
-          Uri.parse("${AppConstants.linkApproveUser(user.id)}"),
-      headers: AppConstants.headers(token!));
 
-      if (response.statusCode == 200) {
-        user.status = user.status == 1 ? 1 : 1;
-        users.refresh();
-        SnackbarHelper.showSuccess(title: "Success", message: "Approved successfully");
+      // If we are approving a pending user (from 0 to 1)
+      if (user.status == 0) {
+        String role = user.role.toUpperCase();
+        bool needsSalary = role == "TEACHER" || role == "SUPERVISOR" || role == "ADMIN";
+        
+        int? salary;
+        String? type;
+
+        if (needsSalary) {
+          salary = await _showSalaryDialog(user.full_name);
+          if (salary == null) return; // User cancelled
+          type = (role == "TEACHER") ? "teacher" : "admin";
+        }
+
+        // 1. Approve User
+        var approveResponse = await http.put(
+          Uri.parse(AppConstants.linkApproveUser(user.id)),
+          headers: AppConstants.headers(token!)
+        );
+
+        if (approveResponse.statusCode == 200) {
+          if (needsSalary && salary != null) {
+            // 2. Assign Salary (using user.id as it's the required ID)
+            var salaryResponse = await http.put(
+              Uri.parse(AppConstants.linkAssignSalary(int.parse(user.id))),
+              headers: AppConstants.headers(token),
+              body: jsonEncode({
+                'salary': salary,
+                'type': type,
+              }),
+            );
+
+            if (salaryResponse.statusCode == 200) {
+              user.status = 1;
+              users.refresh();
+              SnackbarHelper.showSuccess(title: "Success", message: "User approved and salary assigned successfully");
+            } else {
+              SnackbarHelper.showWarning(title: "Partial Success", message: "User approved, but failed to assign salary");
+              user.status = 1;
+              users.refresh();
+            }
+          } else {
+            // No salary needed (e.g. Student)
+            user.status = 1;
+            users.refresh();
+            SnackbarHelper.showSuccess(title: "Success", message: "User approved successfully");
+          }
+        } else {
+          ErrorHandler.handleHttpError(approveResponse);
+        }
       } else {
-        ErrorHandler.handleHttpError(response);
+        // Toggle back to pending (from 1 to 0)
+        var response = await http.put(
+            Uri.parse("${AppConstants.linkApproveUser(user.id)}"),
+            headers: AppConstants.headers(token!));
+
+        if (response.statusCode == 200) {
+          user.status = 0;
+          users.refresh();
+          SnackbarHelper.showSuccess(title: "Success", message: "User set to pending successfully");
+        } else {
+          ErrorHandler.handleHttpError(response);
+        }
       }
     } catch (e) {
       SnackbarHelper.showError(title: "Error", message: "Toggle status error: $e");
       ErrorHandler.handleException(e);
     }
+  }
+
+  Future<int?> _showSalaryDialog(String name) async {
+    final TextEditingController salaryController = TextEditingController();
+    int? result;
+    
+    await Get.defaultDialog(
+      title: "Assign Salary",
+      middleText: "Enter the monthly salary for $name",
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: TextField(
+          controller: salaryController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: "Salary",
+            hintText: "e.g. 1500",
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ),
+      textConfirm: "Confirm",
+      textCancel: "Cancel",
+      confirmTextColor: Colors.white,
+      buttonColor: const Color(0xFF1C3486),
+      onConfirm: () {
+        result = int.tryParse(salaryController.text);
+        if (result != null && result! >= 0) {
+          Get.back();
+        } else {
+          SnackbarHelper.showWarning(title: "Warning", message: "Please enter a valid salary");
+        }
+      },
+    );
+    return result;
   }
   Future<void> getCountOfTeachers() async {
     try {
