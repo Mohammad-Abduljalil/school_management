@@ -471,7 +471,7 @@ class InvoiceDataSource extends DataGridSource {
     );
   }
 
-  Widget _buildProfileSection(dynamic t) {
+  Widget _buildProfileSection(InvoiceModel t) {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -492,7 +492,7 @@ class InvoiceDataSource extends DataGridSource {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildTag(t.status.toUpperCase().tr, t.status == "unpaid" ? Colors.grey.shade200 : Colors.teal.withOpacity(0.1),
+              _buildTag((t.status ?? "").toUpperCase().tr, t.status == "unpaid" ? Colors.grey.shade200 : Colors.teal.withOpacity(0.1),
                   t.status == "unpaid" ? Colors.black : Colors.teal),
               const SizedBox(width: 5),
               _buildTag("GRADE 12-A".tr, Colors.purple.shade50, Colors.purple),

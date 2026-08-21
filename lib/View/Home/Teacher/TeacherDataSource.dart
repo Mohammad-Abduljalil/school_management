@@ -38,7 +38,7 @@ class TeacherDataSource extends DataGridSource {
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
-    final t = row.getCells()[0].value;
+    final t = row.getCells()[0].value as TeacherModel;
 
     return DataGridRowAdapter(cells: [
       // identity
@@ -47,7 +47,7 @@ class TeacherDataSource extends DataGridSource {
         child: Row(
           children: [
             MyImageHelper.buildCircleAvatar(
-              path: t?.profile_image,
+              path: t.profile_image,
               radius: 25,
             ),
             const SizedBox(width: 10),
@@ -56,8 +56,14 @@ class TeacherDataSource extends DataGridSource {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(t.full_name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: MyColors.primaryText)),
-                  Text(t.email, style: const TextStyle(color: Colors.grey, fontSize: 11)),
+                  Text(t.full_name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: MyColors.primaryText)),
+                  Text(t.email,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(color: Colors.grey, fontSize: 11)),
                 ],
               ),
             ),
