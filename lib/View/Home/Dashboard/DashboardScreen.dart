@@ -299,7 +299,7 @@ class DashboardScreen extends StatefulWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_dashboardController.currentUsersPage.value} of ${_dashboardController.totalUsersPages.value}",
+            "${"Page".tr} ${_dashboardController.currentUsersPage.value} ${"of".tr} ${_dashboardController.totalUsersPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(

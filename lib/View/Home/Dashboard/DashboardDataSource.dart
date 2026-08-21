@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:school_management/Custom/MyImageHelper.dart';
 import 'package:school_management/Custom/MyColors.dart';
@@ -67,7 +68,7 @@ class DashboardDataSource extends DataGridSource {
               color: t.role == "STUDENT" ? const Color(0xFFDDE1FF) : t.role == "TEACHER" ? const Color(0xFFB0E4DD) : const Color(0xFFFEF0BD),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text("${t.role}",
+            child: Text("${t.role}".tr,
                 style: TextStyle(
                     color: t.role == "STUDENT" ? const Color(0xFF0732A3) : t.role == "TEACHER" ? const Color(0xFF007F6D) : const Color(0xFFD4A400),
                     fontWeight: FontWeight.bold,

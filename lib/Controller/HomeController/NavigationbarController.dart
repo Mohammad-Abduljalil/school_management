@@ -73,7 +73,7 @@ class Navigationbarcontroller extends GetxController{
       case 13:
         return MarksScreen();
       default:
-        return Center(child: Text("nothing"));
+        return Center(child: Text("nothing".tr));
     }
   }
 

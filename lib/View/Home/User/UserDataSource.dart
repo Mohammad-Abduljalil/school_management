@@ -25,8 +25,8 @@ class UserDataSource extends DataGridSource {
         DataGridCell<dynamic>(columnName: 'identity', value: t),
         DataGridCell<String>(columnName: 'phone', value: t.phone),
         DataGridCell<dynamic>(columnName: 'id', value: t.id),
-        DataGridCell<String>(columnName: 'role', value: t.role),
-        DataGridCell<String>(columnName: 'status', value: t.status == 1 ? "Approved" : "Pending"),
+        DataGridCell<String>(columnName: 'role', value: t.role.tr),
+        DataGridCell<String>(columnName: 'status', value: (t.status == 1 ? "Approved" : "Pending").tr),
         DataGridCell<dynamic>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -82,7 +82,7 @@ class UserDataSource extends DataGridSource {
               color: t.role == "STUDENT" ? const Color(0xFFDDE1FF) : t.role == "TEACHER" ? const Color(0xFFB0E4DD) : const Color(0xFFFEF0BD),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text("${t.role}",
+            child: Text("${t.role}".tr,
                 style: TextStyle(
                     color: t.role == "STUDENT" ? const Color(0xFF0732A3) : t.role == "TEACHER" ? const Color(0xFF007F6D) : const Color(0xFFD4A400),
                     fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class UserDataSource extends DataGridSource {
             color: t.status == 1 ? Colors.teal.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(t.status == 1 ? "Approved" : "Pending",
+          child: Text((t.status == 1 ? "Approved" : "Pending").tr,
               style: TextStyle(
                   color: t.status == 0 ? Colors.grey : Colors.teal, fontSize: 10, fontWeight: FontWeight.bold)),
         ),
@@ -107,14 +107,14 @@ class UserDataSource extends DataGridSource {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(width: 5),
-          _buildBtn(t.status == 1 ? "PENDING" : "ACTIVE", t.status == 1 ? Colors.red : Colors.teal, () async {
-            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?");
+          _buildBtn((t.status == 1 ? "PENDING" : "ACTIVE").tr, t.status == 1 ? Colors.red : Colors.teal, () async {
+            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
             if (confirmed) {
               onToggleStatus(t);
             }
           }),
           const SizedBox(width: 5),
-          _buildBtn("Notification", Colors.orangeAccent, () {
+          _buildBtn("Notification".tr, Colors.orangeAccent, () {
             _buildNotificationDialog(t);
           }),
         ],
@@ -128,7 +128,7 @@ class UserDataSource extends DataGridSource {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(6)),
-        child: Text(title, style: const TextStyle(color: Colors.white, fontSize: 11)),
+        child: Text(title.tr, style: const TextStyle(color: Colors.white, fontSize: 11)),
       ),
     );
   }
@@ -154,10 +154,10 @@ class UserDataSource extends DataGridSource {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Send Notification",
+                    Text("Send Notification".tr,
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: MyColors.primaryText)),
                     const SizedBox(height: 5),
-                    Text("Draft an official communication for this user.",
+                    Text("Draft an official communication for this user.".tr,
                         style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
                   ],
                 ),
@@ -172,7 +172,7 @@ class UserDataSource extends DataGridSource {
               ],
             ),
             const SizedBox(height: 25),
-            Text("TARGET USER", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("TARGET USER".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(12),
@@ -193,13 +193,13 @@ class UserDataSource extends DataGridSource {
               ),
             ),
             const SizedBox(height: 20),
-            Text("SUBJECT", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("SUBJECT".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             TextField(
               controller: subjectController,
               style: TextStyle(color: MyColors.primaryText),
               decoration: InputDecoration(
-                hintText: "write the main subject",
+                hintText: "write the main subject".tr,
                 hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                 filled: true,
                 fillColor: Get.isDarkMode ? Colors.white10 : const Color(0xFFE8F0F5),
@@ -208,14 +208,14 @@ class UserDataSource extends DataGridSource {
               ),
             ),
             const SizedBox(height: 20),
-            Text("MESSAGE BODY", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("MESSAGE BODY".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             TextField(
               controller: bodyController,
               maxLines: 4,
               style: TextStyle(color: MyColors.primaryText),
               decoration: InputDecoration(
-                hintText: "what is the content about this message...",
+                hintText: "what is the content about this message...".tr,
                 hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                 filled: true,
                 fillColor: Get.isDarkMode ? Colors.white10 : const Color(0xFFE8F0F5),
@@ -234,7 +234,7 @@ class UserDataSource extends DataGridSource {
                       side: const BorderSide(color: Color(0xFF1C3486)),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: const Text("Cancel", style: TextStyle(color: Color(0xFF1C3486), fontWeight: FontWeight.bold)),
+                    child: Text("Cancel".tr, style: const TextStyle(color: Color(0xFF1C3486), fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -242,14 +242,14 @@ class UserDataSource extends DataGridSource {
                   child: ElevatedButton(
                     onPressed: () {
                       Get.back();
-                      SnackbarHelper.showSuccess(title: "Success", message: "Notification sent to ${t.full_name}");
+                      SnackbarHelper.showSuccess(title: "Success".tr, message: "${"Notification sent to".tr} ${t.full_name}");
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       backgroundColor: const Color(0xFF1C3486),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: const Text("Send Notification", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text("Send Notification".tr, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

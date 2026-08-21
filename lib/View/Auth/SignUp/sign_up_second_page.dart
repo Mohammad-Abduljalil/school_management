@@ -79,7 +79,7 @@ class sign_up_second_page extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Add This Photo",
+            "Add This Photo".tr,
             style: TextStyle(
                 color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
@@ -88,30 +88,30 @@ class sign_up_second_page extends StatelessWidget {
           const SizedBox(height: 20),
           //personal and id photo
           Center(
-            child: _buildImagePickerBox("Personal Photo", context),
+            child: _buildImagePickerBox("Personal Photo".tr, context),
           ),
           const SizedBox(height: 30),
-          _buildFieldLabel("Location"),
+          _buildFieldLabel("Location".tr),
           //location TextField
           MyCustomTextField(
             controller: _signUpController.locationController,
-            hintText: "Enter your Location",
+            hintText: "Enter your Location".tr,
             prefixIcon: Icon(Icons.location_on_outlined, color: MyColors.iconInAuthTextFieldColor),
             validator: (value){
               if(value==null ||value.isEmpty){
-                return "Please Enter your Location";
+                return "Please Enter your Location".tr;
               }
               return null;
             },
           ),
           const SizedBox(height: 20),
-          _buildFieldLabel("Password"),
+          _buildFieldLabel("Password".tr),
           //Password TextField
           Obx(
             ()=> MyCustomTextField(
               controller: _signUpController.passwordController,
               textInputAction: TextInputAction.next,
-              hintText: "Enter Password",
+              hintText: "Enter Password".tr,
               isPassword: true,
               prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
               obscureText: _signUpController.isPasswordObsecured.value,
@@ -121,10 +121,10 @@ class sign_up_second_page extends StatelessWidget {
               },
               validator: (value){
                 if(value==null ||value.isEmpty){
-                  return "Please Enter your Password";
+                  return "Please Enter your Password".tr;
                 }
                 if (value.length < 8) {
-                  return 'Password must be at least 8 characters long';
+                  return 'Password must be at least 8 characters long'.tr;
                 }
                 return null;
               },
@@ -137,8 +137,8 @@ class sign_up_second_page extends StatelessWidget {
               _signUpController.passwordText.value.isEmpty
                   ? ""
                   : _signUpController.passwordText.value.length < 8
-                  ? "Weak password"
-                  : "Strong password",
+                  ? "Weak password".tr
+                  : "Strong password".tr,
               style: TextStyle(
                 color: _signUpController.passwordText.value.length < 8 ? Colors.red : Colors.green,
                 fontSize: 12,
@@ -146,11 +146,11 @@ class sign_up_second_page extends StatelessWidget {
             ),
           )),
           const SizedBox(height: 20),
-          _buildFieldLabel("Confirm Password"),
+          _buildFieldLabel("Confirm Password".tr),
           //Confirm Password TextField
           Obx(()=>MyCustomTextField(
             controller: _signUpController.passwordConfirmController,
-            hintText: "Confirm Password",
+            hintText: "Confirm Password".tr,
             isPassword: true,
             textInputAction: TextInputAction.done,
             prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInAuthTextFieldColor),
@@ -160,13 +160,13 @@ class sign_up_second_page extends StatelessWidget {
             },
             validator: (value){
               if(value==null ||value.isEmpty){
-                return "Please Enter your Password";
+                return "Please Enter your Password".tr;
               }
               if (value.length < AppConstants.minPasswordLength) {
-                return 'Password must be at least ${AppConstants.minPasswordLength} characters long';
+                return 'Password must be at least ${AppConstants.minPasswordLength} characters long'.tr;
               }
               if(value!=(_signUpController.passwordController.text)){
-                return "Passwords do not match!";
+                return "Passwords do not match!".tr;
               }
               return null;
             },
@@ -180,7 +180,7 @@ class sign_up_second_page extends StatelessWidget {
             onPressed: () {
               _signUpController.SignUp();
             },
-            title: "Finish",
+            title: "Finish".tr,
             backgroundColorLeft: const Color(0xFF1D3587),
             backgroundColorRight: const Color(0xFF006879),
             foregroundColor: Colors.white,
@@ -191,12 +191,12 @@ class sign_up_second_page extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Back to First Page?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Back to First Page?".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                       Get.offAllNamed('SignUpFirstPage');
                 },
-                child: Text("Sign Up", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                child: Text("Sign Up".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),
@@ -231,7 +231,7 @@ class sign_up_second_page extends StatelessWidget {
                   children: [
                     const Icon(Icons.camera_alt_outlined, color: Colors.grey),
                     Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
-                    const Text("Upload", style: TextStyle(fontSize: 10, color: Colors.grey)),
+                    Text("Upload".tr, style: const TextStyle(fontSize: 10, color: Colors.grey)),
                   ],
                 )
                     : ClipRRect(
@@ -272,7 +272,7 @@ class sign_up_second_page extends StatelessWidget {
           children: [
             ListTile(
               leading: Icon(Icons.photo_library, color: MyColors.backgroundColor),
-              title: Text('Gallery', style: TextStyle(color: MyColors.primaryText)),
+              title: Text('Gallery'.tr, style: TextStyle(color: MyColors.primaryText)),
               onTap: () {
                 _signUpController.pickImage(ImageSource.gallery);
                 Get.back();
@@ -280,7 +280,7 @@ class sign_up_second_page extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.photo_camera, color: MyColors.backgroundColor),
-              title: Text('Camera', style: TextStyle(color: MyColors.primaryText)),
+              title: Text('Camera'.tr, style: TextStyle(color: MyColors.primaryText)),
               onTap: () {
                 _signUpController.pickImage(ImageSource.camera);
                 Get.back();

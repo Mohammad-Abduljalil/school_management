@@ -120,7 +120,7 @@ class AssignmentSubjectToTeacherScreen extends StatelessWidget {
         isExpanded: true,
         dropdownColor: Theme.of(context).cardColor,
         value: controller.selectedSubject.value,
-        hint: const Text("Choose a subject...", style: TextStyle(color: Colors.grey)),
+        hint: Text("Choose a subject...".tr, style: const TextStyle(color: Colors.grey)),
         items: controller.subjects
             .map((sub) => DropdownMenuItem<SubjectModel>(
                   value: sub,
@@ -158,11 +158,11 @@ class AssignmentSubjectToTeacherScreen extends StatelessWidget {
         isExpanded: true,
         dropdownColor: Theme.of(context).cardColor,
         value: controller.selectedClass.value,
-        hint: const Text("Choose a class/grade...", style: TextStyle(color: Colors.grey)),
+        hint: Text("Choose a class/grade...".tr, style: const TextStyle(color: Colors.grey)),
         items: controller.classes
             .map((cls) => DropdownMenuItem<StageModel>(
                   value: cls,
-                  child: Text("Stage ${cls.stage_number}", style: TextStyle(color: MyColors.primaryText)),
+                  child: Text("${"Stage".tr} ${cls.stage_number}", style: TextStyle(color: MyColors.primaryText)),
                 ))
             .toList(),
         onChanged: (val) => controller.onClassSelected(val),
@@ -177,7 +177,7 @@ class AssignmentSubjectToTeacherScreen extends StatelessWidget {
         isExpanded: true,
         dropdownColor: Theme.of(context).cardColor,
         value: controller.selectedSection.value,
-        hint: const Text("Choose a section...", style: TextStyle(color: Colors.grey)),
+        hint: Text("Choose a section...".tr, style: const TextStyle(color: Colors.grey)),
         items: controller.selectedClass.value?.sections
             .map((sec) => DropdownMenuItem<SectionModel>(
                   value: sec,
@@ -196,7 +196,7 @@ class AssignmentSubjectToTeacherScreen extends StatelessWidget {
         isExpanded: true,
         dropdownColor: Theme.of(context).cardColor,
         value: controller.selectedTeacher.value,
-        hint: const Text("Choose a teacher...", style: TextStyle(color: Colors.grey)),
+        hint: Text("Choose a teacher...".tr, style: const TextStyle(color: Colors.grey)),
         items: controller.teachers
             .map((teacher) => DropdownMenuItem<TeacherModel>(
                   value: teacher,

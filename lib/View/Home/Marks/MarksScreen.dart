@@ -189,7 +189,7 @@ class MarksScreen extends StatelessWidget {
                           children: [
                             Icon(Icons.circle, size: 8, color: MyColors.backgroundColor),
                             const SizedBox(width: 5),
-                            const Text("Active", style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            Text("ACTIVE".tr, style: const TextStyle(color: Colors.grey, fontSize: 12)),
                           ],
                         )
                       ],

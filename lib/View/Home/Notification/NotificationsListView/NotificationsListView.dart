@@ -45,7 +45,7 @@ class _NotificationsListViewState extends State<NotificationsListView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Notifications',
+                  'Notifications'.tr,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -96,7 +96,7 @@ class _NotificationsListViewState extends State<NotificationsListView> {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: _notificationController.fetchNotifications,
-              child: const Text('Retry'),
+              child: Text('Retry'.tr),
             ),
           ],
         ),
@@ -104,14 +104,14 @@ class _NotificationsListViewState extends State<NotificationsListView> {
     }
 
     if (_notificationController.notificationsList.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.notifications_off_outlined, size: 48, color: Colors.grey),
             SizedBox(height: 8),
-            Text('No notifications yet',
-                style: TextStyle(color: Colors.grey)),
+            Text('No notifications yet'.tr,
+                style: const TextStyle(color: Colors.grey)),
           ],
         ),
       );
@@ -216,9 +216,9 @@ class _NotificationCard extends StatelessWidget {
                       onTap: ()  {
                         _showDetailsDialog(context, notificationModel);
                       },
-                      child: const Text(
-                        'View Details',
-                        style: TextStyle(
+                      child: Text(
+                        'View Details'.tr,
+                        style: const TextStyle(
                           color: Color(0xFF1A3A6B),
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -269,9 +269,9 @@ class _NotificationCard extends StatelessWidget {
 
   String _timeAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
-    if (diff.inMinutes < 60) return '${diff.inMinutes} mins ago';
-    if (diff.inHours < 24) return '${diff.inHours} hours ago';
-    return '${diff.inDays} days ago';
+    if (diff.inMinutes < 60) return '${diff.inMinutes} ${"mins ago".tr}';
+    if (diff.inHours < 24) return '${diff.inHours} ${"hours ago".tr}';
+    return '${diff.inDays} ${"days ago".tr}';
   }
 
 
@@ -298,10 +298,10 @@ class _NotificationCard extends StatelessWidget {
                     child: const Icon(Icons.campaign_rounded, color: Color(0xFF1A3A6B)),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "Notification Details",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      "Notification Details".tr,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                   IconButton(
@@ -322,9 +322,9 @@ class _NotificationCard extends StatelessWidget {
               // Badges (Type and Grade)
               Row(
                 children: [
-                  _buildMiniTag("Target: ${n.type.toUpperCase()}", Colors.indigo.shade50, Colors.indigo),
+                  _buildMiniTag("${"Target:".tr} ${n.type.toUpperCase()}", Colors.indigo.shade50, Colors.indigo),
                   const SizedBox(width: 8),
-                  _buildMiniTag("Grade: ${n.grade}", Colors.teal.shade50, Colors.teal),
+                  _buildMiniTag("${"Grade:".tr} ${n.grade}", Colors.teal.shade50, Colors.teal),
                 ],
               ),
               const SizedBox(height: 20),
@@ -349,7 +349,7 @@ class _NotificationCard extends StatelessWidget {
                   const Icon(Icons.access_time, size: 14, color: Colors.grey),
                   const SizedBox(width: 6),
                   Text(
-                    "Sent on: ${_formatFullDate(n.createdAt)}",
+                    "${"Sent on:".tr} ${_formatFullDate(n.createdAt)}",
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
@@ -367,7 +367,7 @@ class _NotificationCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 18),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
-                      child: const Text("Close"),
+                      child: Text("Close".tr),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -385,7 +385,7 @@ class _NotificationCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
-                        child: const Text("Mark as Read", style: TextStyle(color: Colors.white)),
+                        child: Text("Mark as Read".tr, style: const TextStyle(color: Colors.white)),
                       ),
                     ),
                 ],

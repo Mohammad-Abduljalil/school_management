@@ -30,8 +30,8 @@ class SendNotificationView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Head
-            const Text(
-              'Send Notification',
+            Text(
+              'Send Notification'.tr,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -45,28 +45,28 @@ class SendNotificationView extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Grade Dropdown
-            _fieldLabel('GRADE / CLASS'),
+            _fieldLabel('GRADE / CLASS'.tr),
             const SizedBox(height: 8),
             _GradeDropdownWidget(),
             const SizedBox(height: 20),
 
             // Subject
-            _fieldLabel('SUBJECT'),
+            _fieldLabel('SUBJECT'.tr),
             const SizedBox(height: 8),
             //TextField for subject
             MyCustomTextFieldWithLines(
               textController: _notificationController.subjectController,
-              hintText: 'Write the main subject',
+              hintText: 'Write the main subject'.tr,
             ),
             const SizedBox(height: 20),
 
             // Message Body
-            _fieldLabel('MESSAGE BODY'),
+            _fieldLabel('MESSAGE BODY'.tr),
             const SizedBox(height: 8),
             //TextField for Message Body
             MyCustomTextFieldWithLines(
               textController: _notificationController.bodyController,
-              hintText: 'What is the content about this message...',
+              hintText: 'What is the content about this message...'.tr,
               maxLines: 4,
             ),
 
@@ -88,8 +88,8 @@ class SendNotificationView extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: const Text('Cancel',
-                        style: TextStyle(color: Color(0xFF374151))),
+                    child: Text('Cancel'.tr,
+                        style: const TextStyle(color: Color(0xFF374151))),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -115,8 +115,8 @@ class SendNotificationView extends StatelessWidget {
                           child: CircularProgressIndicator(
                               strokeWidth: 2, color: Colors.white),
                         )
-                            : const Text('Send Notification',
-                            style: TextStyle(fontWeight: FontWeight.w600)),
+                            : Text('Send Notification'.tr,
+                            style: const TextStyle(fontWeight: FontWeight.w600)),
                       )),
                 ),
               ],

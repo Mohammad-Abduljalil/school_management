@@ -70,11 +70,11 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildCategoryHeader("MANAGEMENT"),
+                _buildCategoryHeader("MANAGEMENT".tr),
                 const SizedBox(height: 20),
-                _buildMenuCard("Add Grade", Icons.add_box_outlined, () => navigateTo(1, "Add New Grade")),
-                _buildMenuCard("Add Section", Icons.person_add_alt_1_outlined, () => navigateTo(3, "Add Section")),
-                _buildMenuCard("Add Subject", Icons.menu_book_outlined, () => navigateTo(5, "Add Subject")),
+                _buildMenuCard("Add Grade".tr, Icons.add_box_outlined, () => navigateTo(1, "Add New Grade".tr)),
+                _buildMenuCard("Add Section".tr, Icons.person_add_alt_1_outlined, () => navigateTo(3, "Add Section".tr)),
+                _buildMenuCard("Add Subject".tr, Icons.menu_book_outlined, () => navigateTo(5, "Add Subject".tr)),
               ],
             ),
           ),
@@ -83,11 +83,11 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildCategoryHeader("REPORTING"),
+                _buildCategoryHeader("REPORTING".tr),
                 const SizedBox(height: 20),
-                _buildMenuCard("Display Grades", Icons.format_list_bulleted_rounded, () => navigateTo(2, "Current Grades")),
-                _buildMenuCard("Display Sections", Icons.group_outlined, () => navigateTo(4, "Current Section")),
-                _buildMenuCard("Display Subjects", Icons.inventory_2_outlined, () => navigateTo(6, "Current Subjects")),
+                _buildMenuCard("Display Grades".tr, Icons.format_list_bulleted_rounded, () => navigateTo(2, "Current Grades".tr)),
+                _buildMenuCard("Display Sections".tr, Icons.group_outlined, () => navigateTo(4, "Current Section".tr)),
+                _buildMenuCard("Display Subjects".tr, Icons.inventory_2_outlined, () => navigateTo(6, "Current Subjects".tr)),
               ],
             ),
           ),
@@ -133,7 +133,6 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
     );
   }
 
-  //Views
   Widget _buildAddGradeView() {
     return _buildActionTemplate(
       hint: "Enter number of the grade(Ex:9)",
@@ -142,17 +141,17 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
         if (val != null) {
           controller.createStudyStage(val);
         } else {
-          SnackbarHelper.showError(title: "Error", message: "Please enter a valid number");
+          SnackbarHelper.showError(title: "Error".tr, message: "Please enter a valid number".tr);
         }
       },
-      child: _buildDisplayList("Current Grade", controller.stages, Icons.school),
+      child: _buildDisplayList("Current Grade".tr, controller.stages, Icons.school),
     );
   }
 
   Widget _buildShowGradesView() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: _buildDisplayList("List of All Grades", controller.stages, Icons.school),
+      child: _buildDisplayList("List of All Grades".tr, controller.stages, Icons.school),
     );
   }
 
@@ -167,11 +166,11 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
         if (val != null) {
           controller.createSection(val);
         } else {
-          SnackbarHelper.showError(title: "Error", message: "Please enter a valid number");
+          SnackbarHelper.showError(title: "Error".tr, message: "Please enter a valid number".tr);
         }
       } ,
       child: Obx(() => _buildDisplayList(
-          "Sections for selected stage",
+          "Sections for selected stage".tr,
           controller.getSectionsForSelectedStage(controller.selectedStageForSection.value),
           Icons.layers)),
     );
@@ -185,9 +184,9 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
       onStageChanged: (val) => controller.selectedStageForDisplay.value = val,
       child: Obx(() {
         final stage = controller.selectedStageForDisplay.value;
-        if (stage == null) return const Center(child: Text("Please select a stage"));
+        if (stage == null) return Center(child: Text("Please select a stage".tr));
         return _buildDisplayList(
-            "Sections for Stage ${stage.stage_number}",
+            "${"Sections for Stage".tr} ${stage.stage_number}",
             controller.getSectionsForSelectedStage(stage),
             Icons.groups);
       }),
@@ -201,7 +200,7 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
       selectedStage: controller.selectedStageForSubject,
       onStageChanged: (val) => controller.selectedStageForSubject.value = val,
       onBtnPressed: () => controller.addNewSubject(inputController.text),
-      child: _buildDisplayList("Subjects of selected grade", controller.subjects, Icons.book),
+      child: _buildDisplayList("Subjects of selected grade".tr, controller.subjects, Icons.book),
     );
   }
 
@@ -214,7 +213,7 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
         controller.selectedStageForDisplay.value = val;
         controller.fetchSubjectsByGrade(val!.id);
       },
-      child: _buildDisplayList("Subjects for this grade", controller.subjects, Icons.menu_book),
+      child: _buildDisplayList("Subjects for this grade".tr, controller.subjects, Icons.menu_book),
     );
   }
 
@@ -252,11 +251,11 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<StageModel>(
           isExpanded: true,
-          hint: const Text("Select Stage"),
+          hint: Text("Select Stage".tr),
           value: selected.value,
           items: controller.stages.map((g) => DropdownMenuItem(
               value: g,
-              child: Text("Stage ${g.stage_number}")
+              child: Text("${"Stage".tr} ${g.stage_number}")
           )).toList(),
           onChanged: onChanged,
         ),
@@ -302,10 +301,10 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
               int? stageId;
 
               if (item is StageModel) {
-                label = "Stage ${item.stage_number}";
+                label = "${"Stage".tr} ${item.stage_number}";
                 stageId = item.id;
               } else if (item is int) {
-                label = "Section $item";
+                label = "${"Section".tr} $item";
               } else {
                 label = item.name.toString();
               }
@@ -329,7 +328,7 @@ class _AcademicManagementScreenState extends State<AcademicManagementScreen> {
                       const SizedBox(width: 8),
                       GestureDetector(
                         onTap: () async {
-                          if(await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?")){
+                          if(await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr)){
                             controller.deleteStudyStage(stageId!);
                           }
                         },

@@ -147,7 +147,7 @@ class InvoiceDataSource extends DataGridSource {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(6)),
-        child: Text(title, style: const TextStyle(color: Colors.white, fontSize: 11)),
+        child: Text(title.tr, style: const TextStyle(color: Colors.white, fontSize: 11)),
       ),
     );
   }
@@ -308,9 +308,9 @@ class InvoiceDataSource extends DataGridSource {
                 ],
               )
             else if (!controller.isLoadingItems.value)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Text("No specific fee items found for this invoice."),
+               Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Text("No specific fee items found for this invoice.".tr),
               ),
             const SizedBox(height: 20),
           ],
@@ -336,11 +336,11 @@ class InvoiceDataSource extends DataGridSource {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Add New Fee Item",
+              Text("Add New Fee Item".tr,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
               const Divider(),
               const SizedBox(height: 20),
-              const Text("Fee Type", style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text("Fee Type".tr, style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(height: 5),
               Obx(() => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -351,7 +351,7 @@ class InvoiceDataSource extends DataGridSource {
                       child: DropdownButton<FeeTypeModel>(
                         isExpanded: true,
                         dropdownColor: Theme.of(context).cardColor,
-                        hint: const Text("Select Type", style: TextStyle(color: Colors.grey)),
+                        hint: Text("Select Type".tr, style: const TextStyle(color: Colors.grey)),
                         value: controller.selectedFeeTypeForAdd.value,
                         items: controller.feeTypes
                             .map((type) => DropdownMenuItem(
@@ -371,9 +371,9 @@ class InvoiceDataSource extends DataGridSource {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(child: _buildInputField("Quantity", qtyController)),
+                  Expanded(child: _buildInputField("Quantity".tr, qtyController)),
                   const SizedBox(width: 15),
-                  Expanded(child: _buildInputField("Unit Price", priceController)),
+                  Expanded(child: _buildInputField("Unit Price".tr, priceController)),
                 ],
               ),
               const SizedBox(height: 30),
@@ -396,7 +396,7 @@ class InvoiceDataSource extends DataGridSource {
                                   Navigator.of(context).pop();
                                 }
                               } else {
-                                SnackbarHelper.showWarning(title: "Warning", message: "Please select a fee type first");
+                                SnackbarHelper.showWarning(title: "Warning".tr, message: "Please select a fee type first".tr);
                               }
                             },
                       child: controller.isLoading.value
@@ -404,7 +404,7 @@ class InvoiceDataSource extends DataGridSource {
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                          : const Text("Add Item", style: TextStyle(color: Colors.white)),
+                          : Text("Add Item".tr, style: const TextStyle(color: Colors.white)),
                     ),
                   )),
             ],
@@ -430,13 +430,13 @@ class InvoiceDataSource extends DataGridSource {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Edit ${item.feeType.toUpperCase()} Item",
+            Text("${"Edit".tr} ${item.feeType.toUpperCase()} ${"Item".tr}",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
               const Divider(),
               const SizedBox(height: 20),
-              _buildInputField("Unit Price", priceController),
+              _buildInputField("Unit Price".tr, priceController),
               const SizedBox(height: 15),
-              _buildInputField("Quantity", qtyController),
+              _buildInputField("Quantity".tr, qtyController),
               const SizedBox(height: 30),
               Obx(() => SizedBox(
                     width: double.infinity,
@@ -461,7 +461,7 @@ class InvoiceDataSource extends DataGridSource {
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                          : const Text("Update Item", style: TextStyle(color: Colors.white)),
+                          : Text("Update Item".tr, style: const TextStyle(color: Colors.white)),
                     ),
                   )),
             ],
@@ -487,15 +487,15 @@ class InvoiceDataSource extends DataGridSource {
           const SizedBox(height: 15),
           Text(t.full_name,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
-          Text("Student ID: #${t.id}", style: const TextStyle(color: Colors.grey)),
+          Text("${"Student ID:".tr} #${t.id}", style: const TextStyle(color: Colors.grey)),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildTag(t.status.toUpperCase(), t.status == "unpaid" ? Colors.grey.shade200 : Colors.teal.withOpacity(0.1),
+              _buildTag(t.status.toUpperCase().tr, t.status == "unpaid" ? Colors.grey.shade200 : Colors.teal.withOpacity(0.1),
                   t.status == "unpaid" ? Colors.black : Colors.teal),
               const SizedBox(width: 5),
-              _buildTag("GRADE 12-A", Colors.purple.shade50, Colors.purple),
+              _buildTag("GRADE 12-A".tr, Colors.purple.shade50, Colors.purple),
             ],
           ),
           const Divider(height: 30),
@@ -597,8 +597,8 @@ class InvoiceDataSource extends DataGridSource {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Paid: $paid \$", style: const TextStyle(fontSize: 11, color: Colors.grey)),
-              Text("Rem: $remaining \$", style: const TextStyle(fontSize: 11, color: Colors.blue)),
+              Text("${"Paid:".tr} $paid \$", style: const TextStyle(fontSize: 11, color: Colors.grey)),
+              Text("${"Remaining:".tr} $remaining \$", style: const TextStyle(fontSize: 11, color: Colors.blue)),
             ],
           ),
           const SizedBox(height: 8),
@@ -607,7 +607,7 @@ class InvoiceDataSource extends DataGridSource {
           const SizedBox(height: 8),
           Align(
               alignment: Alignment.centerLeft,
-              child: Text("Total: $total \$",
+              child: Text("${"Total:".tr} $total \$",
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: MyColors.primaryText))),
         ],
       ),
@@ -711,7 +711,7 @@ class InvoiceDataSource extends DataGridSource {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("Cancel"),
+                      child: Text("Cancel".tr),
                     ),
                     const SizedBox(width: 10),
                     ElevatedButton(
@@ -732,7 +732,7 @@ class InvoiceDataSource extends DataGridSource {
                           Navigator.of(context).pop();
                         }
                       },
-                      child: const Text("Save Changes", style: TextStyle(color: Colors.white)),
+                      child: Text("Save Changes".tr, style: const TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),

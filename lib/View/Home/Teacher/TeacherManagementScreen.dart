@@ -32,10 +32,10 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                  const Text("No users found"),
+                  Text("No users found".tr),
                   TextButton(
                     onPressed: () => _teachersManagementController.fetchTeachers(),
-                    child: const Text("Refresh"),
+                    child: Text("Refresh".tr),
                   )
                 ],
               ),
@@ -87,12 +87,12 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
                                 return true;
                               },
                               columns: [
-                                GridColumn(columnName: 'identity',label: _buildLabel('Identity')),
-                                GridColumn(columnName: 'phone' , label: _buildLabel('Phone')),
-                                GridColumn(columnName: 'id' , label: _buildLabel('Id')),
-                                GridColumn(columnName: 'salary' , label: _buildLabel('Salary')),
-                                GridColumn(columnName: 'status' , label: _buildLabel('Status')),
-                                GridColumn(columnName: 'actions' , label: _buildLabel('Actions')),
+                                GridColumn(columnName: 'identity',label: _buildLabel('Identity'.tr)),
+                                GridColumn(columnName: 'phone' , label: _buildLabel('Phone'.tr)),
+                                GridColumn(columnName: 'id' , label: _buildLabel('Id'.tr)),
+                                GridColumn(columnName: 'salary' , label: _buildLabel('Salary'.tr)),
+                                GridColumn(columnName: 'status' , label: _buildLabel('Status'.tr)),
+                                GridColumn(columnName: 'actions' , label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -131,7 +131,7 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_teachersManagementController.currentTeachersPage.value} of ${_teachersManagementController.totalTeachersPages.value}",
+            "${"Page".tr} ${_teachersManagementController.currentTeachersPage.value} ${"of".tr} ${_teachersManagementController.totalTeachersPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(
@@ -157,7 +157,7 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management",
+              "User Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -166,7 +166,7 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and teachers",
+              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and teachers".tr,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -194,7 +194,7 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
         child: Row(
           children: [
             _buildStatCard(
-              "Teachers",
+              "Teachers".tr,
               "${_teachersManagementController.numOfTeachers.value}",
               Icons.person,
               const Color(0xFFC7D2FE),
@@ -266,13 +266,13 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
       ),
       child: Column(
         children: [
-          MyCustomTextField(controller: _teachersManagementController.searchEditingController, hintText: "Search by student name...",onChanged: (value){
+          MyCustomTextField(controller: _teachersManagementController.searchEditingController, hintText: "Search by student name...".tr,onChanged: (value){
             _teachersManagementController.searchByName(value);
           },),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Row(
             children: [
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               _buildFilterButtons(),
             ],
@@ -287,14 +287,14 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
     return Obx(() => Row(
       children: [
         _filterButton(
-          label: "All Students",
+          label: "All Students".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchTeachers(onlyPending: false),
           icon: Icons.group,
         ),
         const SizedBox(width: 15),
         _filterButton(
-          label: "Pending Students",
+          label: "Pending Students".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchTeachers(onlyPending: true),
           icon: Icons.pending_actions,

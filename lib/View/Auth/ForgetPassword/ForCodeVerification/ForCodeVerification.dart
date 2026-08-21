@@ -120,7 +120,7 @@ class _ForCodeVerificationState extends State<ForCodeVerification>{
             height: 40,
             child: FittedBox(
               fit: BoxFit.contain,
-              child: Text("Email Verification",style: TextStyle(
+              child: Text("Email Verification".tr,style: TextStyle(
                 color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
@@ -133,7 +133,7 @@ class _ForCodeVerificationState extends State<ForCodeVerification>{
             child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "Enter the 6-digit code sent to your email address",
+                "Enter the 6-digit code sent to your email address".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: MyColors.labelUpOfTextFieldInLoginPageColor),),
@@ -158,7 +158,7 @@ class _ForCodeVerificationState extends State<ForCodeVerification>{
               ),
             ),
             onCompleted: (pin) {
-           SnackbarHelper.showSuccess(title: "Success", message: "Completed Pin: $pin");
+           SnackbarHelper.showSuccess(title: "Success".tr, message: "${"Completed Pin:".tr} $pin");
             },
           ),
 
@@ -169,19 +169,19 @@ class _ForCodeVerificationState extends State<ForCodeVerification>{
                 :
             MyCustomButton(onPressed: (){
               _forgetPasswordController.VerifyCode();
-            },title: "Verify Code",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+            },title: "Verify Code".tr,backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
           ),
           const SizedBox(height: 20),
           //To go to Register Page
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Didn't receive code? ", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Didn't receive code? ".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                   _forgetPasswordController.resendCode();
                   },
-                child: Text("Resend", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                child: Text("Resend".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),

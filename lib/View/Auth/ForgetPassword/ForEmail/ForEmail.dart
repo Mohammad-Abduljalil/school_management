@@ -97,7 +97,7 @@ class _ForEmailState extends State<ForEmail>{
             height: 40,
             child: FittedBox(
               fit: BoxFit.contain,
-              child: Text("Forget Your Password?",style: TextStyle(
+              child: Text("Forget Your Password?".tr,style: TextStyle(
                 color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
@@ -110,7 +110,7 @@ class _ForEmailState extends State<ForEmail>{
             child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "Enter your email address to receive the verification code",
+                "Enter your email address to receive the verification code".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: MyColors.labelUpOfTextFieldInLoginPageColor),),
@@ -121,19 +121,19 @@ class _ForEmailState extends State<ForEmail>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Email",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Email".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               MyCustomTextField(
                 controller: _forgetPasswordController.emailVerificationController,
-                hintText: "Enter your Email ",
+                hintText: "Enter your Email ".tr,
                 prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Email";
+                  if (value == null || value.isEmpty) return "Please Enter your Email".tr;
                   if(GetUtils.isEmail(value)){
                     return null;
                   }
-                  return "your Email should be as 'example@gmail.com'";
+                  return "your Email should be as 'example@gmail.com'".tr;
                 },
               ),
             ],
@@ -145,19 +145,19 @@ class _ForEmailState extends State<ForEmail>{
                 :
             MyCustomButton(onPressed: (){
               _forgetPasswordController.SendCode();
-            },title: "Send Code",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+            },title: "Send Code".tr,backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
           ),
           const SizedBox(height: 20),
           //To go to Register Page
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Remember password?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Remember password?".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                 Get.offAllNamed('/SignUpFirstPage');
                 },
-                child: Text("Sign In", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                child: Text("Sign In".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),

@@ -84,7 +84,7 @@ class StudentDataSource extends DataGridSource {
               color: const Color(0xFFDDE1FF),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text("STUDENT", style: TextStyle(color: Color(0xFF0732A3), fontWeight: FontWeight.bold, fontSize: 10))),
+            child: Text("STUDENT".tr, style: TextStyle(color: Color(0xFF0732A3), fontWeight: FontWeight.bold, fontSize: 10))),
       ),
       // Status
       Container(
@@ -397,8 +397,8 @@ class StudentDataSource extends DataGridSource {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Paid: $paid \$", style: const TextStyle(fontSize: 10, color: Colors.teal, fontWeight: FontWeight.bold)),
-              Text("Remaining: $remaining \$", style: const TextStyle(fontSize: 10, color: Colors.grey)),
+              Text("${"Paid:".tr} $paid \$", style: const TextStyle(fontSize: 10, color: Colors.teal, fontWeight: FontWeight.bold)),
+              Text("${"Remaining:".tr} $remaining \$", style: const TextStyle(fontSize: 10, color: Colors.grey)),
             ],
           ),
           const SizedBox(height: 6),
@@ -407,7 +407,7 @@ class StudentDataSource extends DataGridSource {
           const SizedBox(height: 6),
           Align(
               alignment: Alignment.centerLeft,
-              child: Text("Total: $total \$", style: const TextStyle(fontSize: 10, color: Colors.grey))),
+              child: Text("${"Total:".tr} $total \$", style: const TextStyle(fontSize: 10, color: Colors.grey))),
         ],
       ),
     );
@@ -417,7 +417,7 @@ class StudentDataSource extends DataGridSource {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(5)),
-      child: Text(text, style: TextStyle(color: textCol, fontSize: 9, fontWeight: FontWeight.bold)),
+      child: Text(text.tr, style: TextStyle(color: textCol, fontSize: 9, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -458,10 +458,10 @@ class StudentDataSource extends DataGridSource {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Send Notification",
+                    Text("Send Notification".tr,
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: MyColors.primaryText)),
                     const SizedBox(height: 5),
-                    Text("Draft an official communication for this student.",
+                    Text("Draft an official communication for this student.".tr,
                         style: TextStyle(color: Colors.grey.shade600, fontSize: 13)),
                   ],
                 ),
@@ -476,7 +476,7 @@ class StudentDataSource extends DataGridSource {
               ],
             ),
             const SizedBox(height: 25),
-            Text("TARGET STUDENT", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("TARGET STUDENT".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(12),
@@ -497,13 +497,13 @@ class StudentDataSource extends DataGridSource {
               ),
             ),
             const SizedBox(height: 20),
-            Text("SUBJECT", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("SUBJECT".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             TextField(
               controller: subjectController,
               style: TextStyle(color: MyColors.primaryText),
               decoration: InputDecoration(
-                hintText: "write the main subject",
+                hintText: "write the main subject".tr,
                 hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                 filled: true,
                 fillColor: Get.isDarkMode ? Colors.white10 : const Color(0xFFE8F0F5),
@@ -512,14 +512,14 @@ class StudentDataSource extends DataGridSource {
               ),
             ),
             const SizedBox(height: 20),
-            Text("MESSAGE BODY", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text("MESSAGE BODY".tr, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey)),
             const SizedBox(height: 8),
             TextField(
               controller: bodyController,
               maxLines: 4,
               style: TextStyle(color: MyColors.primaryText),
               decoration: InputDecoration(
-                hintText: "what is the content about this message...",
+                hintText: "what is the content about this message...".tr,
                 hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                 filled: true,
                 fillColor: Get.isDarkMode ? Colors.white10 : const Color(0xFFE8F0F5),
@@ -538,7 +538,7 @@ class StudentDataSource extends DataGridSource {
                       side: const BorderSide(color: Color(0xFF1C3486)),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: const Text("Cancel", style: TextStyle(color: Color(0xFF1C3486), fontWeight: FontWeight.bold)),
+                    child: Text("Cancel".tr, style: const TextStyle(color: Color(0xFF1C3486), fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -546,14 +546,14 @@ class StudentDataSource extends DataGridSource {
                   child: ElevatedButton(
                     onPressed: () {
                       Get.back();
-                      SnackbarHelper.showSuccess(title: "Success", message: "Notification sent to ${t.full_name}");
+                      SnackbarHelper.showSuccess(title: "Success".tr, message: "${"Notification sent to".tr} ${t.full_name}");
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       backgroundColor: const Color(0xFF1C3486),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                    child: const Text("Send Notification", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text("Send Notification".tr, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

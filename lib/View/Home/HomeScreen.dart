@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:school_management/Controller/AuthController/LogoutController.dart';
 import 'package:school_management/Controller/HomeController/NavigationbarController.dart';
 import 'package:school_management/Custom/MyColors.dart';
@@ -95,16 +94,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               child: Image.asset(AppConstants.logoPath, fit: BoxFit.cover),
             ),
             title: Text(
-              'SchoolMange',
-              style: TextStyle(
+              'SchoolMange'.tr,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
-              'ADMIN PORTAL',
-              style: TextStyle(
+              'ADMIN PORTAL'.tr,
+              style: const TextStyle(
                 color: Color(0xFF8DA3E0),
                 fontSize: 10,
                 letterSpacing: 1.3,
@@ -179,18 +178,18 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Contact us',
-            style: TextStyle(
+          Text(
+            'Contact us'.tr,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Get help with us, send massage about your problem.',
-            style: TextStyle(color: Colors.white70, fontSize: 13),
+          Text(
+            'Get help with us, send massage about your problem.'.tr,
+            style: const TextStyle(color: Colors.white70, fontSize: 13),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -201,7 +200,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
             ),
             onPressed: () {},
-            child: const Text('Send Message'),
+            child: Text('Send Message'.tr),
           ),
         ],
       ),
@@ -221,7 +220,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           minimumSize: Size.zero,
         ),
         icon: Icon(Icons.logout, size: isSmallScreen ? 18 : 20),
-        label: isSmallScreen ? const SizedBox.shrink() : const Text('Logout'),
+        label: isSmallScreen ? const SizedBox.shrink() : Text('Logout'.tr),
         onPressed: () {
             _logoutController.logout();
         },
@@ -285,7 +284,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                           ),
                           Row(
                             children: [
-                              _buildTopAction(Icons.notifications, 'Notifications',isSmallScreen,(){
+                              _buildTopAction(Icons.notifications, 'Notifications'.tr,isSmallScreen,(){
                                 _navigationbarcontroller.selectedIndex.value=_navigationbarcontroller.notificationIndex.value;
                               }),
                               SizedBox(width: 12,),

@@ -35,11 +35,11 @@ class ReportsDataSource extends DataGridSource {
     final ReportModel r = row.getCells().last.value;
 
     return DataGridRowAdapter(cells: [
-      _buildCell(r.id.toString()),
-      _buildCell(r.type.tr),
-      _buildCell((r.studyStageName ?? 'All Stages').tr),
-      _buildCell((r.sectionName ?? 'All Sections').tr),
-      _buildCell("${r.startDate.day}/${r.startDate.month}/${r.startDate.year}"),
+        _buildCell(r.id.toString()),
+        _buildCell(r.type.tr),
+        _buildCell((r.studyStageName ?? 'All Stages'.tr).tr),
+        _buildCell((r.sectionName ?? 'All Sections'.tr).tr),
+        _buildCell("${r.startDate.day}/${r.startDate.month}/${r.startDate.year}"),
       
       // Actions
       Padding(

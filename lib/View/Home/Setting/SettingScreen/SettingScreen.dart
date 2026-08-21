@@ -86,7 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //Header
-        const Text("Personal Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text("Personal Details".tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 15),
         // Info
         Container(
@@ -127,7 +127,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               const SizedBox(height: 5),
               //Principle
-              const Text("Principle", style: TextStyle(fontSize: 14, color: Colors.white70)),
+              Text("Principle".tr, style: const TextStyle(fontSize: 14, color: Colors.white70)),
               const SizedBox(height: 15),
               //The Role
               Container(
@@ -136,7 +136,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text("Admin", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                child: Text("Admin".tr, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -150,7 +150,7 @@ class _SettingScreenState extends State<SettingScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         //Header
-        const Text("Personal Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text("Personal Details".tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 15),
         //Info
         Container(
@@ -162,11 +162,11 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             children: [
               //Email
-              _infoTile(Icons.email_outlined, "Email Address", user?.email ?? "example@gmail.com"),
+              _infoTile(Icons.email_outlined, "Email Address".tr, user?.email ?? "example@gmail.com"),
               //Phone Number
-              _infoTile(Icons.phone_outlined, "Phone Number",user?.phone ?? "09** *** ***"),
+              _infoTile(Icons.phone_outlined, "Phone Number".tr,user?.phone ?? "09** *** ***"),
               //Location
-              _infoTile(Icons.location_on_outlined, "Location", user?.location ?? "Not Set"),
+              _infoTile(Icons.location_on_outlined, "Location".tr, user?.location ?? "Not Set".tr),
               const SizedBox(height: 20),
               //Update Button
               SizedBox(
@@ -178,7 +178,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   ),
                   onPressed: () {_showUpdateProfileDialog(user);},
-                  child: const Text("Update", style: TextStyle(color: Colors.white, fontSize: 16)),
+                  child: Text("Update".tr, style: const TextStyle(color: Colors.white, fontSize: 16)),
                 ),
               ),
               SizedBox(height: 43,)
@@ -248,8 +248,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 final settingService = Get.find<SettingService>();
                 return _settingsTile(
                   Icons.dark_mode_outlined,
-                  "Theme",
-                  "Light or Dark environment",
+                  "Theme".tr,
+                  "Light or Dark environment".tr,
                   trailing: Switch(
                     value: settingService.isDark.value,
                     onChanged: (v) => settingService.switchTheme(),
@@ -258,7 +258,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 );
               }),
               const Divider(height: 1),
-              _settingsTile(Icons.notifications_none, "Notification Settings", "Manage alerts and messages", trailing: Switch(value: true, onChanged: (v) {})),
+              _settingsTile(Icons.notifications_none, "Notification Settings".tr, "Manage alerts and messages".tr, trailing: Switch(value: true, onChanged: (v) {})),
             ],
           ),
         ),
@@ -318,7 +318,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      "Update personal information",
+                      "Update personal information".tr,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: MyColors.primaryText),
                     ),
                   ],
@@ -359,29 +359,29 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Container(
                             padding: const EdgeInsets.all(0),
                           decoration: const BoxDecoration(color: Color(0xFF08314F), shape: BoxShape.circle),
-                          child: IconButton(onPressed: (){}, icon: Icon(Icons.edit, size: 14, color: Colors.white)),
+                          child: IconButton(onPressed: (){}, icon: const Icon(Icons.edit, size: 14, color: Colors.white)),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "UPDATE YOUR PHOTO",
-                    style: TextStyle(fontSize: 12, color: Colors.grey, letterSpacing: 1.2),
+                  Text(
+                    "UPDATE YOUR PHOTO".tr,
+                    style: const TextStyle(fontSize: 12, color: Colors.grey, letterSpacing: 1.2),
                   ),
                   const SizedBox(height: 30),
                   Row(
                     children: [
                       Expanded(
                         child: _labelWithTextField(
-                          "Full name",
+                          "Full name".tr,
                           _updateProfileController.fullNameController.text,
                           Icons.person_outline,
                           TextInputType.text,
                           _updateProfileController.fullNameController,
                             (value){
                             if( value=="" || value.isEmpty){
-                              return "Please Enter Your Full Name";
+                              return "Please Enter Your Full Name".tr;
                             }
                             },
                         ),
@@ -389,17 +389,17 @@ class _SettingScreenState extends State<SettingScreen> {
                       const SizedBox(width: 20),
                       Expanded(
                         child: _labelWithTextField(
-                          "Email",
+                          "Email".tr,
                           _updateProfileController.emailController.text,
                           Icons.email_outlined,
                           TextInputType.emailAddress,
                           _updateProfileController.emailController,
                           (value) {
-                            if (value == null || value.isEmpty) return "Please Enter your Email";
+                            if (value == null || value.isEmpty) return "Please Enter your Email".tr;
                             if(GetUtils.isEmail(value!)){
                               return null;
                             }
-                            return "your Email should be as 'example@gmail.com'";
+                            return "your Email should be as 'example@gmail.com'".tr;
                             },
                         ),
                       ),
@@ -410,14 +410,14 @@ class _SettingScreenState extends State<SettingScreen> {
                     children: [
                       Expanded(
                         child: _labelWithTextField(
-                          "Phone",
+                          "Phone".tr,
                           _updateProfileController.phoneController.text,
                           Icons.phone_outlined,
                           TextInputType.phone,
                           _updateProfileController.phoneController,
                              (value) {
-                            if (value == null || value.isEmpty) return "Please Enter your Phone Number";
-                            else if (value.length != AppConstants.phoneLength) return "Phone number must be ${AppConstants.phoneLength} digits";
+                            if (value == null || value.isEmpty) return "Please Enter your Phone Number".tr;
+                            else if (value.length != AppConstants.phoneLength) return "Phone number must be ${AppConstants.phoneLength} digits".tr;
                             return null;
                             },
                         ),
@@ -425,14 +425,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       const SizedBox(width: 20),
                       Expanded(
                         child: _labelWithTextField(
-                          "Location",
+                          "Location".tr,
                           _updateProfileController.locationController.text,
                           Icons.location_on_outlined,
                           TextInputType.text,
                           _updateProfileController.locationController,
                             (value){
                               if(value==null ||value.isEmpty){
-                                return "Please Enter your Location";
+                                return "Please Enter your Location".tr;
                               }
                               return null;
                             },
@@ -451,7 +451,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       onPressed: () {
                       },
-                      child: const Text("Update", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                      child: Text("Update".tr, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

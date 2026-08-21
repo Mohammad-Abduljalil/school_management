@@ -101,7 +101,7 @@ class _NewPasswordState extends State<NewPassword>{
               height: 24,
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Text("Set New Password",style: TextStyle(
+                child: Text("Set New Password".tr,style: TextStyle(
                   color: MyColors.primaryText,
                   fontWeight: FontWeight.bold,
                 ),),
@@ -114,7 +114,7 @@ class _NewPasswordState extends State<NewPassword>{
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
-                  "Choose a strong password for your account",
+                  "Choose a strong password for your account".tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: MyColors.labelUpOfTextFieldInLoginPageColor),),
@@ -122,12 +122,12 @@ class _NewPasswordState extends State<NewPassword>{
             ),
             const SizedBox(height: 30,),
             //Email TextField
-            _buildFieldLabel("New Password"),
+            _buildFieldLabel("New Password".tr),
             //Password TextField
             Obx(
                   ()=> MyCustomTextField(
                 controller: _forgetPasswordController.passwordController,
-                hintText: "Enter Password",
+                hintText: "Enter Password".tr,
                 isPassword: true,
                 prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
                 obscureText: _forgetPasswordController.isPasswordObsecured.value,
@@ -137,10 +137,10 @@ class _NewPasswordState extends State<NewPassword>{
                 },
                 validator: (value){
                   if(value==null ||value.isEmpty){
-                    return "Please Enter your Password";
+                    return "Please Enter your Password".tr;
                   }
                   if (value.length < 8) {
-                    return 'Password must be at least 8 characters long';
+                    return 'Password must be at least 8 characters long'.tr;
                   }
                   return null;
                 },
@@ -156,8 +156,8 @@ class _NewPasswordState extends State<NewPassword>{
                     _forgetPasswordController.passwordText.value.isEmpty
                         ? ""
                         : _forgetPasswordController.passwordText.value.length < 8
-                        ? "Weak password"
-                        : "Strong password",
+                        ? "Weak password".tr
+                        : "Strong password".tr,
                     style: TextStyle(
                       color: _forgetPasswordController.passwordText.value.length < 8 ? Colors.red : Colors.green,
                       fontSize: 12,
@@ -167,11 +167,11 @@ class _NewPasswordState extends State<NewPassword>{
               ],
             )),
             const SizedBox(height: 20),
-            _buildFieldLabel("Confirm the New Password"),
+            _buildFieldLabel("Confirm the New Password".tr),
             //Confirm Password TextField
             Obx(()=>MyCustomTextField(
               controller: _forgetPasswordController.passwordConfirmController,
-              hintText: "Confirm Password",
+              hintText: "Confirm Password".tr,
               isPassword: true,
               textInputAction: TextInputAction.done,
               prefixIcon: Icon(Icons.lock_reset, color: MyColors.iconInAuthTextFieldColor),
@@ -181,13 +181,13 @@ class _NewPasswordState extends State<NewPassword>{
               },
               validator: (value){
                 if(value==null ||value.isEmpty){
-                  return "Please Enter your Password";
+                  return "Please Enter your Password".tr;
                 }
                 if (value.length < AppConstants.minPasswordLength) {
-                  return 'Password must be at least ${AppConstants.minPasswordLength} characters long';
+                  return 'Password must be at least ${AppConstants.minPasswordLength} characters long'.tr;
                 }
                 if(value!=(_forgetPasswordController.passwordController.text)){
-                  return "Passwords do not match!";
+                  return "Passwords do not match!".tr;
                 }
                 return null;
               },
@@ -201,19 +201,19 @@ class _NewPasswordState extends State<NewPassword>{
                   :
               MyCustomButton(onPressed: (){
                 _forgetPasswordController.resetPassword();
-              },title: "Reset Password",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+              },title: "Reset Password".tr,backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
             ),
             const SizedBox(height: 20),
             //To go to Register Page
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text("Do remember the password?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Do remember the password?".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                   onPressed: () {
                         Get.offAllNamed('/SignIn');
                   },
-                  child: Text("SignIn", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                  child: Text("SignIn".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
                 ),
               ],
             ),

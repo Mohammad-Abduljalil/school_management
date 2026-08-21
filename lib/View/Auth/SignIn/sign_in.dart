@@ -103,7 +103,7 @@ class _sign_inState extends State<sign_in>{
             height: 29,
             child: FittedBox(
               fit: BoxFit.contain,
-              child: Text("Login",style: TextStyle(
+              child: Text("Login".tr,style: TextStyle(
                 color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
@@ -116,7 +116,7 @@ class _sign_inState extends State<sign_in>{
             child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "Start managing your School perfect today",
+                "Start managing your School perfect today".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: MyColors.labelUpOfTextFieldInLoginPageColor),),
@@ -127,19 +127,19 @@ class _sign_inState extends State<sign_in>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Email",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Email".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               MyCustomTextField(
               controller: _signInController.emailController,
-                hintText: "Enter your Email ",
+                hintText: "Enter your Email ".tr,
                 prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Email";
-                  if(GetUtils.isEmail(value!)){
+                  if (value == null || value.isEmpty) return "Please Enter your Email".tr;
+                  if(GetUtils.isEmail(value)){
                     return null;
                   }
-                  return "your Email should be as 'example@gmail.com'";
+                  return "your Email should be as 'example@gmail.com'".tr;
                 },
               ),
             ],
@@ -149,12 +149,12 @@ class _sign_inState extends State<sign_in>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Password",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Password".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               Obx(
                     ()=> MyCustomTextField(
                   controller: _signInController.passwordController,
-                  hintText: "Enter Password",
+                  hintText: "Enter Password".tr,
                   isPassword: true,
                   prefixIcon: Icon(Icons.lock_outline, color: MyColors.iconInAuthTextFieldColor),
                   obscureText: _signInController.isPasswordObsecured.value,
@@ -164,10 +164,10 @@ class _sign_inState extends State<sign_in>{
                   },
                   validator: (value){
                     if(value==null ||value.isEmpty){
-                      return "Please Enter your Password";
+                      return "Please Enter your Password".tr;
                     }
                     if (value.length < 8) {
-                      return 'Password must be at least 8 characters long';
+                      return 'Password must be at least 8 characters long'.tr;
                     }
                     return null;
                   },
@@ -180,8 +180,8 @@ class _sign_inState extends State<sign_in>{
                   _signInController.passwordText.value.isEmpty
                       ? ""
                       : _signInController.passwordText.value.length < 8
-                      ? "Weak password"
-                      : "Strong password",
+                      ? "Weak password".tr
+                      : "Strong password".tr,
                   style: TextStyle(
                     color: _signInController.passwordText.value.length < 8 ? Colors.red : Colors.green,
                     fontSize: 12,
@@ -199,7 +199,7 @@ class _sign_inState extends State<sign_in>{
                 onPressed: () {
                   Get.toNamed("/ForEmail");
                 },
-                child: Text("Forgot Password?", style: TextStyle(color: Color(0xFF00A991), decoration: TextDecoration.underline,decorationColor: MyColors.hintTextInTextFieldInSignUp)),
+                child: Text("Forgot Password?".tr, style: TextStyle(color: Color(0xFF00A991), decoration: TextDecoration.underline,decorationColor: MyColors.hintTextInTextFieldInSignUp)),
               ),
             ],
           ),
@@ -210,19 +210,19 @@ class _sign_inState extends State<sign_in>{
             :
         MyCustomButton(onPressed: (){
           _signInController.SignIn();
-        },title: "Login",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+        },title: "Login".tr,backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
           ),
           const SizedBox(height: 20),
           //To go to Register Page
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Already haven't account?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Already haven't account?".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>sign_up_first_page()));
                 },
-                child: Text("Register", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                child: Text("Register".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),
@@ -237,9 +237,9 @@ class _sign_inState extends State<sign_in>{
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 padding: const EdgeInsets.symmetric(vertical: 13),
               ),
-              child: const Text(
-                "Try as Guest",
-                style: TextStyle(color: Color(0xFF00A991), fontWeight: FontWeight.bold),
+              child: Text(
+                "Try as Guest".tr,
+                style: const TextStyle(color: Color(0xFF00A991), fontWeight: FontWeight.bold),
               ),
             ),
           ),

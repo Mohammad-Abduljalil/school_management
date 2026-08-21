@@ -97,7 +97,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
             height: 29,
             child: FittedBox(
               fit: BoxFit.contain,
-              child: Text("Create Account",style: TextStyle(
+              child: Text("Create Account".tr,style: TextStyle(
                 color: MyColors.primaryText,
                 fontWeight: FontWeight.bold,
               ),),
@@ -110,7 +110,7 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
             child: FittedBox(
               fit: BoxFit.contain,
               child: Text(
-                "Start managing your School perfect today",
+                "Start managing your School perfect today".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: MyColors.labelUpOfTextFieldInLoginPageColor),),
@@ -121,15 +121,15 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Full Name",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Full Name".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               MyCustomTextField(
                 controller: _signUpController.fullNameController,
-                hintText: "Enter your Full Name ",
+                hintText: "Enter your Full Name ".tr,
                 prefixIcon: Icon(Icons.person_outline, color: MyColors.iconInAuthTextFieldColor),
                 keyboardType: TextInputType.text,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Full Name";
+                  if (value == null || value.isEmpty) return "Please Enter your Full Name".tr;
                   return null;
                 },
               ),
@@ -140,19 +140,19 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Email Address",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Email Address".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               MyCustomTextField(
                 controller: _signUpController.emailController,
-                hintText: "example@gmail.com",
+                hintText: "example@gmail.com".tr,
                 prefixIcon: Icon(Icons.email_outlined, color: MyColors.iconInAuthTextFieldColor),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Email";
-                  if(GetUtils.isEmail(value!)){
+                  if (value == null || value.isEmpty) return "Please Enter your Email".tr;
+                  if(GetUtils.isEmail(value)){
                     return null;
                   }
-                  return "your Email should be as 'example@gmail.com'";
+                  return "your Email should be as 'example@gmail.com'".tr;
                 },
               ),
             ],
@@ -162,16 +162,16 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Phone Number",style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
+              Text("Phone Number".tr,style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor),),
               const SizedBox(height: 8,),
               MyCustomTextField(
                 textInputAction: TextInputAction.done,
                 controller: _signUpController.phoneNumberController,
-                hintText: "09 **** ****",
+                hintText: "09 **** ****".tr,
                 prefixIcon: Icon(Icons.phone_outlined, color: MyColors.iconInAuthTextFieldColor),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return "Please Enter your Phone Number";
-                  else if (value.length != AppConstants.phoneLength) return "Phone number must be ${AppConstants.phoneLength} digits";
+                  if (value == null || value.isEmpty) return "Please Enter your Phone Number".tr;
+                  else if (value.length != AppConstants.phoneLength) return "Phone number must be ${AppConstants.phoneLength} digits".tr;
                   return null;
                 },
               ),
@@ -181,18 +181,18 @@ class _sign_up_first_pageState extends State<sign_up_first_page>{
           //Next to second Signup page Button
           MyCustomButton(onPressed: (){
             _signUpController.NextToSecondPage();
-          },title: "Next",backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
+          },title: "Next".tr,backgroundColorLeft: Color(0xFF1D3587),backgroundColorRight: Color(0xFF006879),foregroundColor: Color(0xFFFFFFFF)),
           const SizedBox(height: 20),
           //To go to Login Page
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Already have account?", style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
+              Text("Already have account?".tr, style: TextStyle(color: MyColors.labelUpOfTextFieldInLoginPageColor)),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>sign_in()));
                 },
-                child: Text("Log In", style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
+                child: Text("Log In".tr, style: TextStyle(color: Color(0xFF007F6D), decoration: TextDecoration.underline,decorationColor: Color(0xFF007F6D))),
               ),
             ],
           ),

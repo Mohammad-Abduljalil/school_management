@@ -36,16 +36,16 @@ class ScheduleView extends StatelessWidget {
                 }
 
                 if (controller.selectedGrade.value == null) {
-                  return const _PlaceholderView(
+                  return _PlaceholderView(
                     icon: Icons.school_outlined,
-                    message: 'Select Stage First',
+                    message: 'Select Stage First'.tr,
                   );
                 }
 
                 if (controller.selectedSection.value == null) {
-                  return const _PlaceholderView(
+                  return _PlaceholderView(
                     icon: Icons.groups_outlined,
-                    message: 'Select section to show the schedule',
+                    message: 'Select section to show the schedule'.tr,
                   );
                 }
 
@@ -81,7 +81,7 @@ class _ErrorView extends StatelessWidget {
         children: [
           const Icon(Icons.error_outline, size: 48, color: Colors.red),
           const SizedBox(height: 12),
-          const Text('Failed to load data. Please try again.'),
+          Text('Failed to load data. Please try again.'.tr),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {
@@ -95,7 +95,7 @@ class _ErrorView extends StatelessWidget {
               backgroundColor: MyColors.backgroundColor,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Try again'),
+            child: Text('Try again'.tr),
           ),
         ],
       ),
@@ -127,11 +127,11 @@ class _GradeSectionBar extends StatelessWidget {
         children: [
           Expanded(
             child: Obx(() => _StyledDropdown<ScheduleStageModel>(
-              label: 'Grade/Stage',
-              hint: 'Select Stage',
+              label: 'Grade/Stage'.tr,
+              hint: 'Select Stage'.tr,
               value: controller.selectedGrade.value,
               items: controller.grades,
-              itemLabel: (g) => 'Stage ${g.stageNumber}',
+              itemLabel: (g) => '${"Stage".tr} ${g.stageNumber}',
               onChanged: (grade) {
                 if (grade != null) controller.onGradeSelected(grade);
               },
@@ -142,13 +142,13 @@ class _GradeSectionBar extends StatelessWidget {
 
           Expanded(
             child: Obx(() => _StyledDropdown<ScheduleSectionModel>(
-              label: 'Section',
+              label: 'Section'.tr,
               hint: controller.selectedGrade.value == null
-                  ? 'Select Stage first'
-                  : 'Select Section',
+                  ? 'Select Stage First'.tr
+                  : 'Select Section'.tr,
               value: controller.selectedSection.value,
               items: controller.sections,
-              itemLabel: (s) => s.sectionName,
+              itemLabel: (s) => s.sectionName.tr,
               enabled: controller.selectedGrade.value != null,
               onChanged: (section) {
                 if (section != null) controller.onSectionSelected(section);
@@ -251,9 +251,9 @@ class _FilterButton extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Subject',
-          style: TextStyle(
+        Text(
+          'Subject'.tr,
+          style: const TextStyle(
             fontSize: 12,
             color: Color(0xFF6B7280),
             fontWeight: FontWeight.w500,
@@ -274,8 +274,8 @@ class _FilterButton extends StatelessWidget {
           icon: const Icon(Icons.filter_list, size: 18),
           label: Obx(() => Text(
             controller.selectedSubjectFilter.value == 'All Subject'
-                ? 'Filter'
-                : controller.selectedSubjectFilter.value,
+                ? 'Filter'.tr
+                : controller.selectedSubjectFilter.value.tr,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             overflow: TextOverflow.ellipsis,
           )),
@@ -430,13 +430,13 @@ class _CreateScheduleView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'No Schedule Found',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+            Text(
+              'No Schedule Found'.tr,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 8),
             Text(
-              'Stage ${grade.stageNumber}  •  ${section.sectionName}',
+              '${"Stage".tr} ${grade.stageNumber}  •  ${section.sectionName}',
               style: const TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
             ),
             const SizedBox(height: 24),
@@ -445,8 +445,8 @@ class _CreateScheduleView extends StatelessWidget {
             TextField(
               controller: controller.academicYearController,
               decoration: InputDecoration(
-                labelText: 'Academic Year',
-                hintText: 'e.g. 2024-2025',
+                labelText: 'Academic Year'.tr,
+                hintText: 'e.g. 2024-2025'.tr,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 prefixIcon: const Icon(Icons.event),
               ),
@@ -456,21 +456,21 @@ class _CreateScheduleView extends StatelessWidget {
             // Semester Input
             Obx(() => Row(
               children: [
-                const Text('Semester: ', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text('${"Semester:".tr} ', style: const TextStyle(fontWeight: FontWeight.w600)),
                 const SizedBox(width: 12),
                 Radio<String>(
                   value: "1",
                   groupValue: controller.semester.value,
                   onChanged: (v) => controller.semester.value = v!,
                 ),
-                const Text('1st'),
+                Text('1st'.tr),
                 const SizedBox(width: 12),
                 Radio<String>(
                   value: "2",
                   groupValue: controller.semester.value,
                   onChanged: (v) => controller.semester.value = v!,
                 ),
-                const Text('2nd'),
+                Text('2nd'.tr),
               ],
             )),
             
@@ -486,7 +486,7 @@ class _CreateScheduleView extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 icon: const Icon(Icons.add, size: 20),
-                label: const Text('Create Schedule', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                label: Text('Create Schedule'.tr, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
               ),
             ),
           ],
@@ -531,7 +531,7 @@ class _ScheduleGridView extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
                 icon: const Icon(Icons.refresh, size: 16),
-                label: const Text('Reload', style: TextStyle(fontSize: 13)),
+                label: Text('Reload'.tr, style: const TextStyle(fontSize: 13)),
               ),
 
               const SizedBox(width: 10),
@@ -547,7 +547,7 @@ class _ScheduleGridView extends StatelessWidget {
                 icon: controller.isSaving.value
                     ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                     : const Icon(Icons.save_outlined, size: 16),
-                label: Text(controller.isSaving.value ? 'Saving...' : 'Sync with Server', style: const TextStyle(fontSize: 13)),
+                label: Text(controller.isSaving.value ? 'Saving...'.tr : 'Sync with Server'.tr, style: const TextStyle(fontSize: 13)),
               )),
             ],
           ),
