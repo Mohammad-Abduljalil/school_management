@@ -46,10 +46,11 @@ class AppConstants {
           // static const String linkUpdateProfile = "$linkServerName/update-profile";
           static const String linkRefreshToken = "$linkServerName/refresh";
 
-      //Salary
+      // Salary
           static  String linkGetSalaryByRole(type) => "$linkServerName/get_salary/$type";
           static  String linkChangeSalaryById(id) => "$linkServerName/change_salary/$id";
           static  String linkPaidSalaryById(id) => "$linkServerName/pay_salary/$id";
+          static  String linkAssignSalary(int id) => "$linkServerName/assign_salary/$id";
 
       //Invoice
           static const String linkGetInvoices = "$linkServerName/get_invoice";
