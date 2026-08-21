@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:school_management/core/AppConstants.dart';
+import 'package:school_management/core/Utils/ErrorHandler.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 import '../../../Model/HomeModel/NotificationModel.dart';
 
@@ -86,173 +87,29 @@ class NotificationController extends GetxController {
         return;
       }
 
-      //before link
-      await Future.delayed(const Duration(seconds: 1));
-      // Mock data
-      final List<NotificationModel> mockData = [
-      NotificationModel(
-        id: 1,
-        title: 'Welcome to Darra School',
-        body: 'We are glad to have you in our educational community.',
-        type: 'students',
-        grade: 'All Grades',
-        isRead: false,
-        createdAt: DateTime.now(),
-      ),
-    NotificationModel(
-    id: 2,
-    title: 'Exam Schedule Update',
-    body: 'The final exams for Grade 12 have been rescheduled to next Sunday.',
-    type: 'students',
-    grade: 'Grade 12',
-    isRead: true,
-    createdAt: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-    NotificationModel(
-    id: 3,
-    title: 'New Policy for Teachers',
-    body: 'Please review the new attendance policy in the staff room.',
-    type: 'teachers',
-    grade: 'All Grades',
-    isRead: false,
-    createdAt: DateTime.now().subtract(const Duration(days: 2)),
-    ),
-        NotificationModel(
-          id: 4,
-          title: 'Maintenance Alert',
-          body: 'The school library will be closed for maintenance this weekend.',
-          type: 'supervisor',
-          grade: 'All Grades',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        ),NotificationModel(
-          id: 5,
-          title: 'Exam Schedule Update',
-          body: 'The final exams for Grade 12 have been rescheduled to next Sunday.',
-          type: 'students',
-          grade: 'Grade 12',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        ),
-        NotificationModel(
-          id: 6,
-          title: 'New Policy for Teachers',
-          body: 'Please review the new attendance policy in the staff room.',
-          type: 'teachers',
-          grade: 'All Grades',
-          isRead: false,
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-        ),
-        NotificationModel(
-          id: 7,
-          title: 'Maintenance Alert',
-          body: 'The school library will be closed for maintenance this weekend.',
-          type: 'supervisor',
-          grade: 'All Grades',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        ),NotificationModel(
-          id: 8,
-          title: 'Exam Schedule Update',
-          body: 'The final exams for Grade 12 have been rescheduled to next Sunday.',
-          type: 'students',
-          grade: 'Grade 12',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        ),
-        NotificationModel(
-          id: 9,
-          title: 'New Policy for Teachers',
-          body: 'Please review the new attendance policy in the staff room.',
-          type: 'teachers',
-          grade: 'All Grades',
-          isRead: false,
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-        ),
-        NotificationModel(
-          id: 10,
-          title: 'Maintenance Alert',
-          body: 'The school library will be closed for maintenance this weekend.',
-          type: 'supervisor',
-          grade: 'All Grades',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        ),NotificationModel(
-          id: 11,
-          title: 'Exam Schedule Update',
-          body: 'The final exams for Grade 12 have been rescheduled to next Sunday.',
-          type: 'students',
-          grade: 'Grade 12',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        ),
-        NotificationModel(
-          id: 12,
-          title: 'New Policy for Teachers',
-          body: 'Please review the new attendance policy in the staff room.',
-          type: 'teachers',
-          grade: 'All Grades',
-          isRead: false,
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-        ),
-        NotificationModel(
-          id: 13,
-          title: 'Maintenance Alert',
-          body: 'The school library will be closed for maintenance this weekend.',
-          type: 'supervisor',
-          grade: 'All Grades',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        ),NotificationModel(
-          id: 14,
-          title: 'Exam Schedule Update',
-          body: 'The final exams for Grade 12 have been rescheduled to next Sunday.',
-          type: 'students',
-          grade: 'Grade 12',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        ),
-        NotificationModel(
-          id: 15,
-          title: 'New Policy for Teachers',
-          body: 'Please review the new attendance policy in the staff room.',
-          type: 'teachers',
-          grade: 'All Grades',
-          isRead: false,
-          createdAt: DateTime.now().subtract(const Duration(days: 2)),
-        ),
-        NotificationModel(
-          id: 16,
-          title: 'Maintenance Alert',
-          body: 'The school library will be closed for maintenance this weekend.',
-          type: 'supervisor',
-          grade: 'All Grades',
-          isRead: true,
-          createdAt: DateTime.now().subtract(const Duration(days: 5)),
-        ),
-      ];
+      String? token = settingService.sharedPreferences.getString("token");
+      if (token == null) {
+        SnackbarHelper.showError(title: "Auth Error", message: "Please login to view notifications");
+        return;
+      }
 
-      // Update the list with mock data
-      notificationsList.assignAll(mockData);
+      final response = await http.get(
+        Uri.parse(AppConstants.linkGetNotifications),
+        headers: AppConstants.headers(token),
+      ).timeout(const Duration(seconds: 10));
 
-
-
-
-      //After link
-      // final response = await http.get(
-      //   Uri.parse(AppConstants.linkNotifications),
-      //   headers: _headers,
-      // );
-      //
-      // if (response.statusCode == 200) {
-      //   final Map<String, dynamic> json = jsonDecode(response.body);
-      //   final List<dynamic> data = json['data'];
-      //   notifications.value = data.map((e) => NotificationModel.fromJson(e)).toList();
-      // } else {
-      //   errorMessage.value = 'Error ${response.statusCode}';
-      // }
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['data'] != null && responseData['data'] is List) {
+          final List data = responseData['data'];
+          notificationsList.assignAll(data.map((e) => NotificationModel.fromJson(e)).toList());
+        }
+      } else {
+        ErrorHandler.handleHttpError(response);
+      }
     } catch (e) {
-      errorMessage.value = 'Connection failed: $e';
+      ErrorHandler.handleException(e);
+      errorMessage.value = 'Failed to load notifications';
     } finally {
       isLoadingList.value = false;
     }
@@ -268,26 +125,36 @@ class NotificationController extends GetxController {
     isSending.value = true;
 
     try {
+      String? token = settingService.sharedPreferences.getString("token");
+      if (token == null) {
+        SnackbarHelper.showError(title: "Auth Error", message: "Session expired. Please login again.");
+        return;
+      }
+      
+      final Map<String, dynamic> payload = {
+        'title': subjectController.text.trim(),
+        'content': bodyController.text.trim(),
+      };
+
+      if (selectedGrade.value != 'All Grades') {
+        payload['grade'] = selectedGrade.value;
+      }
+
       final response = await http.post(
-        Uri.parse(AppConstants.linkPushNotifications),
-        headers: _headers,
-        body: jsonEncode({
-          'title': subjectController.text.trim(),
-          'body': bodyController.text.trim(),
-          'type': selectedRecipient.value.toLowerCase(),
-          'grade': selectedGrade.value,
-        }),
-      );
+        Uri.parse(AppConstants.linkAddNotification),
+        headers: AppConstants.headers(token),
+        body: jsonEncode(payload),
+      ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         _clearForm();
         await fetchNotifications();
         SnackbarHelper.showSuccess(title: "Success", message: "Notification sent successfully");
       } else {
-        SnackbarHelper.showError(title: "Error", message: "Failed to send: ${response.statusCode}");
+        ErrorHandler.handleHttpError(response);
       }
     } catch (e) {
-      SnackbarHelper.showError(title: "Error", message: "Connection failed: $e");
+      ErrorHandler.handleException(e);
     } finally {
       isSending.value = false;
     }

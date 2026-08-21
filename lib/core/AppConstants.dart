@@ -82,9 +82,11 @@ class AppConstants {
 
 
       //Notification
-          static const String linkNotifications = "$linkServerName/notifications";
+          static const String linkGetNotifications = "$linkServerName/Notifincation";
+          static const String linkAddNotification = "$linkServerName/addNotifincation";
           static  String linkMakeNotificationsIsRead(int id) => "$linkNotifications/$id/read";
-          static const String linkPushNotifications = "$linkServerName/push-notifications";
+          static const String linkPushNotifications = "$linkServerName/push-notifications"; // Kept for reference if needed
+          static const String linkNotifications = "$linkServerName/notifications"; // Kept for reference if needed
 
 
       //All users
