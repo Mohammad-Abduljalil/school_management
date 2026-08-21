@@ -27,14 +27,14 @@ class MockData {
       );
 
   static List<UserModel> get mockUsers => [
-        UserModel(id: 1, full_name: "John Doe", email: "john@example.com", status: 1),
-        UserModel(id: 2, full_name: "Jane Smith", email: "jane@example.com", status: 0),
-        UserModel(id: 3, full_name: "Robert Brown", email: "robert@example.com", status: 1),
+        UserModel(id: "1", full_name: "John Doe", email: "john@example.com", phone: "111222333", role: "ADMIN", status: 1),
+        UserModel(id: "2", full_name: "Jane Smith", email: "jane@example.com", phone: "444555666", role: "TEACHER", status: 0),
+        UserModel(id: "3", full_name: "Robert Brown", email: "robert@example.com", phone: "777888999", role: "STUDENT", status: 1),
       ];
 
   static List<StudentModel> get mockStudents => [
-        StudentModel(id: 1, full_name: "Alice Johnson", email: "alice@student.com", status: 1, student_id: 101, phone: "111222333", location: "East Side", profile_image: "", salary: 0),
-        StudentModel(id: 2, full_name: "Bob Wilson", email: "bob@student.com", status: 1, student_id: 102, phone: "444555666", location: "West Side", profile_image: "", salary: 0),
+        StudentModel(id: 1, student_id: 101, student_number: "S101", full_name: "Alice Johnson", email: "alice@student.com", status: 1, phone: "111222333", location: "East Side", profile_image: ""),
+        StudentModel(id: 2, student_id: 102, student_number: "S102", full_name: "Bob Wilson", email: "bob@student.com", status: 1, phone: "444555666", location: "West Side", profile_image: ""),
       ];
 
   static List<TeacherModel> get mockTeachers => [
@@ -43,7 +43,7 @@ class MockData {
       ];
 
   static List<SupervisorModel> get mockSupervisors => [
-        SupervisorModel(id: 20, full_name: "Emma Davis", email: "emma@super.com", status: 1, supervisor_id: 301, phone: "333444555", location: "Central", profile_image: "", salary: 2000),
+        SupervisorModel(id: 20, supervisor_id: 301, full_name: "Emma Davis", email: "emma@super.com", status: 1, phone: "333444555", location: "Central", profile_image: ""),
       ];
 
   static List<StageModel> get mockStages => [
@@ -63,34 +63,34 @@ class MockData {
       ];
 
   static List<MarkModel> get mockMarks => [
-        MarkModel(id: 1, studentName: "Alice Johnson", subjectName: "Mathematics", mark: 95, date: "2024-01-15"),
-        MarkModel(id: 2, studentName: "Alice Johnson", subjectName: "Science", mark: 88, date: "2024-01-16"),
-        MarkModel(id: 3, studentName: "Bob Wilson", subjectName: "Mathematics", mark: 75, date: "2024-01-15"),
+        MarkModel(id: 1, studentName: "Alice Johnson", teacherName: "Dr. Sarah Miller", subjectName: "Mathematics", type: "Exam", score: 95, date: "2024-01-15"),
+        MarkModel(id: 2, studentName: "Alice Johnson", teacherName: "Dr. Sarah Miller", subjectName: "Science", type: "Quiz", score: 88, date: "2024-01-16"),
+        MarkModel(id: 3, studentName: "Bob Wilson", teacherName: "Mr. James Bond", subjectName: "Mathematics", type: "Exam", score: 75, date: "2024-01-15"),
       ];
 
   static List<InvoiceModel> get mockInvoices => [
-        InvoiceModel(id: 1, student_name: "Alice Johnson", total_amount: 500, paid_amount: 500, status: "Paid", date: "2024-01-01"),
-        InvoiceModel(id: 2, student_name: "Bob Wilson", total_amount: 500, paid_amount: 200, status: "Partial", date: "2024-01-05"),
+        InvoiceModel(id: "1", full_name: "Alice Johnson", email: "alice@student.com", phone: "111222333", total_amount: "500", total_paid: "500", status: "Paid", location: "East Side"),
+        InvoiceModel(id: "2", full_name: "Bob Wilson", email: "bob@student.com", phone: "444555666", total_amount: "500", total_paid: "200", status: "Partial", location: "West Side"),
       ];
 
   static List<InvoiceItemModel> get mockInvoiceItems => [
-        InvoiceItemModel(id: 1, fee_type: "Tuition", amount: 400, status: "Paid"),
-        InvoiceItemModel(id: 2, fee_type: "Books", amount: 100, status: "Paid"),
+        InvoiceItemModel(id: 1, invoiceId: 1, feeType: "Tuition", amount: 400, paidAmount: 400, remainingAmount: 0),
+        InvoiceItemModel(id: 2, invoiceId: 1, feeType: "Books", amount: 100, paidAmount: 100, remainingAmount: 0),
       ];
 
   static List<SalaryModel> get mockSalaries => [
-        SalaryModel(id: 1, name: "Dr. Sarah Miller", role: "Teacher", amount: 1500, status: "Paid", date: "2024-01-30"),
-        SalaryModel(id: 2, name: "Mr. James Bond", role: "Teacher", amount: 1200, status: "Pending", date: "2024-01-30"),
+        SalaryModel(id: 1, name: "Dr. Sarah Miller", email: "sarah@teacher.com", phone: "777888999", salary: "1500", status: 1, role: "Teacher"),
+        SalaryModel(id: 2, name: "Mr. James Bond", email: "james@teacher.com", phone: "000111222", salary: "1200", status: 0, role: "Teacher"),
       ];
 
   static List<NotificationModel> get mockNotifications => [
-        NotificationModel(id: 1, title: "Exam Schedule", body: "Final exams start next week.", createdAt: "2024-02-01", isRead: false),
-        NotificationModel(id: 2, title: "Holiday Notice", body: "School will be closed on Friday.", createdAt: "2024-01-25", isRead: true),
+        NotificationModel(id: 1, title: "Exam Schedule", body: "Final exams start next week.", type: "students", grade: "All Grades", isRead: false, createdAt: DateTime.now()),
+        NotificationModel(id: 2, title: "Holiday Notice", body: "School will be closed on Friday.", type: "teachers", grade: "All Grades", isRead: true, createdAt: DateTime.now().subtract(const Duration(days: 1))),
       ];
 
   static List<ReportModel> get mockReports => [
-        ReportModel(id: 1, title: "Monthly Attendance", description: "January attendance summary", createdAt: "2024-02-01"),
-        ReportModel(id: 2, title: "Financial Report", description: "Q1 financial overview", createdAt: "2024-01-31"),
+        ReportModel(id: 1, type: "Monthly Attendance", startDate: DateTime(2024, 1, 1), endDate: DateTime(2024, 1, 31), filePath: "report1.pdf"),
+        ReportModel(id: 2, type: "Financial Report", startDate: DateTime(2024, 1, 1), endDate: DateTime(2024, 3, 31), filePath: "report2.pdf"),
       ];
 
   static List<PeriodTemplateModel> get mockPeriods => [
