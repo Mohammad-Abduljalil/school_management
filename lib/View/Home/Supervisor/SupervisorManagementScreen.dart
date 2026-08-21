@@ -4,7 +4,6 @@ import 'package:school_management/Controller/HomeController/SupervisorsManagemen
 import 'package:school_management/View/Home/Supervisor/SupervisorDataSource.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import '../../../Controller/HomeController/UserManagementController/UserManagementController.dart';
 import '../../../Custom/MyCustomTextFields.dart';
 import '../../../Custom/MyColors.dart';
 
@@ -179,7 +178,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management".tr,
+              "Supervisor Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -311,7 +310,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
       children: [
         // Button to display all users
         _filterButton(
-          label: "All Users".tr,
+          label: "All Supervisors".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchSupervisors(onlyPending: false),
           icon: Icons.group,
@@ -319,7 +318,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
         const SizedBox(width: 15),
         // Button to display only pending users
         _filterButton(
-          label: "Pending Users".tr,
+          label: "Pending Supervisors".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchSupervisors(onlyPending: true),
           icon: Icons.pending_actions,

@@ -157,7 +157,7 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management".tr,
+              "Teacher Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -287,14 +287,14 @@ class _TeacherManagementScreenState extends State<TeacherManagementScreen> {
     return Obx(() => Row(
       children: [
         _filterButton(
-          label: "All Students".tr,
+          label: "All Teachers".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchTeachers(onlyPending: false),
           icon: Icons.group,
         ),
         const SizedBox(width: 15),
         _filterButton(
-          label: "Pending Students".tr,
+          label: "Pending Teachers".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchTeachers(onlyPending: true),
           icon: Icons.pending_actions,

@@ -4,7 +4,6 @@ import 'package:school_management/Controller/HomeController/StudentsManagementCo
 import 'package:school_management/View/Home/Student/StudentDataSource.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import '../../../Controller/HomeController/UserManagementController/UserManagementController.dart';
 import '../../../Custom/MyCustomTextFields.dart';
 import '../../../Custom/MyColors.dart';
 
@@ -164,7 +163,7 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management".tr,
+              "Student Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
