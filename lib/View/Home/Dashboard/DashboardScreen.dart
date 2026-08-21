@@ -44,12 +44,12 @@ class DashboardScreen extends StatefulWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Welcome User let's start,",
+          "Welcome User let's start,".tr,
           style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: MyColors.backgroundColor),
         ),
-        const Text(
-          "Dashboard brief information about the system.",
-          style: TextStyle(fontSize: 14, color: Colors.grey),
+        Text(
+          "Dashboard brief information about the system.".tr,
+          style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
     );
@@ -58,13 +58,13 @@ class DashboardScreen extends StatefulWidget {
   Widget _buildSummaryCards() {
     return Obx(() => Row(
       children: [
-        _buildTopStatCard("Students", "${_dashboardController.numOfStudents.value}", Icons.people, const Color(0xFFC7D2FE), const Color(0xFF1C3486)),
+        _buildTopStatCard("Students".tr, "${_dashboardController.numOfStudents.value}", Icons.people, const Color(0xFFC7D2FE), const Color(0xFF1C3486)),
         const SizedBox(width: 20),
-        _buildTopStatCard("Teachers", "${_dashboardController.numOfTeachers.value}", Icons.school, const Color(0xFFA7F3D0), const Color(0xFF00A99D)),
+        _buildTopStatCard("Teachers".tr, "${_dashboardController.numOfTeachers.value}", Icons.school, const Color(0xFFA7F3D0), const Color(0xFF00A99D)),
         const SizedBox(width: 20),
-        _buildTopStatCard("Supervisor", "${_dashboardController.numOfSupervisor.value}", Icons.security, const Color(0xFFFEF3C7), const Color(0xFFFFD54F)),
+        _buildTopStatCard("Supervisor".tr, "${_dashboardController.numOfSupervisor.value}", Icons.security, const Color(0xFFFEF3C7), const Color(0xFFFFD54F)),
         const SizedBox(width: 20),
-        _buildTopStatCard("Classes", "${_dashboardController.numOfClasses.value}", Icons.class_, const Color(0xFFFECACA), const Color(0xFFEF4444)),
+        _buildTopStatCard("Classes".tr, "${_dashboardController.numOfClasses.value}", Icons.class_, const Color(0xFFFECACA), const Color(0xFFEF4444)),
       ],
     ));
   }
@@ -107,9 +107,9 @@ class DashboardScreen extends StatefulWidget {
   Widget _buildChartsSection() {
     return Row(
       children: [
-        Expanded(child: _buildChartContainer("Students type", _buildBarChart())),
+        Expanded(child: _buildChartContainer("Students type".tr, _buildBarChart())),
         const SizedBox(width: 20),
-        Expanded(child: _buildChartContainer("Students Registers", _buildLineChart())),
+        Expanded(child: _buildChartContainer("Students Registers".tr, _buildLineChart())),
       ],
     );
   }
@@ -149,10 +149,10 @@ class DashboardScreen extends StatefulWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                    const Text("No users found"),
+                    Text("No users found".tr),
                     TextButton(
                       onPressed: () => _dashboardController.fetchUsers(),
-                      child: const Text("Refresh"),
+                      child: Text("Refresh".tr),
                     )
                   ],
                 ),
@@ -198,10 +198,10 @@ class DashboardScreen extends StatefulWidget {
                                   return true;
                                 },
                                 columns: [
-                                  GridColumn(columnName: 'identity',width: 280,label: _buildLabel('Identity')),
-                                  GridColumn(columnName: 'role', width: 170, label: _buildLabel('Role')),
-                                  GridColumn(columnName: 'status', width: 160, label: _buildLabel('Status')),
-                                  GridColumn(columnName: 'actions', width: 300, label: _buildLabel('Actions')),
+                                  GridColumn(columnName: 'identity',width: 280,label: _buildLabel('Identity'.tr)),
+                                  GridColumn(columnName: 'role', width: 170, label: _buildLabel('Role'.tr)),
+                                  GridColumn(columnName: 'status', width: 160, label: _buildLabel('Status'.tr)),
+                                  GridColumn(columnName: 'actions', width: 300, label: _buildLabel('Actions'.tr)),
                                 ],
                               ),
                             ),
@@ -228,28 +228,28 @@ class DashboardScreen extends StatefulWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Fees Statistics", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text("Fees Statistics".tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 25),
-                _buildFinanceRow("pay", "300 Student", Colors.green, 0.7),
+                _buildFinanceRow("pay".tr, "300 Student", Colors.green, 0.7),
                 const SizedBox(height: 20),
-                _buildFinanceRow("not pay", "100 Student", Colors.redAccent, 0.3),
+                _buildFinanceRow("not pay".tr, "100 Student", Colors.redAccent, 0.3),
                 const SizedBox(height: 30),
                 Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(color: Get.isDarkMode ? Colors.white10 : const Color(0xFFF0F5F9), borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
-                      const Text(
-                        "73% of total tuition fees for the current semester have been collected. An estimated amount remains.",
+                      Text(
+                        "73% of total tuition fees for the current semester have been collected. An estimated amount remains.".tr,
                         textAlign: TextAlign.right,
-                        style: TextStyle(fontSize: 12, height: 1.5),
+                        style: const TextStyle(fontSize: 12, height: 1.5),
                       ),
                       const SizedBox(height: 15),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
                           onPressed: () {},
-                          child: const Text("Go to finance"),
+                          child: Text("Go to finance".tr),
                         ),
                       )
                     ],

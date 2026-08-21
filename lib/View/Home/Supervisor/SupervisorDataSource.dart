@@ -26,8 +26,8 @@ class SupervisorDataSource extends DataGridSource {
         DataGridCell<dynamic>(columnName: 'identity', value: t),
         DataGridCell<String>(columnName: 'phone', value: t.phone),
         DataGridCell<dynamic>(columnName: 'id', value: t.id),
-        DataGridCell<String>(columnName: 'role', value: "Supervisor"),
-        DataGridCell<String>(columnName: 'status', value: t.status == 1 ? "Approved" : "Pending"),
+        DataGridCell<String>(columnName: 'role', value: "Supervisor".tr),
+        DataGridCell<String>(columnName: 'status', value: (t.status == 1 ? "Approved" : "Pending").tr),
         DataGridCell<dynamic>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -95,7 +95,7 @@ class SupervisorDataSource extends DataGridSource {
             color: t.status == 1 ? Colors.teal.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(t.status == 1 ? "ACTIVE" : "PENDING",
+          child: Text((t.status == 1 ? "ACTIVE" : "PENDING").tr,
               style: TextStyle(
                   color: t.status == 0 ? Colors.grey : Colors.teal, fontSize: 10, fontWeight: FontWeight.bold)),
         ),
@@ -104,14 +104,14 @@ class SupervisorDataSource extends DataGridSource {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildBtn(t.status == 1 ? "PENDING" : "ACTIVE", t.status == 1 ? Colors.red : Colors.teal, () async {
-            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?");
+          _buildBtn((t.status == 1 ? "PENDING" : "ACTIVE").tr, t.status == 1 ? Colors.red : Colors.teal, () async {
+            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
             if (confirmed) {
               onToggleStatus(t);
             }
           }),
           const SizedBox(width: 5),
-          _buildBtn("Notification", Colors.orangeAccent, () {
+          _buildBtn("Notification".tr, Colors.orangeAccent, () {
             _buildNotificationDialog(t);
           }),
         ],

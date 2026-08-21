@@ -28,7 +28,7 @@ class SalaryDataSource extends DataGridSource {
         DataGridCell<SalaryModel>(columnName: 'identity', value: t),
         DataGridCell<String>(columnName: 'phone', value: t.phone),
         DataGridCell<String>(columnName: 'salary', value: t.salary),
-        DataGridCell<String>(columnName: 'status', value: t.status==1?"PAID":"UNPAID"),
+        DataGridCell<String>(columnName: 'status', value: (t.status==1?"PAID":"UNPAID").tr),
         DataGridCell<SalaryModel>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -108,7 +108,7 @@ class SalaryDataSource extends DataGridSource {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
-            t.status == 1 ? "PAID" : "NOT PAID",
+            (t.status == 1 ? "PAID" : "NOT PAID").tr,
             style: TextStyle(
               color: t.status == 1 ? const Color(0xFF00A99D) : Colors.grey[600],
               fontSize: 10,
@@ -124,16 +124,16 @@ class SalaryDataSource extends DataGridSource {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _actionButton("Change", const Color(0xFF1C3486), () {
+            _actionButton("Update".tr, const Color(0xFF1C3486), () {
               showUpdateSalaryDialog(Get.context!, t, t.id);
             }),
             const SizedBox(width: 6),
             _actionButton(
-              t.status == 1 ? "UNPAID" : "PAID",
+              (t.status == 1 ? "UNPAID" : "PAID").tr,
               t.status == 1 ? Colors.redAccent : const Color(0xFF00A99D),
                   () async {
                     // To if confirm the action
-                    bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?");
+                    bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
                     if(confirmed){
                       onToggleStatus(t);
                     }
@@ -169,20 +169,20 @@ class SalaryDataSource extends DataGridSource {
     TextEditingController salaryEditController = TextEditingController(text: teacher.salary);
 
     Get.defaultDialog(
-      title: "Change Salary",
-      titleStyle: TextStyle(fontWeight: FontWeight.bold),
+      title: "Assign Salary".tr,
+      titleStyle: const TextStyle(fontWeight: FontWeight.bold),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Change Salary for: ${teacher.name}"),
-          SizedBox(height: 15),
+          Text("${"Assign Salary".tr} ${"for".tr}: ${teacher.name}"),
+          const SizedBox(height: 15),
           TextField(
             controller: salaryEditController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: "New Salary",
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(CupertinoIcons.money_dollar),
+              labelText: "Salary".tr,
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(CupertinoIcons.money_dollar),
             ),
           ),
         ],
@@ -201,16 +201,16 @@ class SalaryDataSource extends DataGridSource {
             if (salaryEditController.text.isNotEmpty) {
               _salaryController.updateSalary(salaryId, salaryEditController.text);
             } else {
-              SnackbarHelper.showError(title: "Error", message: "Please enter a valid amount");
+              SnackbarHelper.showError(title: "Error".tr, message: "Please enter a valid amount".tr);
             }
           },
-          child: const Text("Save Changes", style: TextStyle(color: Colors.white)),
+          child: Text("Save Changes".tr, style: const TextStyle(color: Colors.white)),
         ),
       ),
       // Cancel Button
       cancel: TextButton(
         onPressed: () => Get.back(),
-        child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+        child: Text("Cancel".tr, style: const TextStyle(color: Colors.grey)),
       ),
     );
   }

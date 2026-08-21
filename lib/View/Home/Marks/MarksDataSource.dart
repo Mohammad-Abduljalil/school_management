@@ -22,10 +22,13 @@ class MarksDataSource extends DataGridSource {
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
       cells: row.getCells().map<Widget>((e) {
+        String val = e.value.toString();
+        if (e.columnName == 'type') val = val.tr;
+        
         return Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8.0),
-          child: Text(e.value.toString()),
+          child: Text(val),
         );
       }).toList(),
     );

@@ -32,11 +32,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 children: [
                   const Icon(Icons.description_outlined, size: 80, color: Colors.grey),
                   const SizedBox(height: 16),
-                  const Text("No reports available yet", style: TextStyle(color: Colors.grey, fontSize: 16)),
+                  Text("No reports available yet".tr, style: const TextStyle(color: Colors.grey, fontSize: 16)),
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: () => _controller.fetchReports(),
-                    child: const Text("Refresh List"),
+                    child: Text("Refresh List".tr),
                   )
                 ],
               ),
@@ -83,12 +83,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               gridLinesVisibility: GridLinesVisibility.none,
                               headerGridLinesVisibility: GridLinesVisibility.none,
                               columns: [
-                                GridColumn(columnName: 'id', label: _buildLabel('ID')),
-                                GridColumn(columnName: 'type', label: _buildLabel('Type')),
-                                GridColumn(columnName: 'stage', label: _buildLabel('Stage')),
-                                GridColumn(columnName: 'section', label: _buildLabel('Section')),
-                                GridColumn(columnName: 'date', label: _buildLabel('Date')),
-                                GridColumn(columnName: 'actions', label: _buildLabel('Actions')),
+                                GridColumn(columnName: 'id', label: _buildLabel('ID'.tr)),
+                                GridColumn(columnName: 'type', label: _buildLabel('Type'.tr)),
+                                GridColumn(columnName: 'stage', label: _buildLabel('Stage'.tr)),
+                                GridColumn(columnName: 'section', label: _buildLabel('Section'.tr)),
+                                GridColumn(columnName: 'date', label: _buildLabel('Date'.tr)),
+                                GridColumn(columnName: 'actions', label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -119,12 +119,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "School Reports",
+          "School Reports".tr,
           style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: MyColors.primaryText),
         ),
         const SizedBox(height: 8),
         Text(
-          "View and download academic and administrative reports.",
+          "View and download academic and administrative reports.".tr,
           style: TextStyle(fontSize: 14, color: Theme.of(context).textTheme.bodySmall?.color ?? Colors.grey.shade600),
         ),
       ],
@@ -141,13 +141,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Search Reports", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Text("Search Reports".tr, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 15),
           TextField(
             onChanged: (val) => _controller.searchByType(val),
             style: TextStyle(color: MyColors.primaryText),
             decoration: InputDecoration(
-              hintText: "Search by report type...",
+              hintText: "Search by report type...".tr,
               hintStyle: const TextStyle(color: Colors.grey),
               prefixIcon: const Icon(Icons.search),
               filled: true,
@@ -172,7 +172,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_controller.currentReportsPage.value} of ${_controller.totalReportsPages.value}",
+            "${"Page".tr} ${_controller.currentReportsPage.value} ${"of".tr} ${_controller.totalReportsPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(

@@ -22,7 +22,7 @@ class NotificationsScreen extends StatelessWidget {
           children: [
             // Header
             Text(
-              'Manage your Notifications',
+              'Manage your Notifications'.tr,
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,
@@ -32,9 +32,9 @@ class NotificationsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             //bottom of the header
-            const Text(
-              'See all your notifications and send it for anyone.',
-              style: TextStyle(fontSize: 13.5, color: Color(0xFF9CA3AF)),
+            Text(
+              'See all your notifications and send it for anyone.'.tr,
+              style: const TextStyle(fontSize: 13.5, color: Color(0xFF9CA3AF)),
             ),
             const SizedBox(height: 24),
             // Layout

@@ -27,8 +27,8 @@ class StudentDataSource extends DataGridSource {
         DataGridCell<dynamic>(columnName: 'identity', value: t),
         DataGridCell<String>(columnName: 'phone', value: t.phone),
         DataGridCell<dynamic>(columnName: 'id', value: t.id),
-        DataGridCell<String>(columnName: 'role', value: "Students"),
-        DataGridCell<String>(columnName: 'status', value: t.status == 1 ? "Approved" : "Pending"),
+        DataGridCell<String>(columnName: 'role', value: "Students".tr),
+        DataGridCell<String>(columnName: 'status', value: (t.status == 1 ? "Approved" : "Pending").tr),
         DataGridCell<dynamic>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -95,7 +95,7 @@ class StudentDataSource extends DataGridSource {
             color: t.status == 1 ? Colors.teal.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(t.status == 1 ? "ACTIVE" : "PENDING",
+          child: Text((t.status == 1 ? "ACTIVE" : "PENDING").tr,
               style: TextStyle(
                   color: t.status == 0 ? Colors.grey : Colors.teal, fontSize: 10, fontWeight: FontWeight.bold)),
         ),
@@ -104,19 +104,19 @@ class StudentDataSource extends DataGridSource {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildBtn("Details", const Color(0xFF1C3486), () {
+          _buildBtn("Details".tr, const Color(0xFF1C3486), () {
             studentDetails(t);
             _buildDialog(t);
           }),
           const SizedBox(width: 5),
-          _buildBtn(t.status == 1 ? "PENDING" : "ACTIVE", t.status == 1 ? Colors.red : Colors.teal, () async {
-            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?");
+          _buildBtn((t.status == 1 ? "PENDING" : "ACTIVE").tr, t.status == 1 ? Colors.red : Colors.teal, () async {
+            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
             if (confirmed) {
               onToggleStatus(t);
             }
           }),
           const SizedBox(width: 5),
-          _buildBtn("Notification", Colors.orangeAccent, () {
+          _buildBtn("Notification".tr, Colors.orangeAccent, () {
             _buildNotificationDialog(t);
           }),
         ],
@@ -173,7 +173,7 @@ class StudentDataSource extends DataGridSource {
                         child: const Icon(Icons.person_search, color: Colors.white, size: 18),
                       ),
                       const SizedBox(width: 10),
-                      Text("Student Details View",
+                      Text("Student Details View".tr,
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColors.primaryText)),
                     ],
                   ),
@@ -192,14 +192,14 @@ class StudentDataSource extends DataGridSource {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Financial Overview",
+                        Text("Financial Overview".tr,
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
                         const SizedBox(height: 15),
                         Row(
                           children: [
-                            _buildSummaryCard("TOTAL FEES", "$totalAmount \$", const Color(0xFF003D4C), Icons.payments),
+                            _buildSummaryCard("TOTAL FEES".tr, "$totalAmount \$", const Color(0xFF003D4C), Icons.payments),
                             const SizedBox(width: 15),
-                            _buildSummaryCard("TOTAL REMAINING", "$remaining \$", Theme.of(context).scaffoldBackgroundColor,
+                            _buildSummaryCard("TOTAL REMAINING".tr, "$remaining \$", Theme.of(context).scaffoldBackgroundColor,
                                 Icons.account_balance_wallet,
                                 isDark: false),
                           ],
@@ -208,7 +208,7 @@ class StudentDataSource extends DataGridSource {
                         if (controller.studentInvoiceItems.isEmpty)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Text("No specific invoice items found.", style: TextStyle(color: Colors.grey.shade500)),
+                            child: Text("No specific invoice items found.".tr, style: TextStyle(color: Colors.grey.shade500)),
                           )
                         else
                           Wrap(
@@ -218,7 +218,7 @@ class StudentDataSource extends DataGridSource {
                               return SizedBox(
                                 width: 280,
                                 child: _buildFeesProgressCard(
-                                    "${item.feeType.toUpperCase()} Fees",
+                                    "${item.feeType.toUpperCase()} ${"Fees".tr}",
                                     item.paidAmount,
                                     item.remainingAmount,
                                     item.amount,
@@ -255,15 +255,15 @@ class StudentDataSource extends DataGridSource {
           ),
           const SizedBox(height: 10),
           Text(t.full_name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
-          Text("Student ID: #${t.student_id}", style: const TextStyle(color: Colors.grey, fontSize: 12)),
+          Text("${"ID".tr}: #${t.student_id}", style: const TextStyle(color: Colors.grey, fontSize: 12)),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildSmallTag(t.status == 1 ? "ACTIVE" : "PENDING",
+              _buildSmallTag((t.status == 1 ? "ACTIVE" : "PENDING").tr,
                   t.status == 1 ? Colors.teal.shade50 : Colors.grey.shade50, t.status == 1 ? Colors.teal : Colors.grey),
               const SizedBox(width: 5),
-              _buildSmallTag("STAGE ${t.student_number}", Colors.indigo.shade50, Colors.indigo),
+              _buildSmallTag("${"Stage".tr} ${t.student_number}", Colors.indigo.shade50, Colors.indigo),
             ],
           ),
           const Divider(height: 30),
@@ -285,7 +285,7 @@ class StudentDataSource extends DataGridSource {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Academic Standing", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
+          Text("Academic Standing".tr, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
           const SizedBox(height: 20),
           Row(
             children: [
@@ -311,9 +311,9 @@ class StudentDataSource extends DataGridSource {
               Expanded(
                 child: Column(
                   children: [
-                    _buildAcademicRow("Degree", "A", Colors.teal),
+                    _buildAcademicRow("Update".tr, "A", Colors.teal),
                     const SizedBox(height: 10),
-                    _buildAcademicRow("Class Rank", "#8", Colors.indigo),
+                    _buildAcademicRow("Stage".tr, "#8", Colors.indigo),
                   ],
                 ),
               )
@@ -323,7 +323,7 @@ class StudentDataSource extends DataGridSource {
           ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1C3486)),
-            child: const Text("View All Marks", style: TextStyle(color: Colors.white, fontSize: 12)),
+            child: Text("View All Marks".tr, style: const TextStyle(color: Colors.white, fontSize: 12)),
           )
         ],
       ),

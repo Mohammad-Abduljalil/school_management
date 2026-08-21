@@ -26,16 +26,16 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (!_userManagementController.isLoading.value && _userManagementController.users.isEmpty) {
+            if (!_userManagementController.isLoading.value && _userManagementController.users.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                  const Text("No users found"),
+                  Text("No users found".tr),
                   TextButton(
                     onPressed: () => _userManagementController.fetchUsers(),
-                    child: const Text("Refresh"),
+                    child: Text("Refresh".tr),
                   )
                 ],
               ),
@@ -91,22 +91,22 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
                               columns: [
                                 GridColumn(columnName: 'identity',
                                     // width: 280,
-                                    label: _buildLabel('Identity')),
+                                    label: _buildLabel('Identity'.tr)),
                                 GridColumn(columnName: 'phone',
                                     // width: 180,
-                                    label: _buildLabel('Phone')),
+                                    label: _buildLabel('Phone'.tr)),
                                 GridColumn(columnName: 'id',
                                     // width: 140,
-                                    label: _buildLabel('Id')),
+                                    label: _buildLabel('Id'.tr)),
                                 GridColumn(columnName: 'role',
                                     // width: 170,
-                                    label: _buildLabel('Role')),
+                                    label: _buildLabel('Role'.tr)),
                                 GridColumn(columnName: 'status',
                                     // width: 160,
-                                    label: _buildLabel('Status')),
+                                    label: _buildLabel('Status'.tr)),
                                 GridColumn(columnName: 'actions',
                                     // width: 300,
-                                    label: _buildLabel('Actions')),
+                                    label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -146,7 +146,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_userManagementController.currentUsersPage.value} of ${_userManagementController.totalUsersPages.value}",
+            "${"Page".tr} ${_userManagementController.currentUsersPage.value} ${"of".tr} ${_userManagementController.totalUsersPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(
@@ -173,7 +173,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management",
+              "User Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and students",
+              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and students".tr,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -211,7 +211,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
         child: Row(
           children: [
             _buildStatCard(
-              "Students",
+              "Students".tr,
               "${_userManagementController.numOfStudents.value}",
               Icons.person,
               const Color(0xFFC7D2FE),
@@ -219,7 +219,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
             ),
             const SizedBox(width: 12),
             _buildStatCard(
-              "Teachers",
+              "Teachers".tr,
               "${_userManagementController.numOfTeachers.value}",
               Icons.school,
               const Color(0xFFA7F3D0),
@@ -227,7 +227,7 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
             ),
             const SizedBox(width: 12),
             _buildStatCard(
-              "Supervisor",
+              "Supervisor".tr,
               "${_userManagementController.numOfSupervisor.value}",
               Icons.admin_panel_settings,
               const Color(0xFFFEF3C7), // Light yellow card background
@@ -292,13 +292,13 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
       ),
       child: Column(
         children: [
-          MyCustomTextField(controller: _userManagementController.searchEditingController, hintText: "Search by student name...",onChanged: (value){
+          MyCustomTextField(controller: _userManagementController.searchEditingController, hintText: "Search by student name...".tr,onChanged: (value){
             _userManagementController.searchByName(value);
           },),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Row(
             children: [
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               _buildFilterButtons(),
             ],
@@ -313,14 +313,14 @@ class _UsermanagementScreenState extends State<UserManagementScreen> {
     return Obx(() => Row(
       children: [
         _filterButton(
-          label: "All Users",
+          label: "All Users".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchUsers(onlyPending: false),
           icon: Icons.group,
         ),
         const SizedBox(width: 15),
         _filterButton(
-          label: "Pending Users",
+          label: "Pending Users".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchUsers(onlyPending: true),
           icon: Icons.pending_actions,

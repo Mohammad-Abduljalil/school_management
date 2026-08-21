@@ -138,7 +138,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                        const SizedBox(width: 12),
                        Expanded(
                          child: Text(
-                           item.label,
+                           item.label.tr,
                            style: TextStyle(
                              color: selected ? Colors.white : MyColors.sidebarTextColor,
                              fontSize: 13,

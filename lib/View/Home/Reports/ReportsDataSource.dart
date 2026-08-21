@@ -18,9 +18,9 @@ class ReportsDataSource extends DataGridSource {
     _dataGridRows = reportsList.map<DataGridRow>((r) {
       return DataGridRow(cells: [
         DataGridCell<int>(columnName: 'id', value: r.id),
-        DataGridCell<String>(columnName: 'type', value: r.type),
-        DataGridCell<String>(columnName: 'stage', value: r.studyStageName ?? 'All Stages'),
-        DataGridCell<String>(columnName: 'section', value: r.sectionName ?? 'All Sections'),
+        DataGridCell<String>(columnName: 'type', value: r.type.tr),
+        DataGridCell<String>(columnName: 'stage', value: (r.studyStageName ?? 'All Stages').tr),
+        DataGridCell<String>(columnName: 'section', value: (r.sectionName ?? 'All Sections').tr),
         DataGridCell<String>(columnName: 'range', value: "${r.startDate.day}/${r.startDate.month} - ${r.endDate.day}/${r.endDate.month}"),
         DataGridCell<ReportModel>(columnName: 'actions', value: r),
       ]);
@@ -36,9 +36,9 @@ class ReportsDataSource extends DataGridSource {
 
     return DataGridRowAdapter(cells: [
       _buildCell(r.id.toString()),
-      _buildCell(r.type),
-      _buildCell(r.studyStageName ?? 'All Stages'),
-      _buildCell(r.sectionName ?? 'All Sections'),
+      _buildCell(r.type.tr),
+      _buildCell((r.studyStageName ?? 'All Stages').tr),
+      _buildCell((r.sectionName ?? 'All Sections').tr),
       _buildCell("${r.startDate.day}/${r.startDate.month}/${r.startDate.year}"),
       
       // Actions
@@ -56,7 +56,7 @@ class ReportsDataSource extends DataGridSource {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               icon: const Icon(Icons.download, size: 16),
-              label: const Text("Download", style: TextStyle(fontSize: 11)),
+              label: Text("Download".tr, style: const TextStyle(fontSize: 11)),
             ),
           ],
         ),

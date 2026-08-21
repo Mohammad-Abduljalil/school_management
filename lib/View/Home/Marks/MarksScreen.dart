@@ -53,7 +53,7 @@ class MarksScreen extends StatelessWidget {
         return Container(
           height: 200,
           alignment: Alignment.center,
-          child: const Text("No Marks Available"),
+          child: Text("No Marks Available".tr),
         );
       }
 
@@ -78,11 +78,11 @@ class MarksScreen extends StatelessWidget {
           headerRowHeight: 50,
           isScrollbarAlwaysShown: true,
           columns: [
-            _buildGridColumn("student", "Student Name", context),
-            _buildGridColumn("subject", "Subject", context),
-            _buildGridColumn("type", "Test Type", context),
-            _buildGridColumn("teacher", "Teacher", context),
-            _buildGridColumn("score", "Score", context),
+            _buildGridColumn("student", "Student Name".tr, context),
+            _buildGridColumn("subject", "Subject".tr, context),
+            _buildGridColumn("type", "Test Type".tr, context),
+            _buildGridColumn("teacher", "Teacher".tr, context),
+            _buildGridColumn("score", "Score".tr, context),
           ],
         ),
       );
@@ -115,24 +115,24 @@ class MarksScreen extends StatelessWidget {
               // Grade Filter
               _buildDropdown<StageModel>(
                 context,
-                "Grade/Stage",
+                "Grade/Stage".tr,
                 _marksController.selectedGrade.value,
                 _marksController.grades,
-                (g) => "Stage ${g.stage_number}",
+                (g) => "${"Stage".tr} ${g.stage_number}",
                 (val) => _marksController.onGradeSelected(val),
-                hint: "All Grades",
+                hint: "All Grades".tr,
               ),
               const SizedBox(width: 20),
 
               // Subject Filter
               _buildDropdown<SubjectModel>(
                 context,
-                "Subject",
+                "Subject".tr,
                 _marksController.selectedSubject.value,
                 _marksController.subjectsList,
                 (s) => s.name,
                 (val) => _marksController.onSubjectSelected(val),
-                hint: _marksController.selectedGrade.value == null ? "Select Grade first" : "All Subjects",
+                hint: _marksController.selectedGrade.value == null ? "Select Grade first".tr : "All Subject".tr,
                 enabled: _marksController.selectedGrade.value != null,
               ),
               const Spacer(),
@@ -213,7 +213,7 @@ class MarksScreen extends StatelessWidget {
             decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(10)),
             child: MyCustomTextField(
               controller: _marksController.searchController,
-              hintText: "Search by student name...",
+              hintText: "Search by student name...".tr,
               prefixIcon: const Icon(Icons.search, color: Colors.grey),
               onChanged: (value) {
                 _marksController.searchSubjectMarks(value);
@@ -265,11 +265,11 @@ class MarksScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(color: MyColors.backgroundColor, borderRadius: BorderRadius.circular(8)),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(Icons.filter_alt_outlined, color: Colors.white, size: 18),
-          SizedBox(width: 5),
-          Text("Filter", style: TextStyle(color: Colors.white)),
+          const Icon(Icons.filter_alt_outlined, color: Colors.white, size: 18),
+          const SizedBox(width: 5),
+          Text("Filter".tr, style: const TextStyle(color: Colors.white)),
         ],
       ),
     );

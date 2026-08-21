@@ -29,7 +29,7 @@ class InvoiceDataSource extends DataGridSource {
         DataGridCell<String>(columnName: 'phone', value: t.phone),
         DataGridCell<dynamic>(columnName: 'id', value: t.id),
         DataGridCell<String>(columnName: 'invoice', value: '${t.total_paid}/${t.total_amount}'),
-        DataGridCell<String>(columnName: 'status', value: t.status),
+        DataGridCell<String>(columnName: 'status', value: t.status.tr),
         DataGridCell<dynamic>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -107,15 +107,15 @@ class InvoiceDataSource extends DataGridSource {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildBtn("Details", const Color(0xFF1C3486), () {
+          _buildBtn("Details".tr, const Color(0xFF1C3486), () {
             _buildDialog(t);
           }),
           const SizedBox(width: 5),
           _buildBtn(
-            t.status == "paid" ? "Set Unpaid" : "Set Paid",
+            (t.status == "paid" ? "Set Unpaid" : "Set Paid").tr,
             t.status == "paid" ? Colors.orange : Colors.teal,
             () async {
-              bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Change invoice status?");
+              bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
               if (confirmed) {
                 String newStatus = t.status == "paid" ? "unpaid" : "paid";
                 Get.find<InvoiceController>().updateInvoiceOnServer(
@@ -130,7 +130,7 @@ class InvoiceDataSource extends DataGridSource {
             icon: const Icon(Icons.delete_outline, color: Colors.red, size: 20),
             onPressed: () async {
               bool confirmed =
-                  await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure you want to delete this invoice?");
+                  await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
               if (confirmed) {
                 Get.find<InvoiceController>().deleteInvoice(int.parse(t.id));
               }
@@ -188,7 +188,7 @@ class InvoiceDataSource extends DataGridSource {
                       child: const Icon(Icons.person, color: Colors.white, size: 18),
                     ),
                     const SizedBox(width: 10),
-                    Text("User Details View",
+                    Text("Details".tr,
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: MyColors.primaryText)),
                   ],
                 ),
@@ -210,13 +210,13 @@ class InvoiceDataSource extends DataGridSource {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Fees",
+                          Text("Fees".tr,
                               style:
                                   TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
                           ElevatedButton.icon(
                             onPressed: () => _showAddItemDialog(context, int.parse(t.id)),
                             icon: const Icon(Icons.add, size: 16),
-                            label: const Text("Add New Fee", style: TextStyle(fontSize: 12)),
+                            label: Text("Add Item".tr, style: const TextStyle(fontSize: 12)),
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF1C3486), foregroundColor: Colors.white),
                           ),
@@ -226,10 +226,10 @@ class InvoiceDataSource extends DataGridSource {
                       Row(
                         children: [
                           _buildSummaryCard(
-                              "TOTAL FEES", "${t.total_amount} \$", const Color(0xFF004D61), Icons.payments,
+                              "TOTAL FEES".tr, "${t.total_amount} \$", const Color(0xFF004D61), Icons.payments,
                               onEdit: () => _buildEditTotalDialog(t)),
                           const SizedBox(width: 15),
-                          _buildSummaryCard("TOTAL REMAINING", "$remaining \$", Theme.of(context).cardColor,
+                          _buildSummaryCard("TOTAL REMAINING".tr, "$remaining \$", Theme.of(context).cardColor,
                               Icons.account_balance_wallet,
                               isDark: false),
                         ],
@@ -242,14 +242,14 @@ class InvoiceDataSource extends DataGridSource {
                           return SizedBox(
                             width: 300,
                             child: _buildProgressCard(
-                                "${item.feeType.toUpperCase()} Fees",
+                                "${item.feeType.toUpperCase()} ${"Fees".tr}",
                                 item.paidAmount,
                                 item.remainingAmount,
                                 item.amount,
                                 item.feeType.toLowerCase().contains('bus') ? Icons.directions_bus : Icons.school,
                                 onEdit: () => _showEditItemDialog(context, item), onDelete: () async {
                               bool confirmed = await MyCustomConfirmDialog()
-                                  .isConfermedDialog(context, "Are you sure you want to delete this fee item?");
+                                  .isConfermedDialog(context, "Are you sure?".tr);
                               if (confirmed) {
                                 await controller.deleteInvoiceItem(item.id, item.invoiceId);
                               }
@@ -267,7 +267,7 @@ class InvoiceDataSource extends DataGridSource {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Add Payment",
+                  Text("Add Payment".tr,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MyColors.primaryText)),
                   const SizedBox(height: 15),
                   Wrap(
@@ -283,7 +283,7 @@ class InvoiceDataSource extends DataGridSource {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
-                                child: _buildInputField("${item.feeType.toUpperCase()} Amount", itemControllers[item.id]!)),
+                                child: _buildInputField("${item.feeType.toUpperCase()} ${"Amount".tr}", itemControllers[item.id]!)),
                             const SizedBox(width: 10),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF00A99D)),
@@ -298,7 +298,7 @@ class InvoiceDataSource extends DataGridSource {
                                   itemControllers[item.id]!.clear();
                                 }
                               },
-                              child: const Text("Pay", style: TextStyle(color: Colors.white)),
+                              child: Text("Pay".tr, style: const TextStyle(color: Colors.white)),
                             ),
                           ],
                         ),

@@ -28,16 +28,16 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (!_invoiceController.isLoading.value && _invoiceController.invoices.isEmpty) {
+            if (!_invoiceController.isLoading.value && _invoiceController.invoices.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                  const Text("No invoices found"),
+                  Text("No invoices found".tr),
                   TextButton(
                     onPressed: () => _invoiceController.fetchInvoices(),
-                    child: const Text("Refresh"),
+                    child: Text("Refresh".tr),
                   )
                 ],
               ),
@@ -86,12 +86,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                               gridLinesVisibility: GridLinesVisibility.none,
                               headerGridLinesVisibility: GridLinesVisibility.none,
                               columns: [
-                                GridColumn(columnName: 'identity', label: _buildLabel('Identity')),
-                                GridColumn(columnName: 'phone', label: _buildLabel('Phone')),
-                                GridColumn(columnName: 'id', label: _buildLabel('Id')),
-                                GridColumn(columnName: 'invoice', label: _buildLabel('Invoice')),
-                                GridColumn(columnName: 'status', label: _buildLabel('Status')),
-                                GridColumn(columnName: 'actions', label: _buildLabel('Actions')),
+                                GridColumn(columnName: 'identity', label: _buildLabel('Identity'.tr)),
+                                GridColumn(columnName: 'phone', label: _buildLabel('Phone'.tr)),
+                                GridColumn(columnName: 'id', label: _buildLabel('Id'.tr)),
+                                GridColumn(columnName: 'invoice', label: _buildLabel('Invoice'.tr)),
+                                GridColumn(columnName: 'status', label: _buildLabel('Status'.tr)),
+                                GridColumn(columnName: 'actions', label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -131,7 +131,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_invoiceController.currentInvoicesPage.value} of ${_invoiceController.totalInvoicesPages.value}",
+            "${"Page".tr} ${_invoiceController.currentInvoicesPage.value} ${"of".tr} ${_invoiceController.totalInvoicesPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(
@@ -156,9 +156,9 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Welcome User let's start,",style: TextStyle(fontSize: 28,fontWeight: FontWeight.bold,color: MyColors.primaryText),),
+            Text("Welcome User let's start,".tr,style: TextStyle(fontSize: 28,fontWeight: FontWeight.bold,color: MyColors.primaryText),),
             const SizedBox(height: 8,),
-            Text("Dashboard brief  information about the system.",style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF545455)),),
+            Text("Dashboard brief information about the system.".tr,style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF545455)),),
           ],
         ),
         ElevatedButton.icon(
@@ -170,7 +170,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
           icon: const Icon(Icons.settings_suggest_outlined),
-          label: const Text("Manage Fee Types", style: TextStyle(fontWeight: FontWeight.bold)),
+          label: Text("Manage Fee Types".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -195,7 +195,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Manage Fee Types", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
+                  Text("Manage Fee Types".tr, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
                   IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.close)),
                 ],
               ),
@@ -203,7 +203,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
               const SizedBox(height: 20),
               
               // Creation Form
-              const Text("Create New Type", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text("Create New Type".tr, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 15),
               Row(
                 children: [
@@ -213,7 +213,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       controller: nameController,
                       style: TextStyle(color: MyColors.primaryText),
                       decoration: InputDecoration(
-                        hintText: "Type Name (e.g. Uniform)",
+                        hintText: "Type Name (e.g. Uniform)".tr,
                         hintStyle: const TextStyle(color: Colors.grey),
                         filled: true,
                         fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -229,7 +229,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       keyboardType: TextInputType.number,
                       style: TextStyle(color: MyColors.primaryText),
                       decoration: InputDecoration(
-                        hintText: "Price \$",
+                        hintText: "Price \$".tr,
                         hintStyle: const TextStyle(color: Colors.grey),
                         filled: true,
                         fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -253,7 +253,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           Navigator.of(context).pop();
                         }
                       } else {
-                        SnackbarHelper.showWarning(title: "Warning", message: "Please fill in all fields");
+                        SnackbarHelper.showWarning(title: "Warning".tr, message: "Please fill in all fields".tr);
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -263,13 +263,13 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     ),
                     child: _invoiceController.isLoading.value 
                         ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                        : const Text("Add"),
+                        : Text("Add".tr),
                   )),
                 ],
               ),
               
               const SizedBox(height: 30),
-              const Text("Existing Types", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text("Existing Types".tr, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 15),
               
               // List of Fee Types
@@ -317,16 +317,16 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
 
     Get.dialog(
       AlertDialog(
-        title: const Text("Edit Fee Type"),
+        title: Text("Edit Fee Type".tr),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: nameController, decoration: const InputDecoration(labelText: "Name")),
-            TextField(controller: amountController, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: "Price \$")),
+            TextField(controller: nameController, decoration: InputDecoration(labelText: "Type Name (e.g. Uniform)".tr)),
+            TextField(controller: amountController, keyboardType: TextInputType.number, decoration: InputDecoration(labelText: "Price \$".tr)),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Cancel")),
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("Cancel".tr)),
           ElevatedButton(
             onPressed: () async {
               bool success = await _invoiceController.updateFeeType(type.id, nameController.text, double.parse(amountController.text));
@@ -334,7 +334,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                 Navigator.of(context).pop();
               }
             },
-            child: const Text("Save"),
+            child: Text("Update".tr),
           ),
         ],
       ),
@@ -342,7 +342,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   }
 
   void _confirmDeleteFeeType(BuildContext context, int id) async {
-    bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure you want to delete this fee type?");
+    bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure you want to delete this fee type?".tr);
     if (confirmed) {
       await _invoiceController.deleteFeeType(id);
     }
@@ -359,12 +359,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
         children: [
           Row(
             children: [
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
             ],
           ),
-          SizedBox(height: 10,),
-          MyCustomTextField(controller: _invoiceController.searchEditingController, hintText: "Search by student name...",onChanged: (value){
+          const SizedBox(height: 10,),
+          MyCustomTextField(controller: _invoiceController.searchEditingController, hintText: "Search by student name...".tr,onChanged: (value){
             _invoiceController.searchByName(value);
           },),
         ],

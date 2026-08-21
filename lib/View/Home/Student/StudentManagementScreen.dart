@@ -27,16 +27,16 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (!_studentsManagementController.isLoading.value && _studentsManagementController.students.isEmpty) {
+            if (!_studentsManagementController.isLoading.value && _studentsManagementController.students.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                  const Text("No users found"),
+                  Text("No users found".tr),
                   TextButton(
                     onPressed: () => _studentsManagementController.fetchStudents(),
-                    child: const Text("Refresh"),
+                    child: Text("Refresh".tr),
                   )
                 ],
               ),
@@ -92,12 +92,12 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
                                 return true;
                               },
                               columns: [
-                                GridColumn(columnName: 'identity',label: _buildLabel('Identity')),
-                                GridColumn(columnName: 'phone',label: _buildLabel('Phone')),
-                                GridColumn(columnName: 'id', label: _buildLabel('Id')),
-                                GridColumn(columnName: 'role' , label: _buildLabel('Role')),
-                                GridColumn(columnName: 'status' , label: _buildLabel('Status')),
-                                GridColumn(columnName: 'actions' , label: _buildLabel('Actions')),
+                                GridColumn(columnName: 'identity',label: _buildLabel('Identity'.tr)),
+                                GridColumn(columnName: 'phone',label: _buildLabel('Phone'.tr)),
+                                GridColumn(columnName: 'id', label: _buildLabel('Id'.tr)),
+                                GridColumn(columnName: 'role' , label: _buildLabel('Role'.tr)),
+                                GridColumn(columnName: 'status' , label: _buildLabel('Status'.tr)),
+                                GridColumn(columnName: 'actions' , label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -137,7 +137,7 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_studentsManagementController.currentStudentsPage.value} of ${_studentsManagementController.totalStudentsPages.value}",
+            "${"Page".tr} ${_studentsManagementController.currentStudentsPage.value} ${"of".tr} ${_studentsManagementController.totalStudentsPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(
@@ -164,7 +164,7 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management",
+              "User Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -173,7 +173,7 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and students",
+              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and students".tr,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -202,7 +202,7 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
         child: Row(
           children: [
             _buildStatCard(
-              "Students",
+              "Students".tr,
               "${_studentsManagementController.numOfStudents.value}",
               Icons.person,
               const Color(0xFFC7D2FE),
@@ -274,13 +274,13 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
       ),
       child: Column(
         children: [
-          MyCustomTextField(controller: _studentsManagementController.searchEditingController, hintText: "Search by student name...",onChanged: (value){
+          MyCustomTextField(controller: _studentsManagementController.searchEditingController, hintText: "Search by student name...".tr,onChanged: (value){
             _studentsManagementController.searchByName(value);
           },),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Row(
             children: [
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               _buildFilterButtons(),
             ],
@@ -295,14 +295,14 @@ class _StudentManagementScreenState extends State<StudentManagementScreen> {
     return Obx(() => Row(
       children: [
         _filterButton(
-          label: "All Students",
+          label: "All Students".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchStudents(onlyPending: false),
           icon: Icons.group,
         ),
         const SizedBox(width: 15),
         _filterButton(
-          label: "Pending Students",
+          label: "Pending Students".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchStudents(onlyPending: true),
           icon: Icons.pending_actions,

@@ -30,9 +30,9 @@ class _SalaryScreenState extends State<SalaryScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  Icon(Icons.person_off, size: 80, color: Colors.grey),
-                  const Text("No members found for this role."),
-                  TextButton(onPressed: () => _salaryController.fetchSalaries(), child: Text("Retry"))
+                  const Icon(Icons.person_off, size: 80, color: Colors.grey),
+                  Text("No users found".tr),
+                  TextButton(onPressed: () => _salaryController.fetchSalaries(), child: Text("Retry".tr))
                 ],
               ),
             );
@@ -87,11 +87,11 @@ class _SalaryScreenState extends State<SalaryScreen> {
                               gridLinesVisibility: GridLinesVisibility.none,
                               headerGridLinesVisibility: GridLinesVisibility.none,
                               columns: [
-                                GridColumn(columnName: 'identity', label: _buildLabel('Identity')),
-                                GridColumn(columnName: 'phone', label: _buildLabel('Phone')),
-                                GridColumn(columnName: 'salary', label: _buildLabel('Salary')),
-                                GridColumn(columnName: 'status', label: _buildLabel('Status')),
-                                GridColumn(columnName: 'actions', label: _buildLabel('Actions')),
+                                GridColumn(columnName: 'identity', label: _buildLabel('Identity'.tr)),
+                                GridColumn(columnName: 'phone', label: _buildLabel('Phone'.tr)),
+                                GridColumn(columnName: 'salary', label: _buildLabel('Salary'.tr)),
+                                GridColumn(columnName: 'status', label: _buildLabel('Status'.tr)),
+                                GridColumn(columnName: 'actions', label: _buildLabel('Actions'.tr)),
                               ],
                             ),
                           ),
@@ -133,10 +133,10 @@ class _SalaryScreenState extends State<SalaryScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // details about the pagination from the server
-          Text(
-            "Page ${_salaryController.currentSalaryPage.value} of ${_salaryController.totalSalaryPages.value} (${_salaryController.totalSalaryItems.value} members)",
+          Obx(() => Text(
+            "${"Page".tr} ${_salaryController.currentSalaryPage.value} ${"of".tr} ${_salaryController.totalSalaryPages.value} (${_salaryController.totalSalaryItems.value} ${"Users".tr})",
             style: const TextStyle(color: Colors.white, fontSize: 13),
-          ),
+          )),
           // to transform between the pages
           SfDataPager(
             delegate: source,
@@ -158,9 +158,9 @@ class _SalaryScreenState extends State<SalaryScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Welcome User let's start,", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
+        Text("Welcome User let's start,".tr, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: MyColors.primaryText)),
         const SizedBox(height: 8),
-        Text("Dashboard brief information about the system.", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF545455))),
+        Text("Dashboard brief information about the system.".tr, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF545455))),
       ],
     );
   }
@@ -176,7 +176,7 @@ class _SalaryScreenState extends State<SalaryScreen> {
       child: Column(
         children: [
           //Search TextField
-          MyCustomTextField(controller: _salaryController.searchEditingController, hintText: "Search by name",
+          MyCustomTextField(controller: _salaryController.searchEditingController, hintText: "Search by name".tr,
             onChanged: (value){
               _salaryController.searchByName(value);
               },
@@ -186,13 +186,13 @@ class _SalaryScreenState extends State<SalaryScreen> {
           Row(
             children: [
               // Label before Buttons
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               // First Button
-              _filterButton("Teachers", "teacher"),
+              _filterButton("Teachers".tr, "teacher"),
               const SizedBox(width: 10),
               //Second Buttons
-              _filterButton("Admins", "admin"),
+              _filterButton("Supervisor".tr, "admin"),
             ],
           ),
         ],

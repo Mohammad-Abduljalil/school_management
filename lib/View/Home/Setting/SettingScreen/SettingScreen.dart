@@ -69,12 +69,12 @@ class _SettingScreenState extends State<SettingScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "My Profile",
+          "My Profile".tr,
           style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.primaryText, fontSize: 24),
         ),
         const SizedBox(height: 8),
-        const Text(
-          "manage your profile and your appearance here",
+        Text(
+          "manage your profile and your appearance here".tr,
           style: TextStyle(fontWeight: FontWeight.w400, color: Colors.grey, fontSize: 14),
         ),
       ],
@@ -214,12 +214,11 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  //Setting Section In Screen
   Widget _accountSettingsSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Account Settings", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text("Account Settings".tr, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.all(10),
@@ -229,7 +228,21 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           child: Column(
             children: [
-              _settingsTile(Icons.language, "Language", "Switch between English & Arabic", trailing:  IconButton(onPressed: (){},icon: Icon(Icons.keyboard_arrow_down),)),
+              Obx(() {
+                final settingService = Get.find<SettingService>();
+                bool isArabic = settingService.currentLocale.value.languageCode == 'ar';
+                return _settingsTile(
+                  Icons.language,
+                  "Language".tr,
+                  isArabic ? "اللغة العربية" : "English Language",
+                  trailing: IconButton(
+                    onPressed: () {
+                      settingService.changeLanguage(isArabic ? 'en' : 'ar');
+                    },
+                    icon: const Icon(Icons.swap_horiz),
+                  ),
+                );
+              }),
               const Divider(height: 1),
               Obx(() {
                 final settingService = Get.find<SettingService>();

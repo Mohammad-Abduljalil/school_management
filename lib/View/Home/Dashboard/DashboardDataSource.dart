@@ -20,8 +20,8 @@ class DashboardDataSource extends DataGridSource {
     _dataGridRows = users.map<DataGridRow>((t) {
       return DataGridRow(cells: [
         DataGridCell<dynamic>(columnName: 'identity', value: t),
-        DataGridCell<String>(columnName: 'role', value: t.role),
-        DataGridCell<String>(columnName: 'status', value: t.status == 1 ? "Approved" : "Pending"),
+        DataGridCell<String>(columnName: 'role', value: t.role.tr),
+        DataGridCell<String>(columnName: 'status', value: (t.status == 1 ? "Approved" : "Pending").tr),
         DataGridCell<dynamic>(columnName: 'actions', value: t),
       ]);
     }).toList();
@@ -82,7 +82,7 @@ class DashboardDataSource extends DataGridSource {
             color: t.status == 1 ? Colors.teal.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(t.status == 1 ? "ACTIVE" : "PENDING",
+          child: Text((t.status == 1 ? "ACTIVE" : "PENDING").tr,
               style: TextStyle(
                   color: t.status == 0 ? Colors.grey : Colors.teal, fontSize: 10, fontWeight: FontWeight.bold)),
         ),
@@ -91,8 +91,8 @@ class DashboardDataSource extends DataGridSource {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildBtn(t.status == 1 ? "PENDING" : "ACTIVE", t.status == 1 ? Colors.red : Colors.teal, () async {
-            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?");
+          _buildBtn((t.status == 1 ? "PENDING" : "ACTIVE").tr, t.status == 1 ? Colors.red : Colors.teal, () async {
+            bool confirmed = await MyCustomConfirmDialog().isConfermedDialog(context, "Are you sure?".tr);
             if (confirmed) {
               onToggleStatus(t);
             }
@@ -108,7 +108,7 @@ class DashboardDataSource extends DataGridSource {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(6)),
-        child: Text(title, style: const TextStyle(color: Colors.white, fontSize: 11)),
+        child: Text(title.tr, style: const TextStyle(color: Colors.white, fontSize: 11)),
       ),
     );
   }

@@ -33,10 +33,10 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.receipt_long, size: 80, color: Colors.grey),
-                  const Text("No users found"),
+                  Text("No users found".tr),
                   TextButton(
                     onPressed: () => _supervisorsManagementController.fetchSupervisors(),
-                    child: const Text("Refresh"),
+                    child: Text("Refresh".tr),
                   )
                 ],
               ),
@@ -92,27 +92,27 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
                               columns: [
                                 GridColumn(
                                   columnName: 'identity',
-                                  label: _buildLabel('Identity'),
+                                  label: _buildLabel('Identity'.tr),
                                 ),
                                 GridColumn(
                                   columnName: 'phone',
-                                  label: _buildLabel('Phone'),
+                                  label: _buildLabel('Phone'.tr),
                                 ),
                                 GridColumn(
                                   columnName: 'id',
-                                  label: _buildLabel('Id'),
+                                  label: _buildLabel('Id'.tr),
                                 ),
                                 GridColumn(
                                   columnName: 'role',
-                                  label: _buildLabel('Role'),
+                                  label: _buildLabel('Role'.tr),
                                 ),
                                 GridColumn(
                                   columnName: 'status',
-                                  label: _buildLabel('Status'),
+                                  label: _buildLabel('Status'.tr),
                                 ),
                                 GridColumn(
                                   columnName: 'actions',
-                                  label: _buildLabel('Actions'),
+                                  label: _buildLabel('Actions'.tr),
                                 ),
                               ],
                             ),
@@ -152,7 +152,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Obx(() => Text(
-            "Page ${_supervisorsManagementController.currentSupervisorsPage.value} of ${_supervisorsManagementController.totalSupervisorsPages.value}",
+            "${"Page".tr} ${_supervisorsManagementController.currentSupervisorsPage.value} ${"of".tr} ${_supervisorsManagementController.totalSupervisorsPages.value}",
             style: const TextStyle(color: Colors.white, fontSize: 13),
           )),
           SfDataPager(
@@ -179,7 +179,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "User Management",
+              "User Management".tr,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
             ),
             const SizedBox(height: 8),
             Text(
-              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and Supervisors",
+              "Orchestrate your educational community. Manage permissions, monitor\nfinancial standings, and streamline communication for staff and Supervisors".tr,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
@@ -217,7 +217,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
         child: Row(
           children: [
             _buildStatCard(
-              "Supervisors",
+              "Supervisor".tr,
               "${_supervisorsManagementController.numOfSupervisors.value}",
               Icons.person,
               const Color(0xFFC7D2FE),
@@ -289,13 +289,13 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
       ),
       child: Column(
         children: [
-          MyCustomTextField(controller: _supervisorsManagementController.searchEditingController, hintText: "Search by student name...",onChanged: (value){
+          MyCustomTextField(controller: _supervisorsManagementController.searchEditingController, hintText: "Search by name".tr,onChanged: (value){
             _supervisorsManagementController.searchByName(value);
           },),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Row(
             children: [
-              const Text("Show Data For: ", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Show Data For: ".tr, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(width: 15),
               _buildFilterButtons(),
             ],
@@ -311,7 +311,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
       children: [
         // Button to display all users
         _filterButton(
-          label: "All Users",
+          label: "All Users".tr,
           isSelected: !controller.isShowingPending.value,
           onTap: () => controller.fetchSupervisors(onlyPending: false),
           icon: Icons.group,
@@ -319,7 +319,7 @@ class _SupervisorManagementScreenState extends State<SupervisorManagementScreen>
         const SizedBox(width: 15),
         // Button to display only pending users
         _filterButton(
-          label: "Pending Users",
+          label: "Pending Users".tr,
           isSelected: controller.isShowingPending.value,
           onTap: () => controller.fetchSupervisors(onlyPending: true),
           icon: Icons.pending_actions,
