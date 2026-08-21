@@ -6,6 +6,7 @@ import 'package:school_management/Model/AuthModel/SignInModel.dart';
 import 'package:school_management/core/AppConstants.dart';
 import 'package:school_management/core/Services/SettingsService.dart';
 import 'package:school_management/core/Utils/ErrorHandler.dart';
+import 'package:school_management/core/Utils/SnackbarHelper.dart';
 
 class SignInController extends GetxController {
   SettingService settingService = Get.find();
@@ -41,9 +42,14 @@ class SignInController extends GetxController {
 
         if (response.statusCode == 200) {
           var responseBody = jsonDecode(response.body);
-          SignInModel userResponse = SignInModel.fromJson(responseBody);
-          saveUserLogin(userResponse.token!);
-          Get.offAllNamed('/AdminHomeScreen');
+          if(responseBody["user"]["roles"][0]=="super_admin"){
+              SnackbarHelper.showSuccess(title: "Success", message: "Welcome back");
+              SignInModel userResponse = SignInModel.fromJson(responseBody);
+              saveUserLogin(userResponse.token!);
+              Get.offAllNamed('/AdminHomeScreen');
+            }else{
+            SnackbarHelper.showError(title: "Error", message: "The role of this User is non-admin");
+          }
         } else {
           ErrorHandler.handleHttpError(response);
         }
