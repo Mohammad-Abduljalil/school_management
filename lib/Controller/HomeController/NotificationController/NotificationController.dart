@@ -6,6 +6,9 @@ import 'package:school_management/core/AppConstants.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 import '../../../Model/HomeModel/NotificationModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+import '../../../core/Services/SettingsService.dart';
+
 class NotificationController extends GetxController {
   final notificationsList = <NotificationModel>[].obs;
   final isLoadingList = false.obs;
@@ -17,6 +20,8 @@ class NotificationController extends GetxController {
   final selectedGrade = 'All Grades'.obs;
   final subjectController = TextEditingController();
   final bodyController = TextEditingController();
+  
+  final SettingService settingService = Get.find();
 
   //  Static Data
   final recipients = ['Students', 'Teachers', 'Supervisor'];
@@ -74,6 +79,12 @@ class NotificationController extends GetxController {
     try {
       isLoadingList.value = true;
 
+      if (settingService.isGuestMode.value) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        notificationsList.assignAll(MockData.mockNotifications);
+        isLoadingList.value = false;
+        return;
+      }
 
       //before link
       await Future.delayed(const Duration(seconds: 1));

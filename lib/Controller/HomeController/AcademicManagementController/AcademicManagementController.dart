@@ -11,6 +11,8 @@ import '../../../Model/HomeModel/SectionModel.dart';
 import '../../../Model/HomeModel/SubjectModel.dart';
 import '../../../core/Services/SettingsService.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class AcademicManagementController extends GetxController {
 
   SettingService settingService = Get.find();
@@ -30,6 +32,10 @@ class AcademicManagementController extends GetxController {
   }
 
   void createStudyStage(int studyStage)async{
+    if (settingService.isGuestMode.value) {
+      SnackbarHelper.showSuccess(title: "Success", message: "Stage created (Guest Mode)");
+      return;
+    }
     try{
       isLoading.value=true;
       String? token=settingService.sharedPreferences.getString('token');
@@ -55,6 +61,10 @@ class AcademicManagementController extends GetxController {
   }
 
   void getStudyStages()async{
+    if (settingService.isGuestMode.value) {
+      stages.assignAll(MockData.mockStages);
+      return;
+    }
     try{
       isLoading.value=true;
       String? token=settingService.sharedPreferences.getString('token');
@@ -177,6 +187,10 @@ class AcademicManagementController extends GetxController {
   }
 
   Future<void> fetchSubjectsByGrade(int gradeId) async {
+    if (settingService.isGuestMode.value) {
+      subjects.assignAll(MockData.mockSubjects.where((s) => s.gradeId == gradeId).toList());
+      return;
+    }
     try {
       isLoading.value = true;
       var response = await http.get(Uri.parse(AppConstants.linkGetSubjectsByGrade(gradeId)));

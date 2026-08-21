@@ -10,6 +10,8 @@ import 'package:school_management/core/Utils/ErrorHandler.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 import '../../../Model/HomeModel/SupervisorModel/SupervisorModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class SupervisorsManagementController extends GetxController{
   var isLoading=true.obs;
   RxList<SupervisorModel> supervisors=<SupervisorModel>[].obs;
@@ -33,6 +35,16 @@ class SupervisorsManagementController extends GetxController{
 
 
   Future<void> fetchSupervisors({int page=1,bool onlyPending=false}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      supervisors.assignAll(MockData.mockSupervisors);
+      allSupervisors.assignAll(MockData.mockSupervisors);
+      totalSupervisorsPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     try{
       isLoading.value=true;
       currentSupervisorsPage.value=page;

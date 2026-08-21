@@ -58,6 +58,14 @@ class SignInController extends GetxController {
   void saveUserLogin(String token) {
     settingService.sharedPreferences.setString("token", token);
     settingService.sharedPreferences.setBool("isLoggedIn", true);
+    settingService.setGuestMode(false);
+  }
+
+  void guestSignIn() {
+    settingService.sharedPreferences.setString("token", "guest_token");
+    settingService.sharedPreferences.setBool("isLoggedIn", true);
+    settingService.setGuestMode(true);
+    Get.offAllNamed('/AdminHomeScreen');
   }
 
   String? getToken() {

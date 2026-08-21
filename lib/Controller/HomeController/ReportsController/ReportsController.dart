@@ -8,6 +8,8 @@ import 'dart:html' as html; // Only works on Web
 
 import '../../../Model/HomeModel/ReportModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class ReportsController extends GetxController {
   var isLoading = true.obs;
   RxList<ReportModel> reports = <ReportModel>[].obs;
@@ -24,6 +26,16 @@ class ReportsController extends GetxController {
   }
 
   Future<void> fetchReports({int page = 1}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      reports.assignAll(MockData.mockReports);
+      allReports.assignAll(MockData.mockReports);
+      totalReportsPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     try {
       isLoading.value = true;
       currentReportsPage.value = page;

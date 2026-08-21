@@ -13,6 +13,8 @@ import '../../../Model/HomeModel/InvoiceItemModel.dart';
 import '../../../Model/HomeModel/StudentModel/StudentModel.dart';
 import '../../../core/Services/SettingsService.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class StudentsManagementController extends GetxController{
   var isLoading=true.obs;
   RxList<StudentModel> students=<StudentModel>[].obs;
@@ -36,6 +38,16 @@ class StudentsManagementController extends GetxController{
 
 
   Future<void> fetchStudents({int page=1,bool onlyPending=false}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      students.assignAll(MockData.mockStudents);
+      allStudents.assignAll(MockData.mockStudents);
+      totalStudentsPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     try{
       isLoading.value=true;
       currentStudentsPage.value=page;

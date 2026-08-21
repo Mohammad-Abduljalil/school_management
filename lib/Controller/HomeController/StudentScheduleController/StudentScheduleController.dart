@@ -14,6 +14,8 @@ import '../../../Model/HomeModel/StudentScheduleModel/PeriodTemplateModel.dart';
 import '../../../Model/HomeModel/SubjectModel.dart';
 import '../../../Model/HomeModel/StudentScheduleModel/TeacherModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class ScheduleController extends GetxController {
 
   final RxList<ScheduleStageModel> grades = <ScheduleStageModel>[].obs;
@@ -57,6 +59,16 @@ class ScheduleController extends GetxController {
   Future<void> fetchGradesAndPeriods() async {
     isLoadingGrades.value = true;
     hasError.value = false; // Reset error state
+
+    if (settingService.isGuestMode.value) {
+      grades.assignAll(MockData.mockStages.map((s) => ScheduleStageModel(id: s.id, stageNumber: s.stage_number, sections: s.sections.map((sec) => ScheduleSectionModel(sectionId: sec.id, sectionName: sec.name)).toList())).toList());
+      periodTemplates.assignAll(MockData.mockPeriods);
+      availableSubjects.assignAll(MockData.mockSubjects);
+      availableTeachers.assignAll(MockData.mockTeachers.map((t) => TeacherModel(id: t.id, full_name: t.full_name, teacher_id: t.teacher_id, imageUrl: t.profile_image)).toList());
+      isLoadingGrades.value = false;
+      return;
+    }
+
     await Future.wait([
       fetchGrades(),
       fetchPeriodTemplates(),
@@ -167,6 +179,13 @@ class ScheduleController extends GetxController {
 
     isLoadingSchedule.value = true;
     hasError.value = false;
+
+    if (settingService.isGuestMode.value) {
+      schedule.value = MockData.mockSchedule;
+      _originalSchedule = MockData.mockSchedule;
+      isLoadingSchedule.value = false;
+      return;
+    }
 
     try {
       String? token = settingService.sharedPreferences.getString("token");

@@ -7,6 +7,8 @@ import 'package:school_management/core/AppConstants.dart';
 import 'package:school_management/core/Services/SettingsService.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class SalaryController extends GetxController {
   var isLoading = true.obs;
   var searchQuery = "".obs;
@@ -32,6 +34,17 @@ class SalaryController extends GetxController {
   }
 
   Future<void> fetchSalaries({int page = 1}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      displayedUsers.assignAll(MockData.mockSalaries);
+      allUsers.assignAll(MockData.mockSalaries);
+      totalSalaryPages.value = 1;
+      totalSalaryItems.value = MockData.mockSalaries.length;
+      isLoading.value = false;
+      return;
+    }
+    
     try {
       isLoading.value = true;
       currentSalaryPage.value = page;

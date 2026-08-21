@@ -7,6 +7,8 @@ import 'package:school_management/core/AppConstants.dart';
 import 'package:school_management/core/Services/SettingsService.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class ProfileController extends GetxController{
 var isLoading=false.obs;
 
@@ -21,6 +23,11 @@ SettingService settingService=Get.find();
   }
 
   Future<void> getUserData() async {
+    if (settingService.isGuestMode.value) {
+      profileModel.value = MockData.mockProfile;
+      return;
+    }
+    
     try{
       isLoading.value=true;
 

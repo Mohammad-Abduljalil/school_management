@@ -10,6 +10,8 @@ import '../../../Model/HomeModel/InvoiceModel.dart';
 import '../../../Model/HomeModel/InvoiceItemModel.dart';
 import '../../../Model/HomeModel/FeeTypeModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class InvoiceController extends GetxController {
   var isLoading = true.obs;
   RxList<InvoiceModel> invoices = <InvoiceModel>[].obs;
@@ -32,13 +34,21 @@ class InvoiceController extends GetxController {
   @override
   void onInit() {
     searchEditingController = TextEditingController();
-    Future.wait([
-    fetchInvoices(),
-    ]);
+    fetchInvoices();
     super.onInit();
   }
 
   Future<void> fetchInvoices({int page = 1}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      invoices.assignAll(MockData.mockInvoices);
+      allInvoices.assignAll(MockData.mockInvoices);
+      totalInvoicesPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     try {
       isLoading.value = true;
       currentInvoicesPage.value = page;

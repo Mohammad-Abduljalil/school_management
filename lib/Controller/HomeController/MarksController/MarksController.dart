@@ -10,6 +10,8 @@ import '../../../Model/HomeModel/Marks/MarkModel.dart';
 import '../../../Model/HomeModel/AcademicManagementModel/StageModel.dart';
 import '../../../Model/HomeModel/SubjectModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class MarksController extends GetxController {
   final SettingService settingService = Get.find();
 
@@ -34,6 +36,12 @@ class MarksController extends GetxController {
   }
 
   Future<void> fetchInitialData() async {
+    if (settingService.isGuestMode.value) {
+      grades.assignAll(MockData.mockStages);
+      marksRecords.assignAll(MockData.mockMarks);
+      displayedMarks.assignAll(MockData.mockMarks);
+      return;
+    }
     await fetchGrades();
     await fetchMarks();
   }

@@ -226,6 +226,23 @@ class _sign_inState extends State<sign_in>{
               ),
             ],
           ),
+          const SizedBox(height: 10),
+          // Guest Login Button
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () => _signInController.guestSignIn(),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xFF00A991)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                padding: const EdgeInsets.symmetric(vertical: 13),
+              ),
+              child: const Text(
+                "Try as Guest",
+                style: TextStyle(color: Color(0xFF00A991), fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
 
         ],
       ),

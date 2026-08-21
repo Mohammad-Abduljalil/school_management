@@ -12,6 +12,8 @@ import 'package:school_management/core/Utils/SnackbarHelper.dart';
 import '../../../Model/HomeModel/InvoiceModel.dart';
 import '../../../Model/HomeModel/TacherModel/TeacherModel.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class TeachersManagementController extends GetxController{
   var isLoading=true.obs;
   RxList<TeacherModel> teachers=<TeacherModel>[].obs;
@@ -35,6 +37,16 @@ class TeachersManagementController extends GetxController{
 
 
   Future<void> fetchTeachers({int page=1,bool onlyPending=false}) async {
+    if (settingService.isGuestMode.value) {
+      isLoading.value = true;
+      await Future.delayed(const Duration(milliseconds: 500));
+      teachers.assignAll(MockData.mockTeachers);
+      allTeachers.assignAll(MockData.mockTeachers);
+      totalTeachersPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     try{
       isLoading.value=true;
       currentTeachersPage.value=page;

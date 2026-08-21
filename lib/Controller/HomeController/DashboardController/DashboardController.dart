@@ -10,6 +10,8 @@ import 'package:school_management/core/Utils/SnackbarHelper.dart';
 import '../../../Model/HomeModel/InvoiceModel.dart';
 import '../../../core/Services/SettingsService.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class Dashboardcontroller extends GetxController{
   var isLoading=false.obs;
   RxList<UserModel> users=<UserModel>[].obs;
@@ -28,6 +30,22 @@ class Dashboardcontroller extends GetxController{
   @override
   void onInit() {
     searchEditingController=TextEditingController();
+    fetchInitialData();
+    super.onInit();
+  }
+
+  void fetchInitialData() async {
+    if (settingService.isGuestMode.value) {
+      users.assignAll(MockData.mockUsers);
+      allUsers.assignAll(MockData.mockUsers);
+      numOfStudents.value = 500;
+      numOfTeachers.value = 45;
+      numOfSupervisor.value = 12;
+      numOfClasses.value = 24;
+      totalUsersPages.value = 1;
+      return;
+    }
+    
     Future.wait([
     fetchUsers(),
     getCountOfTeachers(),
@@ -35,12 +53,12 @@ class Dashboardcontroller extends GetxController{
     getCountOfSupervisors(),
     getCountOfClasses(),
     ]);
-    super.onInit();
   }
 
 
 
   Future<void> fetchUsers({int page=1}) async {
+    if (settingService.isGuestMode.value) return;
     try{
       isLoading.value=true;
       currentUsersPage.value=page;

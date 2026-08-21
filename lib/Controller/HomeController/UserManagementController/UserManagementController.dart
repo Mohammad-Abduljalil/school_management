@@ -12,6 +12,8 @@ import '../../../Model/HomeModel/InvoiceModel.dart';
 import '../../../View/Home/User/UserDataSource.dart';
 import '../../../core/Services/SettingsService.dart';
 
+import '../../../core/Utils/MockData.dart';
+
 class UserManagementController extends GetxController{
   var isLoading=true.obs;
   RxList<UserModel> users=<UserModel>[].obs;
@@ -29,15 +31,31 @@ class UserManagementController extends GetxController{
   @override
   void onInit() {
     searchEditingController=TextEditingController();
+    fetchInitialData();
+    super.onInit();
+  }
+
+  void fetchInitialData() async {
+    if (settingService.isGuestMode.value) {
+      users.assignAll(MockData.mockUsers);
+      allUsers.assignAll(MockData.mockUsers);
+      numOfStudents.value = 500;
+      numOfTeachers.value = 45;
+      numOfSupervisor.value = 12;
+      totalUsersPages.value = 1;
+      isLoading.value = false;
+      return;
+    }
+    
     fetchUsers();
     getCountOfTeachers();
     getCountOfStudents();
-    super.onInit();
   }
 
 
 
   Future<void> fetchUsers({int page=1,bool onlyPending=false}) async {
+    if (settingService.isGuestMode.value) return;
     try{
       isLoading.value=true;
       currentUsersPage.value=page;
