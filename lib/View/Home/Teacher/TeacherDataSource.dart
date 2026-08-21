@@ -116,6 +116,10 @@ class TeacherDataSource extends DataGridSource {
             }
           }),
           const SizedBox(width: 5),
+          _buildBtn("Assign Salary".tr, const Color(0xFF00A99D), () {
+            Get.find<TeachersManagementController>().assignSalaryManual(t);
+          }),
+          const SizedBox(width: 5),
           _buildBtn("Notification".tr, Colors.orangeAccent, () {
             _buildNotificationDialog(t);
           }),

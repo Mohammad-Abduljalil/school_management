@@ -115,70 +115,19 @@ class UserManagementController extends GetxController{
 
     try {
       String? token = settingService.sharedPreferences.getString("token");
-
-      // If we are approving a pending user (from 0 to 1)
-      if (user.status == 0) {
-        String role = user.role.toUpperCase();
-        bool needsSalary = role == "TEACHER" || role == "SUPERVISOR" || role == "ADMIN";
-        
-        int? salary;
-        String? type;
-
-        if (needsSalary) {
-          salary = await _showSalaryDialog(user.full_name);
-          if (salary == null) return; // User cancelled
-          type = (role == "TEACHER") ? "teacher" : "admin";
-        }
-
-        // 1. Approve User
-        var approveResponse = await http.put(
+      var response = await http.put(
           Uri.parse(AppConstants.linkApproveUser(user.id)),
-          headers: AppConstants.headers(token!)
-        );
+          headers: AppConstants.headers(token!));
 
-        if (approveResponse.statusCode == 200) {
-          if (needsSalary && salary != null) {
-            // 2. Assign Salary (using user.id as it's the required ID)
-            var salaryResponse = await http.put(
-              Uri.parse(AppConstants.linkAssignSalary(int.parse(user.id))),
-              headers: AppConstants.headers(token),
-              body: jsonEncode({
-                'salary': salary,
-                'type': type,
-              }),
-            );
-
-            if (salaryResponse.statusCode == 200) {
-              user.status = 1;
-              users.refresh();
-              SnackbarHelper.showSuccess(title: "Success", message: "User approved and salary assigned successfully");
-            } else {
-              SnackbarHelper.showWarning(title: "Partial Success", message: "User approved, but failed to assign salary");
-              user.status = 1;
-              users.refresh();
-            }
-          } else {
-            // No salary needed (e.g. Student)
-            user.status = 1;
-            users.refresh();
-            SnackbarHelper.showSuccess(title: "Success", message: "User approved successfully");
-          }
-        } else {
-          ErrorHandler.handleHttpError(approveResponse);
-        }
+      if (response.statusCode == 200) {
+        user.status = user.status == 1 ? 0 : 1;
+        users.refresh();
+        String message = user.status == 1 
+            ? "User approved successfully" 
+            : "User set to pending successfully";
+        SnackbarHelper.showSuccess(title: "Success", message: message);
       } else {
-        // Toggle back to pending (from 1 to 0)
-        var response = await http.put(
-            Uri.parse("${AppConstants.linkApproveUser(user.id)}"),
-            headers: AppConstants.headers(token!));
-
-        if (response.statusCode == 200) {
-          user.status = 0;
-          users.refresh();
-          SnackbarHelper.showSuccess(title: "Success", message: "User set to pending successfully");
-        } else {
-          ErrorHandler.handleHttpError(response);
-        }
+        ErrorHandler.handleHttpError(response);
       }
     } catch (e) {
       SnackbarHelper.showError(title: "Error", message: "Toggle status error: $e");

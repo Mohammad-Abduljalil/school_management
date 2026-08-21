@@ -104,59 +104,59 @@ class TeachersManagementController extends GetxController{
     }
 
     try {
-      // If we are approving a pending teacher
-      if (teacher.status == 0) {
-        final salary = await _showSalaryDialog(teacher.full_name);
-        if (salary == null) return; // User cancelled
-
-        String? token = settingService.sharedPreferences.getString("token");
-        
-        // 1. Approve User
-        var approveResponse = await http.put(
+      String? token = settingService.sharedPreferences.getString("token");
+      var response = await http.put(
           Uri.parse("${AppConstants.linkApproveUser(teacher.id)}"),
-          headers: AppConstants.headers(token!)
-        );
-
-        if (approveResponse.statusCode == 200) {
-          // 2. Assign Salary
-          var salaryResponse = await http.put(
-            Uri.parse(AppConstants.linkAssignSalary(teacher.teacher_id)),
-            headers: AppConstants.headers(token),
-            body: jsonEncode({
-              'salary': salary,
-              'type': 'teacher',
-            }),
-          );
-
-          if (salaryResponse.statusCode == 200) {
-            teacher.status = 1;
-            teachers.refresh();
-            SnackbarHelper.showSuccess(title: "Success", message: "Teacher approved and salary assigned successfully");
-          } else {
-            SnackbarHelper.showWarning(title: "Partial Success", message: "Teacher approved, but failed to assign salary");
-            teacher.status = 1;
-            teachers.refresh();
-          }
-        } else {
-          ErrorHandler.handleHttpError(approveResponse);
-        }
+          headers: AppConstants.headers(token!));
+      
+      if (response.statusCode == 200) {
+        teacher.status = teacher.status == 1 ? 0 : 1;
+        teachers.refresh();
+        String message = teacher.status == 1 
+            ? "Teacher approved successfully" 
+            : "Teacher set to pending successfully";
+        SnackbarHelper.showSuccess(title: "Success", message: message);
       } else {
-        // Just toggle back to pending if already active (standard behavior)
-        String? token = settingService.sharedPreferences.getString("token");
-        var response = await http.put(
-            Uri.parse("${AppConstants.linkApproveUser(teacher.id)}"),
-            headers: AppConstants.headers(token!));
-        if (response.statusCode == 200) {
-          teacher.status = 0;
-          teachers.refresh();
-          SnackbarHelper.showSuccess(title: "Success", message: "Teacher set to pending successfully");
-        } else {
-          ErrorHandler.handleHttpError(response);
-        }
+        ErrorHandler.handleHttpError(response);
       }
     } catch (e) {
       SnackbarHelper.showError(title: "Error", message: "Toggle status error: $e");
       ErrorHandler.handleException(e);
+    }
+  }
+
+  Future<void> assignSalaryManual(TeacherModel teacher) async {
+    final salary = await _showSalaryDialog(teacher.full_name);
+    if (salary == null) return;
+
+    if (settingService.isGuestMode.value) {
+      SnackbarHelper.showSuccess(title: "Success", message: "Salary assigned (Guest Mode)");
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      String? token = settingService.sharedPreferences.getString("token");
+      var salaryResponse = await http.put(
+        Uri.parse(AppConstants.linkAssignSalary(teacher.teacher_id)),
+        headers: AppConstants.headers(token!),
+        body: jsonEncode({
+          'salary': salary,
+          'type': 'teacher',
+        }),
+      );
+
+      if (salaryResponse.statusCode == 200) {
+        fetchTeachers(page: currentTeachersPage.value, onlyPending: isShowingPending.value);
+        SnackbarHelper.showSuccess(title: "Success", message: "Salary assigned successfully");
+      } else {
+        ErrorHandler.handleHttpError(salaryResponse);
+      }
+    } catch (e) {
+      SnackbarHelper.showError(title: "Error", message: "Failed to assign salary: $e");
+      ErrorHandler.handleException(e);
+    } finally {
+      isLoading.value = false;
     }
   }
 

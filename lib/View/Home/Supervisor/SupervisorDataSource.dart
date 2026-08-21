@@ -111,6 +111,10 @@ class SupervisorDataSource extends DataGridSource {
             }
           }),
           const SizedBox(width: 5),
+          _buildBtn("Assign Salary".tr, const Color(0xFF00A99D), () {
+            Get.find<SupervisorsManagementController>().assignSalaryManual(t);
+          }),
+          const SizedBox(width: 5),
           _buildBtn("Notification".tr, Colors.orangeAccent, () {
             _buildNotificationDialog(t);
           }),

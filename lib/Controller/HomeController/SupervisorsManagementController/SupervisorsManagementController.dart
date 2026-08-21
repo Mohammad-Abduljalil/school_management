@@ -106,55 +106,59 @@ class SupervisorsManagementController extends GetxController{
     }
 
     try {
-      if (supervisor.status == 0) {
-        final salary = await _showSalaryDialog(supervisor.full_name);
-        if (salary == null) return;
-
-        String? token = settingService.sharedPreferences.getString("token");
-        
-        var approveResponse = await http.put(
+      String? token = settingService.sharedPreferences.getString("token");
+      var response = await http.put(
           Uri.parse("${AppConstants.linkApproveUser(supervisor.id)}"),
-          headers: AppConstants.headers(token!)
-        );
-
-        if (approveResponse.statusCode == 200) {
-          var salaryResponse = await http.put(
-            Uri.parse(AppConstants.linkAssignSalary(supervisor.supervisor_id)),
-            headers: AppConstants.headers(token),
-            body: jsonEncode({
-              'salary': salary,
-              'type': 'admin',
-            }),
-          );
-
-          if (salaryResponse.statusCode == 200) {
-            supervisor.status = 1;
-            supervisors.refresh();
-            SnackbarHelper.showSuccess(title: "Success", message: "Supervisor approved and salary assigned successfully");
-          } else {
-            SnackbarHelper.showWarning(title: "Partial Success", message: "Supervisor approved, but failed to assign salary");
-            supervisor.status = 1;
-            supervisors.refresh();
-          }
-        } else {
-          ErrorHandler.handleHttpError(approveResponse);
-        }
+          headers: AppConstants.headers(token!));
+      
+      if (response.statusCode == 200) {
+        supervisor.status = supervisor.status == 1 ? 0 : 1;
+        supervisors.refresh();
+        String message = supervisor.status == 1 
+            ? "Supervisor approved successfully" 
+            : "Supervisor set to pending successfully";
+        SnackbarHelper.showSuccess(title: "Success", message: message);
       } else {
-        String? token = settingService.sharedPreferences.getString("token");
-        var response = await http.put(
-            Uri.parse("${AppConstants.linkApproveUser(supervisor.id)}"),
-            headers: AppConstants.headers(token!));
-        if (response.statusCode == 200) {
-          supervisor.status = 0;
-          supervisors.refresh();
-          SnackbarHelper.showSuccess(title: "Success", message: "Supervisor set to pending successfully");
-        } else {
-          ErrorHandler.handleHttpError(response);
-        }
+        ErrorHandler.handleHttpError(response);
       }
     } catch (e) {
       SnackbarHelper.showError(title: "Error", message: "Toggle status error: $e");
       ErrorHandler.handleException(e);
+    }
+  }
+
+  Future<void> assignSalaryManual(SupervisorModel supervisor) async {
+    final salary = await _showSalaryDialog(supervisor.full_name);
+    if (salary == null) return;
+
+    if (settingService.isGuestMode.value) {
+      SnackbarHelper.showSuccess(title: "Success", message: "Salary assigned (Guest Mode)");
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+      String? token = settingService.sharedPreferences.getString("token");
+      var salaryResponse = await http.put(
+        Uri.parse(AppConstants.linkAssignSalary(supervisor.supervisor_id)),
+        headers: AppConstants.headers(token!),
+        body: jsonEncode({
+          'salary': salary,
+          'type': 'admin',
+        }),
+      );
+
+      if (salaryResponse.statusCode == 200) {
+        fetchSupervisors(page: currentSupervisorsPage.value, onlyPending: isShowingPending.value);
+        SnackbarHelper.showSuccess(title: "Success", message: "Salary assigned successfully");
+      } else {
+        ErrorHandler.handleHttpError(salaryResponse);
+      }
+    } catch (e) {
+      SnackbarHelper.showError(title: "Error", message: "Failed to assign salary: $e");
+      ErrorHandler.handleException(e);
+    } finally {
+      isLoading.value = false;
     }
   }
 
