@@ -85,48 +85,49 @@ class SignUpController extends GetxController{
       }
       try {
         isLoading.value = true;
-        var request= http.MultipartRequest('POST',Uri.parse(AppConstants.linkSignUp));
-        request.fields['full_name'] = fullNameController.text;
-        request.fields['email'] = emailController.text.trim();
-        request.fields['phone'] = phoneNumberController.text;
-        request.fields['location'] = locationController.text;
-        request.fields['password'] = passwordController.text;
-        request.fields['password_confirmation'] = passwordConfirmController.text;
-        request.fields['role'] = 'super_admin';
-
-
-        if(kIsWeb){
-          var bytes=await personalImageController.value!.readAsBytes();
-          request.files.add(http.MultipartFile.fromBytes('profile_image', bytes,filename: personalImageController.value!.name,));
-
-        }else{
-          request.files.add(await http.MultipartFile.fromPath(
-              'profile_image',
-              personalImageController.value!.path
-          ));
-
-        }
-        request.headers.addAll({
-          'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        });
-        var streamResponse=await request.send();
-
-        var response=await http.Response.fromStream(streamResponse);
-          if(response.statusCode==200||response.statusCode==201){
-            var responseBody=jsonDecode(response.body);
-
-            SignUpModel userResponse=SignUpModel.fromJson(responseBody);
-
-            if (userResponse.token != null) {
-                  saveUserLogin(userResponse.token!);
-                  Get.offAllNamed("/AdminHomeScreen");
-                  SnackbarHelper.showSuccess(title: "Success", message: "Account created successfully");
-                }else {
-                var errorData = jsonDecode(response.body);
-                SnackbarHelper.showError(title: "Error", message: errorData['message'] ?? "Registration failed");
-              }
-          }
+        SnackbarHelper.showWarning(title: "Warning", message: "Account creation has been temporarily suspended!");
+        // var request= http.MultipartRequest('POST',Uri.parse(AppConstants.linkSignUp));
+        // request.fields['full_name'] = fullNameController.text;
+        // request.fields['email'] = emailController.text.trim();
+        // request.fields['phone'] = phoneNumberController.text;
+        // request.fields['location'] = locationController.text;
+        // request.fields['password'] = passwordController.text;
+        // request.fields['password_confirmation'] = passwordConfirmController.text;
+        // request.fields['role'] = 'super_admin';
+        //
+        //
+        // if(kIsWeb){
+        //   var bytes=await personalImageController.value!.readAsBytes();
+        //   request.files.add(http.MultipartFile.fromBytes('profile_image', bytes,filename: personalImageController.value!.name,));
+        //
+        // }else{
+        //   request.files.add(await http.MultipartFile.fromPath(
+        //       'profile_image',
+        //       personalImageController.value!.path
+        //   ));
+        //
+        // }
+        // request.headers.addAll({
+        //   'Accept': 'application/json',
+        //   'X-Requested-With': 'XMLHttpRequest',
+        // });
+        // var streamResponse=await request.send();
+        //
+        // var response=await http.Response.fromStream(streamResponse);
+        //   if(response.statusCode==200||response.statusCode==201){
+        //     var responseBody=jsonDecode(response.body);
+        //
+        //     SignUpModel userResponse=SignUpModel.fromJson(responseBody);
+        //
+        //     if (userResponse.token != null) {
+        //           saveUserLogin(userResponse.token!);
+        //           Get.offAllNamed("/AdminHomeScreen");
+        //           SnackbarHelper.showSuccess(title: "Success", message: "Account created successfully");
+        //         }else {
+        //         var errorData = jsonDecode(response.body);
+        //         SnackbarHelper.showError(title: "Error", message: errorData['message'] ?? "Registration failed");
+        //       }
+        //   }
 
       } catch (e) {
         SnackbarHelper.showError(title: "Error", message: "Check your server connection: $e");
