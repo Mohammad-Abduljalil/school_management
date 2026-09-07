@@ -15,7 +15,7 @@ import '../../../core/Utils/MockData.dart';
 
 class AcademicManagementController extends GetxController {
 
-  SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   var stages = <StageModel>[].obs;
   var subjects = <SubjectModel>[].obs;

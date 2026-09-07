@@ -25,7 +25,7 @@ class TeachersManagementController extends GetxController{
 
   var currentTeachersPage=1.obs;
   var totalTeachersPages=1.obs;
-  final SettingService settingService=Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

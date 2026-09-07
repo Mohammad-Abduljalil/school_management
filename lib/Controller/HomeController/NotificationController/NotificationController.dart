@@ -22,7 +22,7 @@ class NotificationController extends GetxController {
   final subjectController = TextEditingController();
   final bodyController = TextEditingController();
   
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   //  Static Data
   final recipients = ['Students', 'Teachers', 'Supervisor'];

@@ -18,7 +18,7 @@ class SupervisorsManagementController extends GetxController{
   RxList<SupervisorModel> allSupervisors = <SupervisorModel>[].obs;
   late TextEditingController searchEditingController;
   RxBool isShowingPending = false.obs;
-  final SettingService settingService=Get.find();
+  SettingService get settingService => Get.find<SettingService>();
   late var numOfSupervisors=supervisors.length.obs;
 
   var currentSupervisorsPage=1.obs;

@@ -9,7 +9,7 @@ import 'package:school_management/core/Utils/ErrorHandler.dart';
 import 'package:school_management/core/Utils/SnackbarHelper.dart';
 
 class SignInController extends GetxController {
-  SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
   final formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController passwordController;

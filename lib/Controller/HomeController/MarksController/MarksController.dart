@@ -13,7 +13,7 @@ import '../../../Model/HomeModel/SubjectModel.dart';
 import '../../../core/Utils/MockData.dart';
 
 class MarksController extends GetxController {
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   var marksRecords = <MarkModel>[].obs;
   var displayedMarks = <MarkModel>[].obs;

@@ -29,7 +29,7 @@ class InvoiceController extends GetxController {
 
   var currentInvoicesPage = 1.obs;
   var totalInvoicesPages = 1.obs;
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

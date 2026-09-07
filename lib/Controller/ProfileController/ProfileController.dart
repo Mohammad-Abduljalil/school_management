@@ -14,7 +14,7 @@ var isLoading=false.obs;
 
 var profileModel=Rxn<Profilemodel>();
 
-SettingService settingService=Get.find();
+SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

@@ -24,7 +24,7 @@ class SalaryController extends GetxController {
   var totalSalaryItems = 0.obs;
   final int rowsPerPage = 10;
 
-  SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

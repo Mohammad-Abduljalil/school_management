@@ -17,7 +17,7 @@ class ReportsController extends GetxController {
 
   var currentReportsPage = 1.obs;
   var totalReportsPages = 1.obs;
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

@@ -26,7 +26,7 @@ class UserManagementController extends GetxController{
 
   var currentUsersPage=1.obs;
   var totalUsersPages=1.obs;
-  final SettingService settingService=Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

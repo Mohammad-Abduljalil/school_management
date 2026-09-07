@@ -48,7 +48,7 @@ class ScheduleController extends GetxController {
     'THU': 'thursday',
   };
 
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {

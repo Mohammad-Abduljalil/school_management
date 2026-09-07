@@ -23,7 +23,7 @@ class AssignmentSubjectToTeacherController extends GetxController {
   var selectedClass = Rxn<StageModel>();
   var selectedSection = Rxn<SectionModel>();
 
-  final SettingService settingService = Get.find();
+  SettingService get settingService => Get.find<SettingService>();
 
   @override
   void onInit() {
